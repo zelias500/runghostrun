@@ -5,6 +5,7 @@ var _ = require('lodash');
 
 var schema = new mongoose.Schema({
 	locations: [{lat: String, lng: String}],
+    best: {time: Number, challenger: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}},
 	totalDistance: Number, // in METERS
 	previousTimes: [{time: Number, challenger: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} }], // in seconds
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -22,15 +23,17 @@ var schema = new mongoose.Schema({
     }
 })
 
-schema.virtual("bestTime").get(function(){
-	return this.previousTimes.reduce(function(prev, curr){
+
+schema.pre('save', function(next){
+    this.best = this.previousTimes.reduce(function(prev, curr){
          if(prev.time < curr.time){
             return prev;
          }
          else{
             return curr;
          }
-	})
+    })
+    next();
 })
 
 // return all one challenger's previous time on this ghost
