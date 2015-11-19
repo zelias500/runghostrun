@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <base href="/" />
-    <title>Fullstack Academy Generated Application</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/style.css" />
-    <script src="/lodash/index.js"></script>
-    <script src="/angular/angular.js"></script>
-    <script src="/angular-animate/angular-animate.js"></script>
-    <script src="/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
-    <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="/socket.io-client/socket.io.js"></script>
-    <script src="/main.js"></script>
-</head>
-<body ng-app="FullstackGeneratedApp">
-    <navbar></navbar>
-    <div id="main" ui-view></div>
-</body>
+<html>
+     <head>
+        <base href="/" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Ghost</title>
+
+        <script src="/lodash/index.js"></script>
+
+        
+        <link href="css/ionic.app.css" rel="stylesheet">
+
+        <!-- ionic/angularjs js -->
+        <script src="lib/ionic/js/ionic.bundle.js"></script>
+        <!-- cordova script (this will be a 404 during development) -->
+        <script src="cordova.js"></script>
+        <!-- your app's js -->
+        <script src="public/main.js"></script>
+        <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
+        <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+    </head>
+
+    <body ng-app="starter">
+        <ui-view></ui-view>
+        <p>Hello earth</p>
+    </body>
 </html>

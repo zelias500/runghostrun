@@ -1,10 +1,10 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var _ = require('lodash');
-var User = mongoose.Model("User")
-var Ghost = mongoose.Model("Ghost")
+var User = mongoose.model("User");
+var Ghost = mongoose.model("Ghost");
 
 
 // GET all ghosts

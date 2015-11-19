@@ -1,10 +1,10 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var _ = require('lodash');
-var User = mongoose.Model("User")
-var Ghost = mongoose.Model("Ghost")
+var User = mongoose.model("User");
+var Ghost = mongoose.model("Ghost");
 
 
 // GET all users
@@ -39,7 +39,7 @@ router.get('/:id', function(req,res, next){
 router.get('/:id/friends', function(req,res, next){
 	 req.targetUser.populate('friends').execPopulate().then(function(fd){
          res.status(200).json(fd)
-	 }).then(null, next)
+	 }).then(null, next);
 });
 
 // GET user challenges by id
@@ -70,7 +70,7 @@ router.put('/:id', function(req, res, next){
 // POST new ghost
 router.post('/:id/ghost', function(req,res, next){
 	req.targetUser.addGhost(req.body).then(function(update){
-		res.status(201).json(update)
+		res.status(201).json(update);
 	}).then(null, next)
 });
 
