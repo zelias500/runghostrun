@@ -22,10 +22,28 @@ var schema = new mongoose.Schema({
     }
 })
 
-schema.methods.getBestTime = function(){
+schema.virtual("bestTime").get(function(){
 	return this.previousTimes.reduce(function(prev, curr){
-		return Math.max(prev.time, curr.time);
+         if(prev.time < curr.time){
+            return prev;
+         }
+         else{
+            return curr;
+         }
 	})
+})
+
+// return all one challenger's previous time on this ghost
+schema.methods.getChallengerTime = function(id){
+   return this.previousTimes.filter(function(time){
+       return time.challenger == id
+   })
+}
+
+//return all ghost where user has a time
+
+schema.statics.getChallenger = function(id){
+    return this.find({previousTimes:{$elemMatch:{challenger : id}}}).exec()
 }
 
 schema.methods.addNewTime = function(data){
