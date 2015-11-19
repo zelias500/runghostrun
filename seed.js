@@ -22,6 +22,7 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
+var Ghost = Promise.promisifyAll(mongoose.model('Ghost'));
 
 var seedUsers = function () {
 
@@ -41,18 +42,32 @@ var seedUsers = function () {
 };
 
 connectToDb.then(function () {
-    User.findAsync({}).then(function (users) {
-        if (users.length === 0) {
-            return seedUsers();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
+    User.create({email: 'zack@123.com'}).then(function(user){
+        return user.addGhost({
+            locations: [{lat: '40.75395', lng: '-73.97076'}, {lat:'40.7297773', lng:'-74.0231929'}],
+            totalDistance: 6598,
+            owner: user,
+        })
+    })
+    .then(function(){
+        // User.findAsync({}).then(function (users) {
+        //     if (users.length === 0) {
+        //         return seedUsers();
+        //     } else {
+        //         console.log(chalk.magenta('Seems to already be user data, exiting!'));
+        //         process.kill(0);
+        //     }
+        // })
+        // .then(function () {
+            console.log(chalk.green('Seed successful!'));
             process.kill(0);
-        }
-    }).then(function () {
-        console.log(chalk.green('Seed successful!'));
-        process.kill(0);
-    }).catch(function (err) {
-        console.error(err);
-        process.kill(1);
-    });
-});
+        }).then(null, function (err) {
+            console.error(err);
+            process.kill(1);
+        });
+    });        
+// })
+
+
+
+
