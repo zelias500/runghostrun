@@ -7,55 +7,45 @@ var User = mongoose.Model("User")
 var Ghost = mongoose.Model("Ghost")
 
 
-//find all ghosts
+// GET all ghosts
 router.get('/', function(req,res,next){
 	Ghost.find({}).then(function(ghosts){
 		res.status(200).json(ghosts)
-	}).then(null, next)
+	}).then(null, next);
+});
 
-})
-
-
-/**
- * Get a single ghost
- */
-
+// id parameter
 router.param('id', function(req, res, next, id){
 	 Ghost.findById(id).then(function(ghost){
 	 	 req.ghost = ghost
 	 	 next()
-	 }).then(null, next)
-})
+	 }).then(null, next);
+});
 
+// GET single ghost by id
 router.get('/:id', function(req,res, next){
-     res.status(200).json(req.ghost)
-})
+     res.status(200).json(req.ghost);
+});
 
 
 
-//Add new time
+// POST new time
 router.post('/:id', function(req, res, next){
 	req.ghost.addNewTime(req.body).then(function(update){
 		 res.status(201).json(update)
-	}).then(null, next)
-})
+	}).then(null, next);
+});
 
-// update ghost settings
+// PUT ghost by id
 router.put('/:id', function(req, res, next){
 	_.extend(req.ghost, req.body)
 	req.ghost.save().then(function(update){
-		res.status(201).json(update)
-	}).then(null, next)
-
-})
-
-
+		res.status(200).json(update)
+	}).then(null, next);
+});
 
 router.delete('/:id', function(req, res, next){
     Ghost.remove({_id :req.params.id}).then(function(){
-      return res.status(204).end()
-    })
-})
-
-
-
+      return res.status(200).json(req.ghost);
+    });
+});
