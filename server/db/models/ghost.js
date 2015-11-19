@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
     best: {time: Number, challenger: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}},
 	totalDistance: Number, // in METERS
 	previousTimes: [{time: Number, challenger: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} }], // in seconds
-    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     privacy: {
     	type: String,
     	enum: ['private', 'friends', 'public'],
@@ -25,14 +25,16 @@ var schema = new mongoose.Schema({
 
 
 schema.pre('save', function(next){
-    this.best = this.previousTimes.reduce(function(prev, curr){
-         if(prev.time < curr.time){
-            return prev;
-         }
-         else{
-            return curr;
-         }
-    })
+    if (this.previousTimes.length){
+        this.best = this.previousTimes.reduce(function(prev, curr){
+             if(prev.time < curr.time){
+                return prev;
+             }
+             else{
+                return curr;
+             }
+        })        
+    }
     next();
 })
 
