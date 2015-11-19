@@ -65,58 +65,69 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/tabs.html'
   })
 
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-
-  .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  })
   .state('tab.home', {
     url: '/home',
     views: {
       'tab-home': {
-        templateUrl: 'templates/home.html',
+        templateUrl: 'templates/tab-home.html',
         controller: 'HomeCtrl'   
+      }
+    }
+  })
+  // Each tab has its own nav history stack:
+
+  .state('tab.profile', {
+    url: '/profile',
+    views: {
+      'tab-profile': {
+        templateUrl: 'templates/tab-profile.html',
+        controller: 'ProfileCtrl'
+      }
+    }
+  })
+
+  .state('tab.record', {
+      url: '/record',
+      views: {
+        'tab-record': {
+          templateUrl: 'templates/tab-record.html',
+          controller: 'RecordCtrl'
+        }
+      }
+    })
+
+  // .state('tab.chat-detail', {
+  //     url: '/chats/:chatId',
+  //     views: {
+  //       'tab-chats': {
+  //         templateUrl: 'templates/chat-detail.html',
+  //         controller: 'ChatDetailCtrl'
+  //       }
+  //     }
+  //   })
+
+  .state('tab.challenge', {
+    url: '/challenge',
+    views: {
+      'tab-challenge': {
+        templateUrl: 'templates/tab-challenge.html',
+        controller: 'ChallengeCtrl'
+      }
+    }
+  })
+
+  .state('tab.more', {
+    url: '/more',
+    views: {
+      'tab-more': {
+        templateUrl: 'templates/tab-more.html',
+        controller: 'MoreCtrl'
       }
     }
   });
 
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/home');
 
 });
