@@ -1,4 +1,4 @@
-window.app = angular.module('runghost', ['ionic'])
+window.app = angular.module('runghost', ['ionic', 'ngCordova'])
 
 app.run(function($ionicPlatform) {
 

@@ -10,6 +10,25 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope) {
-    $scope.something = "Hello we are in Record!"
+app.controller('RecordCtrl', function ($scope, LocationFactory) {
+    $scope.something = "Hello we are in Record!";
+
+    LocationFactory.addLocationPoint({
+        coords: {
+            latitude: 40.703932,
+            longitude: -74.009217
+        },
+        timestamp: 0
+    })
+    LocationFactory.addLocationPoint({
+        coords: {
+            latitude: 40.707110,
+            longitude: -74.004588
+        },
+        timestamp: 100000
+    })
+    LocationFactory.calcDistance();
+    LocationFactory.calcTime();
+    console.log(LocationFactory.getCurrentRunData());
+    console.log(LocationFactory.getAvgSpeed(true));
 });
