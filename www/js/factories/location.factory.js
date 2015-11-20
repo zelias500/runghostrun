@@ -23,7 +23,7 @@ app.factory('LocationFactory', function($cordovaGeolocation){
 	}
 
 	var options = {
-		enableHighAccuracy: true,
+		enableHighAccuracy: false,
 		timeout: 5000
 	};
 
@@ -38,12 +38,12 @@ app.factory('LocationFactory', function($cordovaGeolocation){
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
-			locations = [];
-			$cordovaGeolocation.watchPosition(options).then(function(pos){
+			// locations = [];
+			$cordovaGeolocation.watchPosition(options).then(null, errorHandler, function(pos){
 				console.log("POSITION", pos);
 				data.locations.push(pos);
-				return locations;
-			}, errorHandler);
+				return data;
+			});
 		},
 
 		getCurrentRunData: function(){
