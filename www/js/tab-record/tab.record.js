@@ -14,7 +14,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory) {
     $scope.something = "Hello we are in Record!";
 
     // DEAD CODE FOR TESTING
-    // LocationFactory.startNewRun();
+    LocationFactory.startNewRun();
     // LocationFactory.addLocationPoint({
     //     coords: {
     //         latitude: 40.703932,
@@ -33,12 +33,12 @@ app.controller('RecordCtrl', function ($scope, LocationFactory) {
     // LocationFactory.calcTime();
     // console.log(LocationFactory.getCurrentRunData());
     // console.log(LocationFactory.getAvgSpeed(true));
-    // $scope.testing = LocationFactory.getCurrentRunData();
-    // $scope.counter = 0;
-    // setInterval(function(){
-    //     console.log('tick', LocationFactory.getCurrentRunData())
-    //     $scope.counter += 1;
-    //     $scope.testing = LocationFactory.getCurrentRunData();
-    //     $scope.$digest();
-    // }, 500)
+    $scope.testing = LocationFactory.getCurrentRunData();
+    $scope.counter = 0;
+    setInterval(function(){
+        console.log('tick', LocationFactory.getCurrentRunData())
+        $scope.counter += 1;
+        $scope.testing = LocationFactory.getCurrentRunData();
+        $scope.$digest();
+    }, 500)
 });
