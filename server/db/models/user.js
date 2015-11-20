@@ -14,9 +14,18 @@ var schema = new mongoose.Schema({
         id: String
     },
     displayName: String,
-    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    ghosts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ghost'}]
-
+    friends: [
+        {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'User'
+        }
+    ],
+    ghosts: [
+        {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Ghost'
+        }
+    ]
 });
 
 schema.methods.addGhost = function(data){
@@ -24,7 +33,7 @@ schema.methods.addGhost = function(data){
     return Ghost.create(data).then(function(ghost){
         self.ghosts.push(ghost);
         return self.save();
-    })
+    });
 }
 
 mongoose.model('User', schema);
