@@ -1,4 +1,4 @@
-window.app = angular.module('runghost', ['ionic'])
+window.app = angular.module('runghost', ['ionic', 'ngMap'])
 
 app.run(function($ionicPlatform) {
 
