@@ -2,11 +2,24 @@
   <ion-content class="padding">
     <div class="list card">
       <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          {{ something }}
+      <div class="item item-body" style="height:500px">
+
+        <div map-lazy-load="http://maps.google.com/maps/api/js"
+             map-lazy-load-params="{{googleMapsUrl}}" style="width:100%;height:100%">
+          <ng-map center="center" 
+                  zoom="1"
+                  style="width:100%;height:100%">
+<!--                   <directions
+                    draggable="true"
+                    panel="directions-panel"
+                    travel-mode="WALKING"
+                    waypoints="{{ wayPoints }}"
+                    origin="{{ center }}"
+                    destination="{{ dest }}">
+                  </directions>
+ -->          </ng-map>
         </div>
-      </div>
+
     </div>
     <div class="list card">
       <div class="item item-divider">Health</div>
