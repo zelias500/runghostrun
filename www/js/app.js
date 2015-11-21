@@ -54,6 +54,6 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
 
 });
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/tab/home');
 });
