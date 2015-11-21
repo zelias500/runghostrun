@@ -6,6 +6,7 @@
     "platform.js": "platform#~1.3.0"
   },
   "dependencies": {
-    "ngmap": "~1.14.15"
+    "ngmap": "~1.14.15",
+    "ngCordova": "~0.1.23-alpha"
   }
 }
