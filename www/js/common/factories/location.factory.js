@@ -34,16 +34,26 @@ app.factory('LocationFactory', function($cordovaGeolocation){
 		speedPoints: []
 	}
 
+	var watchId = null;
+
 	var theFactory = {
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
 			// locations = [];
-			$cordovaGeolocation.watchPosition(options).then(null, errorHandler, function(pos){
+			$cordovaGeolocation.watchPosition(options)
+			.then(function (id) {
+				watchId = id;
+			})
+			.then(null, errorHandler, function(pos){
 				console.log("POSITION", pos);
 				data.locations.push(pos);
 				return data;
 			});
+		},
+		
+		stopRun: function () {
+			$cordovaGeolocation.clearWatch(watchId);
 		},
 
 		getCurrentRunData: function(){
