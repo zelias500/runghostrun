@@ -18,7 +18,10 @@ app.config(function ($stateProvider) {
 app.controller('HomeCtrl', function ($scope, ghosts, MapFactory) {
     $scope.something = "Hello we are in Home!"
 
-    var map = MapFactory.newMap(ghosts[0]);
+    // testing
+    var theGhost = ghosts[ghosts.length - 1];
+
+    var map = MapFactory.newMap(theGhost);
     $scope.wayPoints = map.wayPoints;
     $scope.center = map.center
     $scope.dest = map.destination;
