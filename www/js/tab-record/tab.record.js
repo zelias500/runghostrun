@@ -10,16 +10,21 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session) {
+app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval) {
     $scope.something = "Hello we are in Record!";
+    $scope.counter = 0;
 
     $scope.start = function () {
         LocationFactory.startNewRun();
+
+        // testing
+        $interval(function () {
+            $scope.counter++;
+        },1000)
     }
     $scope.stop = function () {
         LocationFactory.stopRun();
         var data = LocationFactory.getCurrentRunData();
-        console.log(data)
         var locations = data.locations.map(geo => {
             return {
                 lat: geo.coords.latitude,
@@ -59,9 +64,9 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
     // $scope.testing = LocationFactory.getCurrentRunData();
     // $scope.counter = 0;
     // setInterval(function(){
-    //     console.log('tick', LocationFactory.getCurrentRunData())
+    // //     console.log('tick', LocationFactory.getCurrentRunData())
     //     $scope.counter += 1;
-    //     $scope.testing = LocationFactory.getCurrentRunData();
+    // //     $scope.testing = LocationFactory.getCurrentRunData();
     //     $scope.$digest();
-    // }, 500)
+    // }, 500);
 });
