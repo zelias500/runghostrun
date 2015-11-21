@@ -16,10 +16,12 @@
           <a ng-click="stop()" class="button">Stop</a>
         </div>
         <div>
-          <h2>{{testing.locations[0].timestamp}}</h2>
-          <h2>{{testing.locations[0].coords.latitude}}</h2>
-          <h2>{{testing.locations[0].coords.longitude}}</h2>
+          <h2>current time: {{testing.locations[0].timestamp}}</h2>
+          <h2>current lat: {{testing.locations[0].coords.latitude}}</h2>
+          <h2>current long: {{testing.locations[0].coords.longitude}}</h2>
+          <h2>number of locations: {{testing.lastInd+1}}</h2>
           <h2>{{counter}}</h2>
+          <h2>Are we running? {{testing.running}}</h2>
         </div>
       </div>
     </div>
