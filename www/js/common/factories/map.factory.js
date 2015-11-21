@@ -22,7 +22,7 @@ app.factory('MapFactory', function () {
 			this.wayPoints = makeWayPoints(ghost);
 			this.center = this.wayPoints[0].location.lat + ', ' + this.wayPoints[0].location.lng;
 			this.destination = this.wayPoints[this.wayPoints.length - 1].location.lat + ', ' + this.wayPoints[this.wayPoints.length - 1].location.lng;
-			this.url = 'http://maps.google.com/thiss/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
+			this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
 			this.mode = 'WALKING';
 			this.draggable = true;
 			
