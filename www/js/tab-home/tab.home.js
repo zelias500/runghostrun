@@ -12,28 +12,17 @@ app.config(function ($stateProvider) {
                 return GhostFactory.fetchAll();
             }
         }
-    })
+    });
 });
 
-app.controller('HomeCtrl', function ($scope, ghosts) {
+app.controller('HomeCtrl', function ($scope, ghosts, MapFactory) {
     $scope.something = "Hello we are in Home!"
-    $scope.googleMapsUrl = 'http://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
-    
-    $scope.wayPoints = [];
 
-   ghosts[0].locations.forEach(function(ele){
-        console.log(ele)
-       $scope.wayPoints.push({
-        locations: {
-            lat: ele.lat,
-            lng: ele.lng
-        }
-    })
-   });
-   console.log($scope.wayPoints)
-   $scope.center = $scope.wayPoints[0].locations.lat + ', ' + $scope.wayPoints[0].locations.lng;
-   $scope.dest = $scope.wayPoints[2].locations.lat + ', ' + $scope.wayPoints[2].locations.lng;
-   console.log($scope.center);
-   console.log($scope.dest);
-
+    var map = MapFactory.newMap(ghosts[0]);
+    $scope.wayPoints = map.wayPoints;
+    $scope.center = map.center
+    $scope.dest = map.destination;
+    $scope.googleMapsUrl = map.url;
+    $scope.mode = map.mode;
+    $scope.draggable = map.draggable;
 });
