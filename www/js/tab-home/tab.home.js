@@ -7,6 +7,9 @@ app.config(function ($stateProvider) {
                 controller: 'HomeCtrl'   
             }
         },
+        data: {
+            authenticate: true
+        },
         resolve: {
             ghosts: function (GhostFactory) {
                 return GhostFactory.fetchAll();
@@ -15,8 +18,9 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, ghosts, MapFactory) {
-    $scope.something = "Hello we are in Home!"
+app.controller('HomeCtrl', function ($scope, ghosts, MapFactory, Session) {
+    $scope.something = "Hello we are in Home!";
+    $scope.user = Session.user;
 
     // testing
     var theGhost = ghosts[ghosts.length - 1];
