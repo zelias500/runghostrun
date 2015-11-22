@@ -1,4 +1,4 @@
-app.factory('LocationFactory', function($cordovaGeolocation){
+app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	function errorHandler (err){
 		console.error(err);
 	};
@@ -41,19 +41,47 @@ app.factory('LocationFactory', function($cordovaGeolocation){
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
 			// locations = [];
-			$cordovaGeolocation.watchPosition(options)
+			return $cordovaGeolocation.watchPosition(options)
 			.then(function (id) {
+				console.log(watchId)
 				watchId = id;
+				console.log("HI THERE");
 			})
 			.then(null, errorHandler, function(pos){
 				console.log("POSITION", pos);
 				data.locations.push(pos);
+				console.log("DATA", data);
+				// return data;
+			}).then(function(){
 				return data;
-			});
+			}).then(null, function(e){console.error(e)});
+		},
+
+		getLocIndex: function(){
+			return data.locations.length-1;
 		},
 		
-		stopRun: function () {
+		stopRun: function (userId) {
 			$cordovaGeolocation.clearWatch(watchId);
+			theFactory.calcTime(); // also calls calcDistance in function body
+			data.locations = data.locations.map(geo => {
+				return {
+					lat: geo.coords.latitude,
+					lng: geo.coords.longitude
+				}
+			})
+			UserFactory.createGhost(userId, {
+            locations: data.locations,
+            previousTimes: [{
+                time: data.time,
+                challenger: userId
+            }],
+            totalDistance: data.distance,
+            owner: userId
+        }).then(function(){
+        	return data;
+        });
+
 		},
 
 		getCurrentRunData: function(){
