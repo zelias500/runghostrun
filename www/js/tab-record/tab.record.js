@@ -13,60 +13,37 @@ app.config(function ($stateProvider) {
 app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval) {
     $scope.something = "Hello we are in Record!";
     $scope.counter = 0;
+    $scope.lastLocIndex;
+    $scope.testing;
 
     $scope.start = function () {
+        // TODO: fix the need for $interval to update run data below
+
         LocationFactory.startNewRun();
+        $scope.testing = LocationFactory.getCurrentRunData();
+        $scope.testing.running = true;
+        $scope.lastInd = LocationFactory.getLocIndex();
+
+
+        // TODO: figure out why this Promise block isn't being entered
+        // LocationFactory.startNewRun().then(function(data){
+        //     console.log("HELLO")
+        //     console.log('DATA FROM CONTROLLER', data);
+        //     $scope.testing = data;
+        //     console.log($scope.testing);
+        //     $scope.testing.running = true;
+        // });
 
         // testing
         $interval(function () {
+            $scope.testing = LocationFactory.getCurrentRunData();
+            // console.log($scope.testing);
             $scope.counter++;
         },1000)
     }
     $scope.stop = function () {
-        LocationFactory.stopRun();
-        var data = LocationFactory.getCurrentRunData();
-        var locations = data.locations.map(geo => {
-            return {
-                lat: geo.coords.latitude,
-                lng: geo.coords.longitude
-            }
-        });
-        UserFactory.createGhost('564f57361d84c351e9d10215', {
-            locations: locations,
-            best: {
-                time: data.time
-            },
-            totalDistance: data.distance,
-            owner: '564f57361d84c351e9d10215'
-        });
+        $scope.testing = LocationFactory.stopRun('564f57361d84c351e9d10215');
+        $scope.lastLocIndex = $scope.testing.locations.length
+        $scope.testing.running = false;
     }
-
-    //DEAD CODE FOR TESTING
-    // LocationFactory.startNewRun();
-    // // LocationFactory.addLocationPoint({
-    // //     coords: {
-    // //         latitude: 40.703932,
-    // //         longitude: -74.009217
-    // //     },
-    // //     timestamp: 0
-    // // })
-    // // LocationFactory.addLocationPoint({
-    // //     coords: {
-    // //         latitude: 40.707110,
-    // //         longitude: -74.004588
-    // //     },
-    // //     timestamp: 100000
-    // // })
-    // // LocationFactory.calcDistance();
-    // // LocationFactory.calcTime();
-    // // console.log(LocationFactory.getCurrentRunData());
-    // // console.log(LocationFactory.getAvgSpeed(true));
-    // $scope.testing = LocationFactory.getCurrentRunData();
-    // $scope.counter = 0;
-    // setInterval(function(){
-    // //     console.log('tick', LocationFactory.getCurrentRunData())
-    //     $scope.counter += 1;
-    // //     $scope.testing = LocationFactory.getCurrentRunData();
-    //     $scope.$digest();
-    // }, 500);
 });
