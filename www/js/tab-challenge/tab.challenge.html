@@ -1,17 +1,23 @@
-<ion-view view-title="Challenge">
+<ion-view view-title="Challenges Near You">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+      <ion-item ng-repeat="map in maps">
+        <a href="#/tab/new/{{map.id}}">
+          <div style="position:relative;width:100%;height:200px">
+            <div style="position:absolute;top:0px;left:0px;z-index:1;background-color:rgba(0,0,0,0.8);width:100%;padding:5px">
+              <p style="color:orange">Challenge Title</p>
+              <p style="color:orange">User, if a challenge</p>
+            </div>
+            <div style="position:absolute;bottom:0px;left:0px;z-index:1;background-color:rgba(0,0,0,0.8);width:100%;padding:5px">
+              <p style="color:orange">If ran before, Your total time</p>
+              <p style="color:orange">If challenge, their total time</p>
+              <p style="color:orange">Total Distance</p>
+              <p style="color:orange">{{ map.center }}</p>
+            </div>
+            <div id="{{map.id}}" style="height:100%;width:100%"></div>
+          </div>
+        </a>
+      </ion-item>
     </ion-list>
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          {{ something }}
-        </div>
-      </div>
-    </div>
   </ion-content>
 </ion-view>
