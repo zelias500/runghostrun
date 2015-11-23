@@ -10,7 +10,7 @@ var UserModel = mongoose.model('User');
 var ENABLED_AUTH_STRATEGIES = [
     // 'local',
     //'twitter',
-    // 'facebook',
+    'facebook',
     'google'
 ];
 
@@ -47,7 +47,7 @@ module.exports = function (app) {
     // logged in already.
     app.get('/session', function (req, res) {
         if (req.user) {
-            res.send({ user: req.user.sanitize() });
+            res.send({ user: req.user });
         } else {
             res.status(401).send('No authenticated user.');
         }
