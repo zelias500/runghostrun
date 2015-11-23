@@ -19,12 +19,19 @@ app.factory('MapFactory', function () {
 
 		// Map constructor function
 		function Map (ghost) {
-			this.wayPoints = makeWayPoints(ghost);
-			this.center = this.wayPoints[0].location.lat + ', ' + this.wayPoints[0].location.lng;
-			this.destination = this.wayPoints[this.wayPoints.length - 1].location.lat + ', ' + this.wayPoints[this.wayPoints.length - 1].location.lng;
-			this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
-			this.mode = 'WALKING';
-			this.draggable = true;
+			if (ghost){
+				this.wayPoints = makeWayPoints(ghost);
+				this.center = this.wayPoints[0].location.lat + ', ' + this.wayPoints[0].location.lng;
+				this.destination = this.wayPoints[this.wayPoints.length - 1].location.lat + ', ' + this.wayPoints[this.wayPoints.length - 1].location.lng;
+			}
+			else {
+				this.waypoints = [];
+				this.center = '40.704703,-74.009186';
+				// this.destination;
+			}
+				this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
+				this.mode = 'WALKING';
+				this.draggable = true;
 			
 		}
 

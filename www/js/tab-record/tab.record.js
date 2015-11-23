@@ -26,13 +26,15 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
 
         LocationFactory.startNewRun();
         $scope.currentRun = LocationFactory.getCurrentRunData();
-        $scope.map = MapFactory.newMap($scope.currentRun)
+        $scope.map = MapFactory.newMap()
         $scope.currentRun.running = true;
         $scope.lastInd = LocationFactory.getLocIndex();
 
         // currentRun
         interv = $interval(function () {
             $scope.currentRun = LocationFactory.getCurrentRunData();
+            console.log("$scope.currentRun", $scope.currentRun)
+            console.log("$scope.map", $scope.map)
 
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
                 var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations-1];
@@ -44,6 +46,8 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                     },
                     stopover: false
                 })
+                var wayPointsLen =  $scope.map.wayPoints.length;
+                $scope.map.center = $scope.map.wayPoints[wayPointsLen - 1] + "," + $scope.map.wayPoints[wayPointsLen-1];
             }
 
             $scope.lastInd = LocationFactory.getLocIndex();
