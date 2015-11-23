@@ -1,6 +1,9 @@
 app.config(function ($stateProvider) {
 	$stateProvider.state('tab.profile', {
         url: '/profile',
+        data: {
+            authenticate: true
+        },
         views: {
             'tab-profile': {
                 templateUrl: 'js/tab-profile/tab.profile.html',

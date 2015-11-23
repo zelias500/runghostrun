@@ -1,6 +1,9 @@
 app.config(function ($stateProvider) {
 	$stateProvider.state('tab.record', {
         url: '/record',
+        data: {
+            authenticate: true
+        },
         views: {
             'tab-record': {
                 templateUrl: 'js/tab-record/tab.record.html',
