@@ -14,24 +14,41 @@ app.factory('MapFactory', function () {
             });
 		}
 
-		// Map constructor function
+		// Map constructor function - if no ghost, returns empty map
 		function Map (ghost) {
-			this.id = ghost._id;
-			this.ghost = ghost;
-			var wayPoints = makeWayPoints(ghost);
-			this.wayPoints = wayPoints;
+			if (ghost){
+				this.id = ghost._id;
+				this.ghost = ghost;
+				this.wayPoints = makeWayPoints(ghost);
+				this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
+			}
+			else {
+				this.wayPoints = [            
+					// {lat: 40.704570, lng: -74.009413}, 
+		   //          {lat: 40.780168, lng:-73.975204}, 
+		   //          {lat: 40.752981,lng:-73.940470}
+            	];
+				this.center = {lat:40.704651, lng: -74.009260};
+			}
+			this.makePolyline();
+			this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
+			this.mode = 'WALKING';
+			this.draggable = true;
+		}
+
+		// waypoints is an array of location object objects with lat and lng properties
+		Map.prototype.addWayPoint = function(location) {
+			this.wayPoints.push(location);
+		}
+
+		Map.prototype.makePolyline = function() {
 			this.runPath = new google.maps.Polyline({
-				path: wayPoints,
+				path: this.wayPoints,
 				geodesic: true,
 				strokeColor: 'red',
 			    strokeOpacity: 0.8,
 			    strokeWeight: 2
 			});
-			this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
-			this.destination = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
-			this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
-			this.mode = 'WALKING';
-			this.draggable = true;
 		}
 
 		return new Map(ghost);

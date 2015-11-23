@@ -49,6 +49,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				}
 
 				data.locations.push(pos);
+				console.log("position after change", pos);
 				console.log("DATA", data);
 				return data;
 			}, errorHandler, options)

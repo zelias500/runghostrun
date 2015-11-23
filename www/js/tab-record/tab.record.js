@@ -18,7 +18,6 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
     $scope.counter = 0;
     $scope.lastLocIndex;
     $scope.currentRun;
-    $scope.map;
     var interv;
 
     $scope.start = function () {
@@ -30,29 +29,60 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.currentRun.running = true;
         $scope.lastInd = LocationFactory.getLocIndex();
 
+        var gmap = new google.maps.Map(document.getElementById("RunMap"), {
+            zoom: 12,
+            center: $scope.map.center,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        })
+        $scope.map.runPath.setMap(gmap);
+
+
+    //         $scope.maps = ghosts.map(ghost => MapFactory.newMap(ghost));
+    
+    // // function initialize () {
+    // setTimeout(function () {
+    //     $scope.maps.forEach(map => {
+    //         var gmap = new google.maps.Map(document.getElementById(map.id), {
+    //             zoom: 12,
+    //             center: map.center,
+    //             mapTypeId: google.maps.MapTypeId.TERRAIN
+    //         })
+            // map.runPath.setMap(gmap);
+    //     });
+
+    // },0)
+
         // currentRun
+
+
         interv = $interval(function () {
             $scope.currentRun = LocationFactory.getCurrentRunData();
-            console.log("$scope.currentRun", $scope.currentRun)
-            console.log("$scope.map", $scope.map)
-
+            console.log("Current run",$scope.currentRun);
+            console.log("Our map",$scope.map);
+            // if ($scope.map.wayPoints.length === 3){
+            //     $scope.map.addWayPoint({
+            //         lat: 40.704570, 
+            //         lng: -74.009413
+            //     })
+                
+            // }
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
-                var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations-1];
-                $scope.map.wayPoints.push(
+                var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations.length-1];
+                $scope.map.addWayPoint(
                 {
-                    location: {
-                        lat: Number(lastLocation.lat),
-                        lng: Number(lastLocation.lng)
-                    },
-                    stopover: false
+                    lat: Number(lastLocation.lat),
+                    lng: Number(lastLocation.lng)
                 })
-                var wayPointsLen =  $scope.map.wayPoints.length;
-                $scope.map.center = $scope.map.wayPoints[wayPointsLen - 1] + "," + $scope.map.wayPoints[wayPointsLen-1];
+                var lastWayPointIndex = $scope.map.wayPoints.length - 1;
+                $scope.map.center = $scope.map.wayPoints[lastWayPointIndex]
             }
 
             $scope.lastInd = LocationFactory.getLocIndex();
             // console.log($scope.currentRun);
             $scope.counter++;
+            $scope.map.makePolyline();
+            $scope.map.runPath.setMap(gmap);
+
         },1000)
     }
     $scope.stop = function () {

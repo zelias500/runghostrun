@@ -16,7 +16,7 @@
           <a ng-click="stop()" class="button">Stop</a>
         </div>
 
-          <ng-map center="center" 
+<!--           <ng-map center="center" 
               zoom="5" 
               disable-default-u-i="true">
             <directions
@@ -26,9 +26,10 @@
               origin="{{ map.center }}"
               destination="{{ map.dest }}">
             </directions>       
-          </ng-map>
+          </ng-map> -->
 
 
+        <div id="RunMap" style="height:200px;width:350px"> </div>
         <div>
           <h2>index {{lastInd}}</h2>
           <h2>current timestamp (or final time): {{currentRun.locations[lastInd].timestamp || currentRun.time}}</h2>
