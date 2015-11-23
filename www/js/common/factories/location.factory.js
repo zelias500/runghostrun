@@ -40,21 +40,12 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
-			// locations = [];
-			return $cordovaGeolocation.watchPosition(options)
-			.then(function (id) {
-				console.log(watchId)
-				watchId = id;
-				console.log("HI THERE");
-			})
-			.then(null, errorHandler, function(pos){
+			watchId = navigator.geolocation.watchPosition(function(pos){
 				console.log("POSITION", pos);
 				data.locations.push(pos);
 				console.log("DATA", data);
-				// return data;
-			}).then(function(){
 				return data;
-			}).then(null, function(e){console.error(e)});
+			}, errorHandler, options)
 		},
 
 		getLocIndex: function(){
@@ -62,25 +53,35 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		},
 		
 		stopRun: function (userId) {
-			$cordovaGeolocation.clearWatch(watchId);
+			navigator.geolocation.clearWatch(watchId);
 			theFactory.calcTime(); // also calls calcDistance in function body
-			data.locations = data.locations.map(geo => {
+			var stopData = data;
+			data = {
+				locations: [],
+				distance: 0,
+				time: 0,
+				speedPoints: []
+			}
+
+			stopData.locations = stopData.locations.map(geo => {
 				return {
 					lat: geo.coords.latitude,
 					lng: geo.coords.longitude
 				}
 			})
-			UserFactory.createGhost(userId, {
-            locations: data.locations,
-            previousTimes: [{
-                time: data.time,
-                challenger: userId
-            }],
-            totalDistance: data.distance,
-            owner: userId
-        }).then(function(){
-        	return data;
-        });
+			return UserFactory.createGhost(userId, {
+	            locations: stopData.locations,
+	            previousTimes: [{
+	                time: stopData.time,
+	                challenger: userId
+	            }],
+	            totalDistance: stopData.distance,
+	            owner: userId
+	        }).then(function(user){
+	        	console.log('STOPDATA', stopData);
+	        	console.log('USER AT STOP', user);
+	        	return stopData;
+	        }, errorHandler);
 
 		},
 
