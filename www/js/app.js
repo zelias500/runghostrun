@@ -6,7 +6,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     });
     $urlRouterProvider.otherwise(function ($injector, $location) {
         var $state = $injector.get('$state');
-        $state.go('tab.home')
+        $state.go('tab.home');
     });
 });
 
@@ -36,7 +36,7 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
-        if (!destinationStateRequiresAuth(toState) || toState.name === 'login') {
+        if (!destinationStateRequiresAuth(toState)) {
             // The destination state does not require authentication
             // Short circuit with return.
             return;
