@@ -12,10 +12,10 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		var latRads2 = toRad(loc2.coords.latitude);
 		var latDeltaRads = toRad(loc2.coords.latitude-loc1.coords.latitude);
 		var longDeltaRads = toRad(loc2.coords.longitude-loc1.coords.longitude);
-
 		var a = Math.sin(latDeltaRads/2) * Math.sin(latDeltaRads/2) + Math.cos(latRads1) * Math.cos(latRads2) * Math.sin(longDeltaRads/2) * Math.sin(longDeltaRads/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		return (earthRadius * c).toFixed(1);
+		var ourReturn = (earthRadius * c).toFixed(1);
+		return Number((earthRadius * c).toFixed(1));
 	}
 
 	function calcPointTime(loc1, loc2){
@@ -79,7 +79,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	            owner: userId
 	        }).then(function(user){
 	        	console.log('STOPDATA', stopData);
-	        	console.log('USER AT STOP', user);
 	        	return stopData;
 	        }, errorHandler);
 
@@ -92,6 +91,14 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		// calculates total run distance of data.locations array
 		calcDistance: function(){
 			var totalDistance = 0;
+			var fakeLocation = { coords: 
+				{
+				latitude: 0,
+				longitude: 0
+			}
+			}
+
+			var distanceCalc = calcGeoDistance(data.locations[0], fakeLocation);
 			var dist = data.locations.reduce(function(prev, curr){
 				totalDistance += calcGeoDistance(prev, curr);
 				return curr;

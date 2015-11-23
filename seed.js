@@ -44,7 +44,10 @@ var seedUsers = function () {
 connectToDb.then(function () {
     User.create({email: 'zack@123.com'}).then(function(user){
         return user.addGhost({
-            locations: [{lat: '40.75395', lng: '-73.97076'}, {lat:'40.7297773', lng:'-74.0231929'}, {lat:'40.7813241',lng:'-74.044026'}],
+            locations: [
+            {lat: '40.704570', lng: '-74.009413'}, 
+            {lat:'40.780168', lng:'-73.975204'}, 
+            {lat:'40.752981',lng:'-73.940470'}],
             totalDistance: 6598,
             owner: user,
         })
