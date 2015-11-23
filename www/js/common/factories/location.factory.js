@@ -8,13 +8,12 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		return degrees * Math.PI/180;
 	}
 	function calcGeoDistance(loc1, loc2){
-		var latRads1 = toRad(loc1.coords.latitude);
-		var latRads2 = toRad(loc2.coords.latitude);
-		var latDeltaRads = toRad(loc2.coords.latitude-loc1.coords.latitude);
-		var longDeltaRads = toRad(loc2.coords.longitude-loc1.coords.longitude);
+		var latRads1 = toRad(loc1.lat);
+		var latRads2 = toRad(loc2.lat);
+		var latDeltaRads = toRad(loc2.lat-loc1.lat);
+		var longDeltaRads = toRad(loc2.lng-loc1.lng);
 		var a = Math.sin(latDeltaRads/2) * Math.sin(latDeltaRads/2) + Math.cos(latRads1) * Math.cos(latRads2) * Math.sin(longDeltaRads/2) * Math.sin(longDeltaRads/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		var ourReturn = (earthRadius * c).toFixed(1);
 		return Number((earthRadius * c).toFixed(1));
 	}
 
@@ -42,6 +41,13 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		startNewRun: function(){
 			watchId = navigator.geolocation.watchPosition(function(pos){
 				console.log("POSITION", pos);
+
+				pos = {
+					lat: pos.coords.latitude,
+					lng: pos.coords.longitude,
+					timestamp: pos.timestamp
+				}
+
 				data.locations.push(pos);
 				console.log("DATA", data);
 				return data;
@@ -63,12 +69,12 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				speedPoints: []
 			}
 
-			stopData.locations = stopData.locations.map(geo => {
-				return {
-					lat: geo.coords.latitude,
-					lng: geo.coords.longitude
-				}
-			})
+			// stopData.locations = stopData.locations.map(geo => {
+			// 	return {
+			// 		lat: geo.coords.latitude,
+			// 		lng: geo.coords.longitude
+			// 	}
+			// })
 			return UserFactory.createGhost(userId, {
 	            locations: stopData.locations,
 	            previousTimes: [{
@@ -91,14 +97,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		// calculates total run distance of data.locations array
 		calcDistance: function(){
 			var totalDistance = 0;
-			var fakeLocation = { coords: 
-				{
-				latitude: 0,
-				longitude: 0
-			}
-			}
-
-			var distanceCalc = calcGeoDistance(data.locations[0], fakeLocation);
 			var dist = data.locations.reduce(function(prev, curr){
 				totalDistance += calcGeoDistance(prev, curr);
 				return curr;

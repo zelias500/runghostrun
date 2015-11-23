@@ -13,26 +13,40 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval) {
+app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory) {
     $scope.something = "Hello we are in Record!";
     $scope.counter = 0;
     $scope.lastLocIndex;
-    $scope.testing;
+    $scope.currentRun;
+    $scope.map;
     var interv;
 
     $scope.start = function () {
         // TODO: fix the need for $interval to update run data below
 
         LocationFactory.startNewRun();
-        $scope.testing = LocationFactory.getCurrentRunData();
-        $scope.testing.running = true;
+        $scope.currentRun = LocationFactory.getCurrentRunData();
+        $scope.map = MapFactory.newMap($scope.currentRun)
+        $scope.currentRun.running = true;
         $scope.lastInd = LocationFactory.getLocIndex();
 
-        // testing
+        // currentRun
         interv = $interval(function () {
-            $scope.testing = LocationFactory.getCurrentRunData();
+            $scope.currentRun = LocationFactory.getCurrentRunData();
+
+            if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
+                var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations-1];
+                $scope.map.wayPoints.push({
+                    location: {
+                        lat: Number(lastLocation.lat),
+                        lng: Number(lastLocation.lng)
+                    },
+                    stopover = false
+                })
+            }
+            
             $scope.lastInd = LocationFactory.getLocIndex();
-            // console.log($scope.testing);
+            // console.log($scope.currentRun);
             $scope.counter++;
         },1000)
     }
@@ -40,10 +54,10 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $interval.cancel(interv);
         interv = undefined;
         LocationFactory.stopRun(Session.user._id).then(function(stopData){
-                $scope.testing = stopData;
-                $scope.lastInd = $scope.testing.locations.length-1
-                $scope.testing.running = false;
+                $scope.currentRun = stopData;
+                $scope.lastInd = $scope.currentRun.locations.length-1
+                $scope.currentRun.running = false;
         });
-        console.log("STOPPED" , $scope.testing.locations[0])
+        console.log("STOPPED" , $scope.currentRun.locations[0])
     }
 });
