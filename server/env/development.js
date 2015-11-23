@@ -8,12 +8,12 @@ module.exports = {
   },
   "FACEBOOK": {
     "clientID": "435586523303337",
-    "clientSecret": "464a9c6de08b6232b8a0658876f395f6",
+    "clientSecret": "89d43b482037abbaab76680cd3983a5e",
     "callbackURL": "http://127.0.0.1:3000/auth/facebook/callback"
   },
   "GOOGLE": {
     "clientID": "663619654509-16r9dejevr0de7g4t64l0ucjov3rkprc.apps.googleusercontent.com",
-    "clientSecret": "Gm5wGd1k3MjKdXa2JvRL3AK6",
+    "clientSecret": "UGlzuBlj3iCtGpVAHSAB7I4N",
     "callbackURL": "http://127.0.0.1:3000/auth/google/callback"
   }
 };

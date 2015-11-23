@@ -1,17 +1,35 @@
-<ion-view view-title="Challenge">
+<ion-view view-title="Challenges Near You">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          {{ something }}
+      <ion-item ng-repeat="map in maps">
+
+        <div map-lazy-load="http://maps.google.com/maps/api/js"
+             map-lazy-load-params="{{map.googleMapsUrl}}"
+             style="position:relative"
+             ui-sref="newchallenge({id:map.id})">
+          <div style="position:absolute;top:0px;left:0px;z-index:1;background-color:rgba(0,0,0,0.8);width:100%;padding:5px">
+            <p style="color:orange">Challenge Title</p>
+            <p style="color:orange">User, if a challenge</p>
+          </div>
+          <div style="position:absolute;bottom:0px;left:0px;z-index:1;background-color:rgba(0,0,0,0.8);width:100%;padding:5px">
+            <p style="color:orange">If ran before, Your total time</p>
+            <p style="color:orange">If challenge, their total time</p>
+            <p style="color:orange">Total Distance</p>
+          </div>
+          <ng-map center="map.center" 
+              zoom="5" 
+              disable-default-u-i="true">
+            <directions
+              draggable="false"
+              travel-mode="{{ map.mode }}"
+              waypoints="{{ map.wayPoints }}"
+              origin="{{ map.center }}"
+              destination="{{ map.dest }}">
+            </directions>
+          </ng-map>
         </div>
-      </div>
-    </div>
+
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
