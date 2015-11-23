@@ -11,6 +11,9 @@
     <div class="list card">
       <div class="item item-divider">Recent Ghosts</div>
       <div class="item item-body">
+        <div ng-show="noGhost">
+          <span>You have no recent ghosts</span>
+        </div>
         <div>
           {{myRecentGhost}}
         </div>
@@ -20,17 +23,27 @@
       <div class="item item-divider">Statistics</div>
       <div class="item item-body">
         <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
+         <ul>
+           <li>Total Runs: {{myghosts.length}}</li>
+           <li>Average Pace:{{avgPace}}</li>
+           <li>Average Distance:{{avgDis}}</li>
+         </ul>
       </div>
     </div>
     <div class="list card">
-
+     <div class="item item-divider">Statistics</div>
       <div class="item item-body">
-        <div>
-         <button class="btn">Friends</button>
-         <button class="btn">Search Friends</button>
-        </div>
+          <div >
+            <!-- <button type="button" class="btn btn-primary">Friends</button> -->
+            <a href="#/tab/friends">Friends</a>
+          </div>
+          <div >
+            <ul>
+              <li ng-repeat="friend in friends">{{friend.email}}</li>
+            </ul>
+
+          </div>
+      </div>
       </div>
     </div>
   </ion-content>

@@ -21,6 +21,34 @@ app.factory('UserFactory', function ($http) {
 		return $http.get('/api/users/' + id + '/challenges')
 		.then(toData);
 	};
+	factory.fetchAvgPace = function(id){
+	     return this.fetchAllChallenges(id).then(function(Allghosts){
+				var totalDistance = Allghosts.reduce(function(curr, next){
+				return curr + next.totalDistance
+				},0);
+				var totalTime = Allghosts.reduce(function(curr, next){
+					if(next._id == singleUser._id){
+					return curr + next.totalTime}
+					else{
+					return curr + 0
+					}
+				},0 );
+
+   				var totalTimeinMin = Math.floor(totalTime/60);
+				var avgPace = Math.round(totalDistance/totalTimeinMin * 100)/100;
+				return avgPace;
+	     })
+	};
+	factory.fetchAvgDis = function(id){
+       return this.fetchAllChallenges(id).then(function(Allghosts){
+				var totalDistance = Allghosts.reduce(function(curr, next){
+				return curr + next.totalDistance
+				},0);
+
+				return Math.round(totalDistance/Allghosts.length *100)/100;
+       })
+	};
+
 	factory.fetchChallengeById = function (uid, cid) {
 		return $http.get('/api/users/' + uid + '/challenges/' + cid)
 		.then(toData);
@@ -41,6 +69,6 @@ app.factory('UserFactory', function ($http) {
 		return $http.delete('/api/users/' + id)
 		.then(toData);
 	};
-	
+
 	return factory;
 });
