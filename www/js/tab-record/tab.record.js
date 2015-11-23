@@ -39,7 +39,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
     $scope.stop = function () {
         $interval.cancel(interv);
         interv = undefined;
-        LocationFactory.stopRun("56533d71d8bb41aa16a5af82").then(function(stopData){
+        LocationFactory.stopRun(Session.user._id).then(function(stopData){
                 $scope.testing = stopData;
                 $scope.lastInd = $scope.testing.locations.length-1
                 $scope.testing.running = false;
