@@ -36,15 +36,16 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
 
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
                 var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations-1];
-                $scope.map.wayPoints.push({
+                $scope.map.wayPoints.push(
+                {
                     location: {
                         lat: Number(lastLocation.lat),
                         lng: Number(lastLocation.lng)
                     },
-                    stopover = false
+                    stopover: false
                 })
             }
-            
+
             $scope.lastInd = LocationFactory.getLocIndex();
             // console.log($scope.currentRun);
             $scope.counter++;
