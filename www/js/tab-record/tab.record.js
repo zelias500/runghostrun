@@ -39,18 +39,29 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
 
 
         interv = $interval(function () {
+            console.log("We are in the setInterval")
             $scope.currentRun = LocationFactory.getCurrentRunData();
-            
+            console.log("We are got the current data", $scope.currentRun);
+
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
+                console.log("We are inside the if statement");
+
                 var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations.length-1];
+                console.log("We are inside the if statement");
                 $scope.map.addWayPoint(
                 {
                     lat: Number(lastLocation.lat),
                     lng: Number(lastLocation.lng)
                 })
+                console.log("We added the waypoint", $scope.map.wayPoint);
+
                 gmap.fitBounds($scope.map.bounds);
+                console.log("We fit to the bounds");
+
                 var lastWayPointIndex = $scope.map.wayPoints.length - 1;
-                $scope.map.center = $scope.map.wayPoints[lastWayPointIndex]
+                console.log("We updated the index to the bounds");
+                // $scope.map.center = $scope.map.wayPoints[lastWayPointIndex]
+
             }
 
             $scope.lastInd = LocationFactory.getLocIndex();
