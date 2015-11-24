@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
 	$stateProvider.state('tab.profile', {
-        url: '/profile',
+        url: '/profile/:id',
         data: {
             authenticate: true
         },
@@ -11,14 +11,20 @@ app.config(function ($stateProvider) {
             }
         },
         resolve:{
-            singleUser: function(UserFactory, Session){
-                return UserFactory.fetchById(Session.user._id)
+            singleUser: function(UserFactory, $stateParams){
+                return UserFactory.fetchById($stateParams.id)
             },
-            Allghosts: function(UserFactory, Session){
-                return UserFactory.fetchAllChallenges(Session.user._id)
+            Allghosts: function(UserFactory, $stateParams){
+                return UserFactory.fetchAllChallenges($stateParams.id)
             },
-            Allfriends:function(UserFactory, Session){
-                return UserFactory.fetchAllFriends(Session.user._id)
+            Allfriends:function(UserFactory, $stateParams){
+                return UserFactory.fetchAllFriends($stateParams.id)
+            },
+            Averagepace: function(UserFactory, $stateParams){
+                return UserFactory.fetchAvgPace($stateParams.id)
+            },
+            Averagedis: function(UserFactory, $stateParams){
+                return UserFactory.fetchAvgDis($stateParams.id)
             }
         }
     })
@@ -32,12 +38,17 @@ app.config(function ($stateProvider) {
                 templateUrl:'js/tab-profile/friends/friends.html',
                 controller: 'FriendsCtrl'
             },
-
+        },
+        resolve:{
+            allUser: function(UserFactory){
+                return UserFactory.fetchAll()
+            }
         }
+
     })
 });
 
-app.controller('ProfileCtrl', function ($scope,singleUser,Allghosts, UserFactory, Allfriends) {
+app.controller('ProfileCtrl', function ($scope,singleUser,Allghosts, UserFactory, Allfriends,Averagepace,Averagedis) {
 
     $scope.friends = Allfriends.friends;
     $scope.me = singleUser
@@ -49,14 +60,13 @@ app.controller('ProfileCtrl', function ($scope,singleUser,Allghosts, UserFactory
 
     $scope.myRecentGhost = Allghosts[Allghosts.length-1]
 
-    $scope.avgPace = UserFactory.fetchAvgPace(singleUser._id)||''// unit: km/min
-    $scope.avgDis = UserFactory.fetchAvgDis(singleUser._id) || ''// unit: km
+    $scope.avgPace = Averagepace ||''// unit: km/min
+    $scope.avgDis = Averagedis || ''// unit: km
 
     if($scope.friends.length){
         $scope.friends = Allfriends.slice(0,3)
 
     }
-
      //console.log("single user", singleUser);
      //console.log("myghosts",  $scope.myghosts);
 });
