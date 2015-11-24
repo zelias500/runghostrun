@@ -20,11 +20,11 @@ app.factory('MapFactory', function () {
 				this.id = ghost._id;
 				this.ghost = ghost;
 				this.wayPoints = makeWayPoints(ghost);
-				this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
+				// this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
 			}
 			else {
 				this.wayPoints = [];
-				this.center = {lat:40.704651, lng: -74.009260};
+				// this.center = {lat:40.704651, lng: -74.009260};
 			}
 			this.bounds = new google.maps.LatLngBounds();
 			this.makePolyline();

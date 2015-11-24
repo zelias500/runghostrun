@@ -53,7 +53,8 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                     lat: Number(lastLocation.lat),
                     lng: Number(lastLocation.lng)
                 })
-                console.log("We added the waypoint", $scope.map.wayPoint);
+                console.log("We added the waypoint", $scope.map.wayPoints);
+                console.log("The bounds are", $scope.map.bounds);
 
                 gmap.fitBounds($scope.map.bounds);
                 console.log("We fit to the bounds");
