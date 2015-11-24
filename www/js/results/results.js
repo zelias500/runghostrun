@@ -18,7 +18,7 @@ app.controller('ResultsCtrl', function ($scope, LocationFactory, $stateParams, M
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     })
-
+    
     if ($scope.map) {
         $scope.map.makePolyline();
         $scope.map.runPath.setMap(gmap);
