@@ -69,7 +69,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
             $scope.lastInd = LocationFactory.getLocIndex();
             $scope.counter++;
             $scope.map.makePolyline();
-            $scope.map.runPath.setMap(gmap);
+            $scope.map.runPath.setMap($scope.gmap);
 
         },1000)
     }
