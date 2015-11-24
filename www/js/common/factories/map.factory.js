@@ -23,11 +23,7 @@ app.factory('MapFactory', function () {
 				this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
 			}
 			else {
-				this.wayPoints = [            
-					// {lat: 40.704570, lng: -74.009413}, 
-		   //          {lat: 40.780168, lng:-73.975204}, 
-		   //          {lat: 40.752981,lng:-73.940470}
-            	];
+				this.wayPoints = [];
 				this.center = {lat:40.704651, lng: -74.009260};
 			}
 			this.makePolyline();
