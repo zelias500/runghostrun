@@ -20,11 +20,9 @@ app.factory('MapFactory', function () {
 				this.id = ghost._id;
 				this.ghost = ghost;
 				this.wayPoints = makeWayPoints(ghost);
-				// this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
 			}
 			else {
 				this.wayPoints = [];
-				// this.center = {lat:40.704651, lng: -74.009260};
 			}
 			this.bounds = new google.maps.LatLngBounds();
 			this.makePolyline();
@@ -36,8 +34,6 @@ app.factory('MapFactory', function () {
 		// waypoints is an array of location object objects with lat and lng properties
 		Map.prototype.addWayPoint = function(location) {
 			var position = new google.maps.LatLng(location.lat, location.lng);
-			console.log("inside addWayPoint position lat",position.lat())
-			console.log("inside addWayPoint position lng",position.lng())
 			this.bounds.extend(position);
 			this.wayPoints.push(location);
 		}
