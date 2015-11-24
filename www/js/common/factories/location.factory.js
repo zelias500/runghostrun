@@ -22,7 +22,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	}
 
 	var options = {
-		enableHighAccuracy: false,
+		enableHighAccuracy: true,
 		timeout: 5000
 	};
 

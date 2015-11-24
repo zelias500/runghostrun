@@ -34,6 +34,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
             center: $scope.map.center,
             mapTypeId: google.maps.MapTypeId.TERRAIN
         })
+
         $scope.map.runPath.setMap(gmap);
 
 
@@ -47,6 +48,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                     lat: Number(lastLocation.lat),
                     lng: Number(lastLocation.lng)
                 })
+                gmap.fitBounds($scope.map.bounds);
                 var lastWayPointIndex = $scope.map.wayPoints.length - 1;
                 $scope.map.center = $scope.map.wayPoints[lastWayPointIndex]
             }
