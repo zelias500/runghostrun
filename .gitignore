@@ -12,4 +12,3 @@ public
 coverage
 server/env
 server/env/dev.js
-server/env/prod.js
