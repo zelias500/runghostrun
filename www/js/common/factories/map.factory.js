@@ -35,7 +35,9 @@ app.factory('MapFactory', function () {
 
 		// waypoints is an array of location object objects with lat and lng properties
 		Map.prototype.addWayPoint = function(location) {
-			var position = new google.maps.LatLng(location[0], location[1])
+			var position = new google.maps.LatLng(location.lat, location.lng);
+			console.log("inside addWayPoint position lat",position.lat())
+			console.log("inside addWayPoint position lng",position.lng())
 			this.bounds.extend(position);
 			this.wayPoints.push(location);
 		}

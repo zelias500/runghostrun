@@ -19,6 +19,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
     $scope.lastLocIndex;
     $scope.currentRun;
     var interv;
+    $scope.gmap;
 
     $scope.start = function () {
         // TODO: fix the need for $interval to update run data below
@@ -29,13 +30,13 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.currentRun.running = true;
         $scope.lastInd = LocationFactory.getLocIndex();
 
-        var gmap = new google.maps.Map(document.getElementById("RunMap"), {
+        $scope.gmap = new google.maps.Map(document.getElementById("RunMap"), {
             zoom: 12,
             center: $scope.map.center,
             mapTypeId: google.maps.MapTypeId.TERRAIN
         })
 
-        $scope.map.runPath.setMap(gmap);
+        $scope.map.runPath.setMap($scope.gmap);
 
 
         interv = $interval(function () {
@@ -56,7 +57,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                 console.log("We added the waypoint", $scope.map.wayPoints);
                 console.log("The bounds are", $scope.map.bounds);
 
-                gmap.fitBounds($scope.map.bounds);
+                $scope.gmap.fitBounds($scope.map.bounds);
                 console.log("We fit to the bounds");
 
                 var lastWayPointIndex = $scope.map.wayPoints.length - 1;
