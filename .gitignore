@@ -11,5 +11,5 @@ public
 .DS_Store
 coverage
 server/env
-server/env/development.js
-server/env/production.js
+server/env/dev.js
+server/env/prod.js
