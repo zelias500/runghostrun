@@ -57,6 +57,14 @@ app.factory('UserFactory', function ($http) {
 		return $http.post('/api/users', data)
 		.then(toData);
 	};
+	factory.createFriend = function(userid, friendid){
+		return $http.post('/api/users/' + userid +"/addFriend", {friendid})
+		.then(toData)
+		.then(function(user){
+			console.log(user)
+		})
+
+	}
 	factory.createGhost = function (id, data) {
 		return $http.post('/api/users/' + id + '/ghost', data)
 		.then(toData);

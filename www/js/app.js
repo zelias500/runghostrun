@@ -25,6 +25,7 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
           // org.apache.cordova.statusbar required
           StatusBar.styleDefault();
         }
+
     });
 
     // The given state requires an authenticated user.
@@ -56,6 +57,7 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
             // (the second time, AuthService.isAuthenticated() will work)
             // otherwise, if no user is logged in, go to "login" state.
             if (user) {
+                $rootScope.userId = Session.user._id;
                 $state.go(toState.name, toParams);
             } else {
                 $state.go('login');
