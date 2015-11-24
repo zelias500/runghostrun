@@ -47,9 +47,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 					lng: pos.coords.longitude,
 					timestamp: pos.timestamp
 				}
-				console.log("Before data.locations.push");
 				data.locations.push(pos);
-				console.log("After data.locations.push");
 				return data;
 			}, errorHandler, options)
 		},
