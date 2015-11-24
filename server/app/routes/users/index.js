@@ -75,10 +75,12 @@ router.put('/:id', function(req, res, next){
 
 // PUT user friend list
 
-router.put('/:id/addFriend', function(req, res, next){
-	req.targetUser.friends.push(req.body);
-	req.targetUser.save.then(function(update){
-		res.status(201).json(update)
+router.post('/:id/addFriend', function(req, res, next){
+	if (req.targetUser.friends.indexOf(req.body) == -1){
+		req.targetUser.friends.push({_id: req.body.friendid});
+	}
+	req.targetUser.save().then(function(user){
+		res.status(201).json(user)
 	}).then(null, next)
 })
 

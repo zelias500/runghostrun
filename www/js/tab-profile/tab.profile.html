@@ -7,7 +7,11 @@
           {{me.email}}
           <br/>
           <br/>
-          <div ng-click="addToFd(me._id)"><img class="add-friend" ng-src="img/add_friend.png"></div>
+          <div ng-show='notMe()'>
+            <div ng-click="addToFd(me._id)"><img class="add-friend" ng-src="img/add_friend.png">
+              <span>{{successMessage}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -28,21 +32,21 @@
         <div>
          <ul>
            <li>Total Runs: {{myghosts.length}}</li>
-           <li>Average Pace:{{avgPace}}</li>
-           <li>Average Distance:{{avgDis}}</li>
+           <li>Average Pace:{{avgPace}} km/hr</li>
+           <li>Average Distance:{{avgDis}} km per run</li>
          </ul>
       </div>
     </div>
     <div class="list card">
-     <div class="item item-divider">Statistics</div>
+     <div class="item item-divider">Following</div>
       <div class="item item-body">
           <div >
             <!-- <button type="button" class="btn btn-primary">Friends</button> -->
-            <a href="#/tab/friends">Friends</a>
+            <a href="#/tab/friends">Find Friends</a>
           </div>
           <div >
             <ul>
-              <li ng-repeat="friend in friends">{{friend.email}}</li>
+              <li ng-repeat="friend in friends"><a href='#/tab/profile/{{friend._id}}'>{{friend.email}}</a></li>
             </ul>
 
           </div>

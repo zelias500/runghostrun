@@ -24,14 +24,15 @@ app.factory('UserFactory', function ($http) {
 	factory.fetchAvgPace = function(id){
 	     return this.fetchAllChallenges(id).then(function(Allghosts){
 				var totalDistance = Allghosts.reduce(function(curr, next){
-				return curr + next.totalDistance
+					return curr + next.totalDistance
 				},0);
 				var totalTime = Allghosts.reduce(function(curr, next){
-					if(next._id == singleUser._id){
-					return curr + next.totalTime}
-					else{
-					return curr + 0
-					}
+					var matches = next.previousTimes.filter(function(time){
+						return time.challenger = id;
+					})
+					return curr + matches.reduce(function(prev, curr){
+						return prev += curr.time;
+					}, 0)
 				},0 );
 
    				var totalTimeinMin = Math.floor(totalTime/60);
@@ -60,10 +61,6 @@ app.factory('UserFactory', function ($http) {
 	factory.createFriend = function(userid, friendid){
 		return $http.post('/api/users/' + userid +"/addFriend", {friendid})
 		.then(toData)
-		.then(function(user){
-			console.log(user)
-		})
-
 	}
 	factory.createGhost = function (id, data) {
 		return $http.post('/api/users/' + id + '/ghost', data)
