@@ -27,10 +27,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	};
 
 	var data = {
-		locations: [{
-			lat: 40.70,
-			lng: -74.00
-				}],
+		locations: [],
 		distance: 0,
 		time: 0,
 		speedPoints: []
@@ -45,8 +42,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
 			watchId = navigator.geolocation.watchPosition(function(pos){
-				console.log("POSITION", pos);
-
 				pos = {
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude,
