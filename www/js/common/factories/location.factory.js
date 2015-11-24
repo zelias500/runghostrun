@@ -22,7 +22,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	}
 
 	var options = {
-		enableHighAccuracy: false,
+		enableHighAccuracy: true,
 		timeout: 5000
 	};
 
@@ -33,21 +33,20 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		speedPoints: []
 	}
 
+
 	var watchId = null;
+	var stopData;
 
 	var theFactory = {
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
 			watchId = navigator.geolocation.watchPosition(function(pos){
-				console.log("POSITION", pos);
-
 				pos = {
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude,
 					timestamp: pos.timestamp
 				}
-
 				data.locations.push(pos);
 				return data;
 			}, errorHandler, options)
@@ -60,7 +59,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
 			theFactory.calcTime(); // also calls calcDistance in function body
-			var stopData = data;
+			stopData = data;
 			data = {
 				locations: [],
 				distance: 0,
@@ -84,6 +83,10 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 
 		getCurrentRunData: function(){
 			return data;
+		},		
+
+		getStopData: function(){
+			return stopData;
 		},
 
 		// calculates total run distance of data.locations array

@@ -1,6 +1,12 @@
 app.factory('MapFactory', function () {
 	var factory = {};
 
+	var ourMap = undefined;
+
+	factory.getMap = function() {
+		return ourMap;
+	}
+
 	// returns a new map instance from the entered ghost data
 	factory.newMap = function (ghost) {
 
@@ -20,12 +26,11 @@ app.factory('MapFactory', function () {
 				this.id = ghost._id;
 				this.ghost = ghost;
 				this.wayPoints = makeWayPoints(ghost);
-				this.center = {lat:this.wayPoints[0].lat, lng: this.wayPoints[0].lng};
 			}
 			else {
 				this.wayPoints = [];
-				this.center = {lat:40.704651, lng: -74.009260};
 			}
+			this.bounds = new google.maps.LatLngBounds();
 			this.makePolyline();
 			this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
 			this.mode = 'WALKING';
@@ -34,6 +39,8 @@ app.factory('MapFactory', function () {
 
 		// waypoints is an array of location object objects with lat and lng properties
 		Map.prototype.addWayPoint = function(location) {
+			var position = new google.maps.LatLng(location.lat, location.lng);
+			this.bounds.extend(position);
 			this.wayPoints.push(location);
 		}
 
@@ -46,8 +53,8 @@ app.factory('MapFactory', function () {
 			    strokeWeight: 2
 			});
 		}
-
-		return new Map(ghost);
+		ourMap = new Map(ghost);
+		return ourMap;
 	}
 
 	return factory;
