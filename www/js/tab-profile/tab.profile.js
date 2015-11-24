@@ -1,6 +1,7 @@
 app.config(function ($stateProvider) {
 	$stateProvider.state('tab.profile', {
-        url: '/profile',
+        url: '/profile/:id',
+        cache:false,
         data: {
             authenticate: true
         },
@@ -11,36 +12,39 @@ app.config(function ($stateProvider) {
             }
         },
         resolve:{
-            singleUser: function(UserFactory, Session){
-                return UserFactory.fetchById(Session.user._id)
+            singleUser: function(UserFactory, $stateParams){
+                return UserFactory.fetchById($stateParams.id)
             },
-            Allghosts: function(UserFactory, Session){
-                return UserFactory.fetchAllChallenges(Session.user._id)
+            Allghosts: function(UserFactory, $stateParams){
+                return UserFactory.fetchAllChallenges($stateParams.id)
             },
-            Allfriends:function(UserFactory, Session){
-                return UserFactory.fetchAllFriends(Session.user._id)
+            Allfriends:function(UserFactory, $stateParams){
+                return UserFactory.fetchAllFriends($stateParams.id)
+            },
+            Averagepace: function(UserFactory, $stateParams){
+                return UserFactory.fetchAvgPace($stateParams.id)
+            },
+            Averagedis: function(UserFactory, $stateParams){
+                return UserFactory.fetchAvgDis($stateParams.id)
             }
-        }
-    })
-    .state('tab.friend', {
-        url:'/friends',
-        data:{
-            authenticate:true
-        },
-        views:{
-            'tab-profile': {
-                templateUrl:'js/tab-profile/friends/friends.html',
-                controller: 'FriendsCtrl'
-            },
-
         }
     })
 });
 
-app.controller('ProfileCtrl', function ($scope,singleUser,Allghosts, UserFactory, Allfriends) {
+app.controller('ProfileCtrl', function ($scope,singleUser,Allghosts, UserFactory, Allfriends,Averagepace,Averagedis, $state) {
+    $scope.successMessage;
+
+    $scope.$on('$ionicView.enter', function( scopes, states){
+        if (states.stateParams.id != $scope.userId && states.direction == 'swap'){
+            $state.go($state.current, {id: $scope.userId}, {reload: true})
+        }
+    })
 
     $scope.friends = Allfriends.friends;
     $scope.me = singleUser
+    $scope.notMe = function(){
+        return !(singleUser._id == $scope.userId)
+    }
 
     $scope.myghosts = Allghosts
 
@@ -49,14 +53,19 @@ app.controller('ProfileCtrl', function ($scope,singleUser,Allghosts, UserFactory
 
     $scope.myRecentGhost = Allghosts[Allghosts.length-1]
 
-    $scope.avgPace = UserFactory.fetchAvgPace(singleUser._id)||''// unit: km/min
-    $scope.avgDis = UserFactory.fetchAvgDis(singleUser._id) || ''// unit: km
+
+    $scope.avgPace = Math.floor(Averagepace*60) || 0// unit: km/min
+    $scope.avgDis = Math.floor(Averagedis) || 0// unit: km
 
     if($scope.friends.length){
-        $scope.friends = Allfriends.slice(0,3)
-
+        $scope.friends = Allfriends.friends.slice(0,3)
+        console.log('all friends', Allfriends.friends)
     }
 
-     //console.log("single user", singleUser);
-     //console.log("myghosts",  $scope.myghosts);
+    $scope.addToFd = function(){
+        return UserFactory.createFriend($scope.userId, $scope.me._id).then(function(){
+            $scope.successMessage = $scope.me.email + ' added to your friends list!'
+        })
+    }
+
 });
