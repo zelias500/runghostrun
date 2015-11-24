@@ -49,8 +49,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				}
 
 				data.locations.push(pos);
-				console.log("position after change", pos);
-				console.log("DATA", data);
 				return data;
 			}, errorHandler, options)
 		},
@@ -70,12 +68,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				speedPoints: []
 			}
 
-			// stopData.locations = stopData.locations.map(geo => {
-			// 	return {
-			// 		lat: geo.coords.latitude,
-			// 		lng: geo.coords.longitude
-			// 	}
-			// })
 			return UserFactory.createGhost(userId, {
 	            locations: stopData.locations,
 	            previousTimes: [{
@@ -85,7 +77,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	            totalDistance: stopData.distance,
 	            owner: userId
 	        }).then(function(user){
-	        	console.log('STOPDATA', stopData);
 	        	return stopData;
 	        }, errorHandler);
 
