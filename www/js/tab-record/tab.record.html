@@ -15,15 +15,15 @@
           <a ng-click="start()" class="button">Start</a>
           <a ng-click="stop()" class="button">Stop</a>
         </div>
+        <div id="RunMap" style="height:200px;width:350px"> </div>
         <div>
           <h2>index {{lastInd}}</h2>
-          <h2>current timestamp (or final time): {{testing.locations[lastInd].timestamp || testing.time}}</h2>
-          <h2>current lat: {{testing.locations[lastInd].coords.latitude || testing.locations[lastInd].lat}}</h2>
-          <h2>current long: {{testing.locations[lastInd].coords.longitude || testing.locations[lastInd].lng}}</h2>
-          <h2>number of locations: {{testing.lastInd+1}}</h2>
+          <h2>current timestamp (or final time): {{currentRun.locations[lastInd].timestamp || currentRun.time}}</h2>
+          <h2>current lat: {{currentRun.locations[lastInd].coords.latitude || currentRun.locations[lastInd].lat}}</h2>
+          <h2>current long: {{currentRun.locations[lastInd].coords.longitude || currentRun.locations[lastInd].lng}}</h2>
+          <h2>number of locations: {{currentRun.lastInd+1}}</h2>
           <h2>{{counter}}</h2>
-          <h2>Are we running? {{testing.running}}</h2>
-          <div ng-repeat="loc in testing.locations">location: {{loc.coords.latitude || loc}}</div>
+          <h2>Are we running? {{currentRun.running}}</h2>
         </div>
       </div>
     </div>
