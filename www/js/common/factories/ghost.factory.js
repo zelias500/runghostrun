@@ -13,6 +13,7 @@ app.factory('GhostFactory', function ($http) {
 		return $http.get('/api/ghosts/' + id)
 		.then(toData);
 	};
+
 	factory.createNewTime = function (data) {
 		return $http.post('/api/ghosts', data)
 		.then(toData);

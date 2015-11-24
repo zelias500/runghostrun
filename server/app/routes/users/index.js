@@ -38,15 +38,21 @@ router.get('/:id', function(req,res, next){
 // GET user friends by id
 router.get('/:id/friends', function(req,res, next){
 	 req.targetUser.populate('friends').execPopulate().then(function(fd){
-         res.status(200).json(fd)
+        res.status(200).json(fd)
 	 }).then(null, next);
 });
 
 // GET user challenges by id
 router.get('/:id/challenges', function(req, res, next){
-    Ghost.getChallenger(req.params.id).then(function(challenges){
-    	 res.status(200).json(challenges)
-    }).then(null, next);
+	//I can only get all myown challenges now
+     User.findById(req.params.id).populate('ghosts').then(function(challenges){
+          var allGhost = challenges.ghosts
+          res.status(200).json(allGhost)
+     })
+
+    // Ghost.getChallenger(req.params.id).then(function(challenges){
+    // 	 res.status(200).json(challenges)
+    // }).then(null, next);
 });
 
 // GET user challenges by challenge id
