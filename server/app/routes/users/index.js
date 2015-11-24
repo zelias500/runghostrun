@@ -73,6 +73,15 @@ router.put('/:id', function(req, res, next){
 
 });
 
+// PUT user friend list
+
+router.put('/:id/addFriend', function(req, res, next){
+	req.targetUser.friends.push(req.body);
+	req.targetUser.save.then(function(update){
+		res.status(201).json(update)
+	}).then(null, next)
+})
+
 // POST new ghost
 router.post('/:id/ghost', function(req,res, next){
 	req.targetUser.addGhost(req.body).then(function(update){
