@@ -37,35 +37,9 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.map.runPath.setMap(gmap);
 
 
-    //         $scope.maps = ghosts.map(ghost => MapFactory.newMap(ghost));
-    
-    // // function initialize () {
-    // setTimeout(function () {
-    //     $scope.maps.forEach(map => {
-    //         var gmap = new google.maps.Map(document.getElementById(map.id), {
-    //             zoom: 12,
-    //             center: map.center,
-    //             mapTypeId: google.maps.MapTypeId.TERRAIN
-    //         })
-            // map.runPath.setMap(gmap);
-    //     });
-
-    // },0)
-
-        // currentRun
-
-
         interv = $interval(function () {
             $scope.currentRun = LocationFactory.getCurrentRunData();
-            console.log("Current run",$scope.currentRun);
-            console.log("Our map",$scope.map);
-            // if ($scope.map.wayPoints.length === 3){
-            //     $scope.map.addWayPoint({
-            //         lat: 40.704570, 
-            //         lng: -74.009413
-            //     })
-                
-            // }
+            
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
                 var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations.length-1];
                 $scope.map.addWayPoint(
@@ -78,7 +52,6 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
             }
 
             $scope.lastInd = LocationFactory.getLocIndex();
-            // console.log($scope.currentRun);
             $scope.counter++;
             $scope.map.makePolyline();
             $scope.map.runPath.setMap(gmap);
@@ -93,6 +66,5 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                 $scope.lastInd = $scope.currentRun.locations.length-1
                 $scope.currentRun.running = false;
         });
-        console.log("STOPPED" , $scope.currentRun.locations[0])
     }
 });
