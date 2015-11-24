@@ -27,13 +27,18 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	};
 
 	var data = {
-		locations: [],
+		locations: [{
+			lat: 40.70,
+			lng: -74.00
+				}],
 		distance: 0,
 		time: 0,
 		speedPoints: []
 	}
 
+
 	var watchId = null;
+	var stopData;
 
 	var theFactory = {
 
@@ -59,7 +64,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
 			theFactory.calcTime(); // also calls calcDistance in function body
-			var stopData = data;
+			stopData = data;
 			data = {
 				locations: [],
 				distance: 0,
@@ -83,6 +88,10 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 
 		getCurrentRunData: function(){
 			return data;
+		},		
+
+		getStopData: function(){
+			return stopData;
 		},
 
 		// calculates total run distance of data.locations array

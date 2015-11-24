@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory) {
+app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state) {
     $scope.something = "Hello we are in Record!";
     $scope.counter = 0;
     $scope.lastLocIndex;
@@ -31,12 +31,10 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
 
         var gmap = new google.maps.Map(document.getElementById("RunMap"), {
             zoom: 12,
-            center: $scope.map.center,
             mapTypeId: google.maps.MapTypeId.TERRAIN
         })
 
         $scope.map.runPath.setMap(gmap);
-
 
         interv = $interval(function () {
             $scope.currentRun = LocationFactory.getCurrentRunData();
@@ -65,6 +63,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                 $scope.currentRun = stopData;
                 $scope.lastInd = $scope.currentRun.locations.length-1
                 $scope.currentRun.running = false;
+                $state.go("results", {map: $scope.map});
         });
     }
 });
