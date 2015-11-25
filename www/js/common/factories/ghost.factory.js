@@ -9,6 +9,7 @@ app.factory('GhostFactory', function ($http) {
 		return $http.get('/api/ghosts')
 		.then(toData);
 	};
+
 	factory.fetchById = function (id) {
 		return $http.get('/api/ghosts/' + id)
 		.then(toData);
@@ -26,6 +27,9 @@ app.factory('GhostFactory', function ($http) {
 		return $http.delete('/api/ghosts/' + id)
 		.then(toData);
 	};
+
+
+	
 
 	return factory;
 });

@@ -26,7 +26,6 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         LocationFactory.startNewRun();
         $scope.currentRun = LocationFactory.getCurrentRunData();
         $scope.map = MapFactory.newMap()
-        $scope.currentRun.running = true;
         $scope.lastInd = LocationFactory.getLocIndex();
 
         var gmap = new google.maps.Map(document.getElementById("RunMap"), {
@@ -37,6 +36,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.map.runPath.setMap(gmap);
 
         interv = $interval(function () {
+            $scope.currentRun.time++;
             $scope.currentRun = LocationFactory.getCurrentRunData();
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
                 var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations.length-1];
@@ -48,22 +48,20 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
                 gmap.fitBounds($scope.map.bounds);
                 var lastWayPointIndex = $scope.map.wayPoints.length - 1;
             }
+            $scope.currentRun.avgPace = LocationFactory.getAvgSpeed();
 
             $scope.lastInd = LocationFactory.getLocIndex();
-            $scope.counter++;
             $scope.map.makePolyline();
             $scope.map.runPath.setMap(gmap);
 
         },1000)
     }
     $scope.stop = function () {
+
         $interval.cancel(interv);
         interv = undefined;
-        LocationFactory.stopRun(Session.user._id).then(function(stopData){
-                $scope.currentRun = stopData;
-                $scope.lastInd = $scope.currentRun.locations.length-1
-                $scope.currentRun.running = false;
-                $state.go("results", {map: $scope.map});
-        });
+        $scope.currentRun = LocationFactory.stopRun(Session.user._id)
+        $scope.lastInd = $scope.currentRun.locations.length-1       
+        $state.go("results", {map: $scope.map});
     }
 });

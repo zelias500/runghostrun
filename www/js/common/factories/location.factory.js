@@ -22,12 +22,17 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	}
 
 	var options = {
-		enableHighAccuracy: true,
+		enableHighAccuracy: false,
 		timeout: 5000
 	};
 
 	var data = {
-		locations: [],
+		locations: [
+					{
+					lat: 40.7062066,
+					lng: -74.0100598,
+					timestamp: 1448466429668
+				}],
 		distance: 0,
 		time: 0,
 		speedPoints: []
@@ -48,6 +53,10 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 					timestamp: pos.timestamp
 				}
 				data.locations.push(pos);
+				var locationsLength = data.locations.length;
+				if (data.locations.length != -1){
+					data.distance+= calcGeoDistance(data.locations[locationsLength-2],data.locations[locationsLength-1]);
+				}
 				return data;
 			}, errorHandler, options)
 		},
@@ -58,7 +67,8 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
-			theFactory.calcTime(); // also calls calcDistance in function body
+			// theFactory.calcTime(); // also calls calcDistance in function body
+			// data.avgPace = theFactory.getAvgSpeed();
 			stopData = data;
 			data = {
 				locations: [],
@@ -66,7 +76,23 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				time: 0,
 				speedPoints: []
 			}
+			return stopData;
 
+	// return UserFactory.createGhost(userId, {
+	  //           locations: stopData.locations,
+	  //           previousTimes: [{
+	  //               time: stopData.time,
+	  //               challenger: userId
+	  //           }],
+	  //           totalDistance: stopData.distance,
+	  //           owner: userId
+	  //       }).then(function(user){
+	  //       	return stopData;
+	  //       }, errorHandler);
+
+		},
+
+		saveRun: function(userId, stopData){
 			return UserFactory.createGhost(userId, {
 	            locations: stopData.locations,
 	            previousTimes: [{
@@ -76,8 +102,9 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	            totalDistance: stopData.distance,
 	            owner: userId
 	        }).then(function(user){
-	        	return stopData;
+	        	return user;
 	        }, errorHandler);
+
 
 		},
 
@@ -90,23 +117,23 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		},
 
 		// calculates total run distance of data.locations array
-		calcDistance: function(){
-			var totalDistance = 0;
-			var dist = data.locations.reduce(function(prev, curr){
-				totalDistance += calcGeoDistance(prev, curr);
-				return curr;
-			})
-			data.distance = totalDistance;
-			return data;			
-		},
+		// calcDistance: function(){
+		// 	var totalDistance = 0;
+		// 	var dist = data.locations.reduce(function(prev, curr){
+		// 		totalDistance += calcGeoDistance(prev, curr);
+		// 		return curr;
+		// 	})
+		// 	data.distance = totalDistance;
+		// 	return data;			
+		// },
 
 		// 	calculates total time of the run
-		calcTime: function(){
-			if (data.distance == 0) theFactory.calcDistance();
-			var totalTime = calcPointTime(data.locations[0], data.locations[data.locations.length-1]);
-			data.time = totalTime;
-			return data;
-		},
+		// calcTime: function(){
+		// 	if (data.distance == 0) theFactory.calcDistance();
+		// 	var totalTime = calcPointTime(data.locations[0], data.locations[data.locations.length-1]);
+		// 	data.time = totalTime;
+		// 	return data;
+		// },
 
 		// fills data.speedPoints with the velocity between two points in data.locations
 		calcSpeed: function(){
@@ -121,14 +148,18 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 
 		// speed conversions
 		getAvgSpeed: function(inMiles){
-			var toReturn = (data.distance/1000)/(data.time/1000/3600); // convert to km/hr
+			var toReturn = (data.distance/1000)/(data.time/3600); // convert to km/hr
 			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
- 			return toReturn;
+ 			return Number(toReturn.toFixed(2));
 		},
 
 		// FOR TESTING PURPOSES ONLY
 		addLocationPoint: function(point){
 			data.locations.push(point);
+		},
+
+		emptyStopData: function(){
+			stopData = undefined;
 		}
 	}
 
