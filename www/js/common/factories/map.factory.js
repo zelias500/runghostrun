@@ -2,11 +2,11 @@
 app.factory('MapFactory', function () {
 	var factory = {};
 
-	// var ourMap = undefined;
+	var ourMap = undefined;
 
-	// factory.getMap = function() {
-	// 	return ourMap;
-	// }
+	factory.getMap = function() {
+		return ourMap;
+	}
 
 	// returns a new map instance from the entered ghost data
 	factory.newMap = function (ghost) {
@@ -55,8 +55,11 @@ app.factory('MapFactory', function () {
 			    strokeWeight: 2
 			});
 		}
-		return new Map(ghost);
-		// return ourMap;way
+		if (ghost) return new Map(ghost);
+		else {
+			ourMap = new Map(ghost);
+			return ourMap;
+		}
 	}
 
 	return factory;
