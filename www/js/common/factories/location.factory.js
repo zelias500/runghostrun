@@ -27,12 +27,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	};
 
 	var data = {
-		locations: [
-					{
-					lat: 40.7062066,
-					lng: -74.0100598,
-					timestamp: 1448466429668
-				}],
+		locations: [],
 		distance: 0,
 		time: 0,
 		speedPoints: []
@@ -67,8 +62,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
-			// theFactory.calcTime(); // also calls calcDistance in function body
-			// data.avgPace = theFactory.getAvgSpeed();
 			stopData = data;
 			data = {
 				locations: [],
@@ -77,35 +70,20 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				speedPoints: []
 			}
 			return stopData;
-
-	// return UserFactory.createGhost(userId, {
-	  //           locations: stopData.locations,
-	  //           previousTimes: [{
-	  //               time: stopData.time,
-	  //               challenger: userId
-	  //           }],
-	  //           totalDistance: stopData.distance,
-	  //           owner: userId
-	  //       }).then(function(user){
-	  //       	return stopData;
-	  //       }, errorHandler);
-
 		},
 
 		saveRun: function(userId, stopData){
 			return UserFactory.createGhost(userId, {
-	            locations: stopData.locations,
-	            previousTimes: [{
-	                time: stopData.time,
-	                challenger: userId
-	            }],
-	            totalDistance: stopData.distance,
-	            owner: userId
-	        }).then(function(user){
-	        	return user;
-	        }, errorHandler);
-
-
+        	            locations: stopData.locations,
+        	            previousTimes: [{
+        	                time: stopData.time,
+        	                challenger: userId
+        	            }],
+        	            totalDistance: stopData.distance,
+        	            owner: userId
+        	        }).then(function(user){
+        	        	return user;
+        	        }, errorHandler);
 		},
 
 		getCurrentRunData: function(){
@@ -115,25 +93,6 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		getStopData: function(){
 			return stopData;
 		},
-
-		// calculates total run distance of data.locations array
-		// calcDistance: function(){
-		// 	var totalDistance = 0;
-		// 	var dist = data.locations.reduce(function(prev, curr){
-		// 		totalDistance += calcGeoDistance(prev, curr);
-		// 		return curr;
-		// 	})
-		// 	data.distance = totalDistance;
-		// 	return data;			
-		// },
-
-		// 	calculates total time of the run
-		// calcTime: function(){
-		// 	if (data.distance == 0) theFactory.calcDistance();
-		// 	var totalTime = calcPointTime(data.locations[0], data.locations[data.locations.length-1]);
-		// 	data.time = totalTime;
-		// 	return data;
-		// },
 
 		// fills data.speedPoints with the velocity between two points in data.locations
 		calcSpeed: function(){
