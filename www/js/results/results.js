@@ -12,6 +12,26 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory) {
     $scope.stopData = LocationFactory.getStopData();
     $scope.map = MapFactory.getMap();
+    $scope.priceSlider = 150;
+    $scope.rangeValue = "Public";
+    var privacySettingDiv = document.getElementById("privacySetting");
+    console.log(privacySettingDiv.className);
+
+
+    $scope.checkTick = function (myRange) {
+        if (myRange == 0) {
+            $scope.rangeValue = "Public";
+            privacySettingDiv.className = "button button-balanced  ng-binding"
+        }
+        if (myRange == 1) {
+            $scope.rangeValue = "Friends";
+            privacySettingDiv.className = "button button-positive ng-binding"
+        }
+        if (myRange == 2) {
+            $scope.rangeValue = "Private";
+            privacySettingDiv.className = "button button-energized ng-binding"
+        }
+    };
 
     var gmap = new google.maps.Map(document.getElementById("RanMap"), {
         zoom: 12,
@@ -38,5 +58,13 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
         //MapFactory.emptyMapData();
         $state.go('tab.home');
     }
+
+    $scope.privacyOptions = {
+        value: 1,
+        options: {
+            stepsArray: 'Public,Friends,Private'.split(',')
+        }
+    };
+
 
 });

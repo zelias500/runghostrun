@@ -14,8 +14,6 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state) {
-    $scope.something = "Hello we are in Record!";
-    $scope.counter = 0;
     $scope.lastLocIndex;
     $scope.currentRun;
     var interv;
