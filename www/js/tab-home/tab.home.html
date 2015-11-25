@@ -1,39 +1,24 @@
 <ion-view view-title="Welcome, {{ user.email }}!">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-divider">Your Recent Ghosts</div>
       <div class="item item-body">
-
-        <div map-lazy-load="http://maps.google.com/maps/api/js"
-             map-lazy-load-params="{{googleMapsUrl}}">
-          <ng-map center="center" 
-              zoom="5" 
-              disable-default-u-i="true">
-            <directions
-              draggable="{{ draggable }}"
-              travel-mode="{{ mode }}"
-              waypoints="{{ wayPoints }}"
-              origin="{{ center }}"
-              destination="{{ dest }}">
-            </directions>
-          </ng-map>
-        </div>
-
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
+        <p ng-show="{{ghosts.length === 0}}">You have no recent ghost data. Let's go for a run!</p>
+        <ion-list>
+          <ion-item ng-repeat='ghost in ghosts'> 
+            <ghost-map ghost='ghost' anchors='false'></ghost-map>
+          </ion-item>
+        </ion-list>
       </div>
-    </div>
     <div class="list card">
-      <div class="item item-divider">Upcoming</div>
+      <div class="item item-divider">Recent Friend Activity</div>
       <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
+        <p ng-show="{{friendGhosts.length === 0}}">No recent friend activity. Go make friends!</p>
+        <ion-list>
+          <ion-item ng-repeat='friend in friendGhosts'>
+            <ghost-map ghost='friend' anchors='true'></ghost-map>
+          </ion-item>
+        </ion-list>
       </div>
     </div>
   </ion-content>
