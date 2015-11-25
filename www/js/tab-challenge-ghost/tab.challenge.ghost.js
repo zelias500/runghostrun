@@ -1,12 +1,12 @@
 app.config(function ($stateProvider) {
-	$stateProvider.state('tab.newchallenge', {
-		url: '/new/:gid',
+	$stateProvider.state('tab.ghost', {
+		url: '/ghost/:gid',
 		data: {
 			authenticate: true
 		},
 		views: {
 			'tab-challenge': {
-				templateUrl: 'js/new-challenge/new.challenge.html',
+				templateUrl: 'js/tab-challenge-ghost/tab.challenge.ghost.html',
 				controller: 'NewChallengeCtrl'
 			}
 		},

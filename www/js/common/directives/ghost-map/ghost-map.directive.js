@@ -9,7 +9,7 @@ app.directive('ghostMap', function(MapFactory){
 		restrict: 'E',
 		link: function (scope) {
 
-			if (scope.anchors) scope.linksTo = "#/tab/new/" + scope.ghost._id
+			if (scope.anchors) scope.linksTo = "#/tab/ghost/" + scope.ghost._id
 			else scope.linksTo = false;
 
 			function initialize () {

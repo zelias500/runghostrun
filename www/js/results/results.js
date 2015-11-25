@@ -9,9 +9,8 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('ResultsCtrl', function ($scope, LocationFactory, $stateParams, MapFactory, $timeout) {
+app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory) {
     $scope.stopData = LocationFactory.getStopData();
-    $scope.something = "Hello we are in More!"
     $scope.map = MapFactory.getMap();
 
     var gmap = new google.maps.Map(document.getElementById("RanMap"), {
@@ -23,6 +22,21 @@ app.controller('ResultsCtrl', function ($scope, LocationFactory, $stateParams, M
         $scope.map.makePolyline();
         $scope.map.runPath.setMap(gmap);
         gmap.fitBounds($scope.map.bounds);
+    }
+
+    $scope.save = function() {
+        LocationFactory.saveRun($rootScope.userId, $scope.stopData)
+        .then(function(user){
+            $state.go('tab.ghost', {gid: user.ghosts[user.ghosts.length-1]});
+        },
+        function(){
+        })
+    }
+
+    $scope.discard = function() {
+        LocationFactory.emptyStopData();
+        //MapFactory.emptyMapData();
+        $state.go('tab.home');
     }
 
 });

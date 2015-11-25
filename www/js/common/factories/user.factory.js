@@ -3,28 +3,33 @@ app.factory('UserFactory', function ($http) {
 
 	function toData (res) {
 		return res.data;
-	}
+	};
 
 	factory.fetchAll = function () {
 		return $http.get('/api/users')
 		.then(toData);
 	};
+
 	factory.fetchById = function (id) {
 		return $http.get('/api/users/' + id)
 		.then(toData);
 	};
+
 	factory.fetchAllFriends = function (id) {
 		return $http.get('/api/users/' + id + '/friends')
 		.then(toData);
 	};
+
 	factory.fetchAllChallenges = function (id) {
 		return $http.get('/api/users/' + id + '/challenges')
 		.then(toData);
 	};
+
 	factory.fetchRecentFriendData = function(id){
 		return $http.get('/api/users/' + id + '/friends/recent')
 		.then(toData);
 	};
+
 	factory.fetchAvgPace = function(id){
 	     return this.fetchAllChallenges(id).then(function(Allghosts){
 				var totalDistance = Allghosts.reduce(function(curr, next){
@@ -44,6 +49,7 @@ app.factory('UserFactory', function ($http) {
 				return avgPace;
 	     })
 	};
+
 	factory.fetchAvgDis = function(id){
        return this.fetchAllChallenges(id).then(function(Allghosts){
 				var totalDistance = Allghosts.reduce(function(curr, next){
