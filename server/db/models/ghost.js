@@ -3,33 +3,34 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 
+// is there a course schema?
 var schema = new mongoose.Schema({
 	locations: [
         {
-            lat: String, 
+            lat: String,
             lng: String
         }
     ],
     best: {
-        time: Number, 
+        time: Number,
         challenger: {
-            type: mongoose.Schema.Types.ObjectId, 
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
     },
 	totalDistance: Number, // in METERS
-	previousTimes: [
+	previousTimes: [ // maybe a "join table" would be good, indexed
         {
-            time: Number, 
+            time: Number,
             challenger: {
-                type: mongoose.Schema.Types.ObjectId, 
+                type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             }
         }
     ], // in seconds
     owner: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     privacy: {
@@ -55,7 +56,7 @@ schema.pre('save', function(next) {
              } else {
                 return curr;
              }
-        });       
+        });
     }
     next();
 });
@@ -70,7 +71,8 @@ schema.methods.getChallengerTime = function (id) {
 //return all ghost where user has a time
 
 schema.statics.getChallenger = function(id){
-    return this.find({previousTimes:{$elemMatch:{challenger:id}}}).exec()
+    // you might not have to elemmatch
+    return this.find({previousTimes:{challenger:id}}).exec()
 }
 
 schema.methods.addNewTime = function(data){
@@ -87,6 +89,7 @@ schema.virtual('totalKM').get(function(){
 });
 
 schema.virtual('totalMiles').get(function(){
+    // how about some const
 	return Math.round(this.totalKM*0.621371*100)/100;
 });
 
