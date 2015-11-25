@@ -19,6 +19,14 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('NewChallengeCtrl', function ($scope, ghost, MapFactory) {
+app.controller('NewChallengeCtrl', function ($scope, ghost, MapFactory, $state) {
 	$scope.ghost = ghost;
+
+    $scope.$on('$ionicView.enter', function( scopes, states){
+        if (states.direction == 'swap'){
+            $state.go('tab.challenge', {reload: true})
+        }
+    })
+
+
 });

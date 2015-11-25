@@ -19,6 +19,8 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, NgMap) {
+
+
     // testing filter to remove junk data
     ghosts = ghosts.filter(ghost => ghost.locations.length !== 0);
     $scope.ghosts = ghosts;
