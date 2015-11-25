@@ -1,16 +1,17 @@
+
 app.factory('MapFactory', function () {
 	var factory = {};
 
-	var ourMap = undefined;
+	// var ourMap = undefined;
 
-	factory.getMap = function() {
-		return ourMap;
-	}
+	// factory.getMap = function() {
+	// 	return ourMap;
+	// }
 
 	// returns a new map instance from the entered ghost data
 	factory.newMap = function (ghost) {
 
-		// helper function to make waypoints
+		// helper function to coerce lat and lng to Numbers from strings
 		function makeWayPoints (ghost) {
 			return ghost.locations.map(loc => {
 				return {
@@ -23,18 +24,19 @@ app.factory('MapFactory', function () {
 		// Map constructor function - if no ghost, returns empty map
 		function Map (ghost) {
 			if (ghost){
+				// for our own benefit - may remove eventually
 				this.id = ghost._id;
 				this.ghost = ghost;
+
 				this.wayPoints = makeWayPoints(ghost);
-			}
-			else {
-				this.wayPoints = [];
-			}
+			} else this.wayPoints = [];
+
 			this.bounds = new google.maps.LatLngBounds();
-			this.makePolyline();
-			this.url = 'https://maps.google.com/maps/api/js?v=3.20&client=AIzaSyAll4lFrjQHmozCEhpwsDIH6AKlkySPQzw';
-			this.mode = 'WALKING';
-			this.draggable = true;
+			this.makePolyline(); // sets this.runPath, which contains a google maps Polyline
+			this.wayPoints.forEach(loc => {
+				loc = new google.maps.LatLng(loc.lat, loc.lng)
+				this.bounds.extend(loc);
+			});
 		}
 
 		// waypoints is an array of location object objects with lat and lng properties
@@ -53,8 +55,8 @@ app.factory('MapFactory', function () {
 			    strokeWeight: 2
 			});
 		}
-		ourMap = new Map(ghost);
-		return ourMap;
+		return new Map(ghost);
+		// return ourMap;way
 	}
 
 	return factory;

@@ -28,10 +28,10 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.map = MapFactory.newMap()
         $scope.lastInd = LocationFactory.getLocIndex();
 
-        var gmap = new google.maps.Map(document.getElementById("RunMap"), {
-            zoom: 12,
-            mapTypeId: google.maps.MapTypeId.TERRAIN
-        })
+        // var gmap = new google.maps.Map(document.getElementById("RunMap"), {
+        //     zoom: 12,
+        //     mapTypeId: google.maps.MapTypeId.TERRAIN
+        // })
 
         $scope.map.runPath.setMap(gmap);
 
