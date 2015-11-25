@@ -24,7 +24,8 @@ var schema = new mongoose.Schema({
             challenger: {
                 type: mongoose.Schema.Types.ObjectId, 
                 ref: 'User'
-            }
+            },
+            timestamp: Number
         }
     ], // in seconds
     owner: {
@@ -68,7 +69,6 @@ schema.methods.getChallengerTime = function (id) {
 }
 
 //return all ghost where user has a time
-
 schema.statics.getChallenger = function(id){
     return this.find({previousTimes:{$elemMatch:{challenger:id}}}).exec()
 }

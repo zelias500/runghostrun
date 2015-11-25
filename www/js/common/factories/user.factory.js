@@ -21,6 +21,10 @@ app.factory('UserFactory', function ($http) {
 		return $http.get('/api/users/' + id + '/challenges')
 		.then(toData);
 	};
+	factory.fetchRecentFriendData = function(id){
+		return $http.get('/api/users/' + id + '/friends/recent')
+		.then(toData);
+	};
 	factory.fetchAvgPace = function(id){
 	     return this.fetchAllChallenges(id).then(function(Allghosts){
 				var totalDistance = Allghosts.reduce(function(curr, next){

@@ -42,6 +42,18 @@ router.get('/:id/friends', function(req,res, next){
 	 }).then(null, next);
 });
 
+router.get('/:id/friends/recent', function(req, res, next){
+	if (req.targetUser.friends.length){
+		req.targetUser.recentFriendActivity().then(recentActivity => {
+			res.status(200).json(recentActivity);
+		})
+	}
+	else {
+		res.status(200).end();
+	}
+
+})
+
 // GET user challenges by id
 router.get('/:id/challenges', function(req, res, next){
 	//I can only get all myown challenges now

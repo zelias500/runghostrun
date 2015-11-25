@@ -11,25 +11,22 @@ app.config(function ($stateProvider) {
             authenticate: true
         },
         resolve: {
-            ghosts: function (GhostFactory) {
-                return GhostFactory.fetchAll();
+            ghosts: function (UserFactory, Session) {
+                return UserFactory.fetchAllChallenges(Session.user._id);
+            },
+            friendGhosts: function(UserFactory, Session) {
+                return UserFactory.fetchRecentFriendData(Session.user._id);
             }
         }
     });
 });
 
-app.controller('HomeCtrl', function ($scope, ghosts, MapFactory, Session) {
-    $scope.something = "Hello we are in Home!";
+app.controller('HomeCtrl', function ($scope, ghosts, Session, friendGhosts) {
     $scope.user = Session.user;
 
-    // testing
-    var theGhost = ghosts[ghosts.length - 1];
+    $scope.ghosts = ghosts.sort((a,b) => {
+        return a.timestamp > b.timestamp
+    }).slice(0, 3);
 
-    var map = MapFactory.newMap(theGhost);
-    $scope.wayPoints = map.wayPoints;
-    $scope.center = map.center
-    $scope.dest = map.destination;
-    $scope.googleMapsUrl = map.url;
-    $scope.mode = map.mode;
-    $scope.draggable = map.draggable;
+    $scope.friendGhosts = friendGhosts
 });

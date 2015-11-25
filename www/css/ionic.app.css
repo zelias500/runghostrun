@@ -9103,3 +9103,28 @@ a.button {
 
 #search-input {
   border: 1px groove grey; }
+
+.map-directive p {
+  color: orange; }
+
+.map-directive .map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px; }
+
+.map-directive .info-bar {
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  padding: 5px;
+  left: 0px; }
+
+.map-directive .top {
+  top: 0px; }
+
+.map-directive .bottom {
+  bottom: 0px; }
+  .map-directive .bottom .google-map-container {
+    width: 100%;
+    height: 100%; }
