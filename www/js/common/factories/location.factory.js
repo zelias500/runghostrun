@@ -7,6 +7,8 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	function toRad (degrees){
 		return degrees * Math.PI/180;
 	}
+
+  // is there a library for this?
 	function calcGeoDistance(loc1, loc2){
 		var latRads1 = toRad(loc1.lat);
 		var latRads2 = toRad(loc2.lat);
@@ -41,6 +43,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function(){
+      // how big is this array getting? how often does it watch?
 			watchId = navigator.geolocation.watchPosition(function(pos){
 				pos = {
 					lat: pos.coords.latitude,
@@ -55,7 +58,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		getLocIndex: function(){
 			return data.locations.length-1;
 		},
-		
+
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
 			theFactory.calcTime(); // also calls calcDistance in function body
@@ -83,7 +86,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 
 		getCurrentRunData: function(){
 			return data;
-		},		
+		},
 
 		getStopData: function(){
 			return stopData;
@@ -97,7 +100,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 				return curr;
 			})
 			data.distance = totalDistance;
-			return data;			
+			return data;
 		},
 
 		// 	calculates total time of the run

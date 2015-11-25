@@ -15,6 +15,7 @@ app.config(function ($stateProvider) {
             singleUser: function(UserFactory, $stateParams){
                 return UserFactory.fetchById($stateParams.id)
             },
+            // can we camelCase this?
             Allghosts: function(UserFactory, $stateParams){
                 return UserFactory.fetchAllChallenges($stateParams.id)
             },
@@ -22,8 +23,10 @@ app.config(function ($stateProvider) {
                 return UserFactory.fetchAllFriends($stateParams.id)
             },
             Averagepace: function(UserFactory, $stateParams){
+                // can this be a prop of the user?
                 return UserFactory.fetchAvgPace($stateParams.id)
             },
+            // ditto
             Averagedis: function(UserFactory, $stateParams){
                 return UserFactory.fetchAvgDis($stateParams.id)
             }
