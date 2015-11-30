@@ -1,16 +1,12 @@
-<ion-view view-title="Friends">
+<ion-view view-title="Followers">
  <ion-content class="padding">
    <div class="form-group">
   	 <div class="list">
-  	 	<a class="item item-icon-left" href="#/tab/find">
-  	 		<i class="icon ion-person-add"></i>
-  	 		Find Friends
-  	 	</a>
-  	 	<a ng-repeat="user in allusers | filter: searchFd" 
+  	 	<a 
   	 	   href="#/tab/profile/{{user._id}}" 
   	 	   class="item item-avatar">
   	 	   <img ng-src="img/ghost_profile.jpg" />
-  	 	   {{user.email}}
+  	 	   Zeke
   	 	</a>
   	 </div>
    </div>

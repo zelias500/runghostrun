@@ -13,6 +13,11 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('MoreCtrl', function ($scope) {
-    $scope.something = "Hello we are in More!"
+app.controller('MoreCtrl', function ($scope, AuthService, $state) {
+    $scope.logout = function () {
+        AuthService.logout()
+        .then(function () {
+            $state.go('login');
+        });
+    }
 });
