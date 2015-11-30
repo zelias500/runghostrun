@@ -22,5 +22,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, NgMap) {
 
     // testing filter to remove junk data
     ghosts = ghosts.filter(ghost => ghost.locations.length !== 0);
+    ghosts = ghosts.filter(ghost => ghost.owner !== null);
+    ghosts = ghosts.filter(ghost => ghost.best !== null);
     $scope.ghosts = ghosts;
 });

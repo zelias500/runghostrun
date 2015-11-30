@@ -55,7 +55,6 @@ schema.pre('save', function(next) {
              else return curr;
         });
     }
-    console.log(this.best);
     next();
 });
 

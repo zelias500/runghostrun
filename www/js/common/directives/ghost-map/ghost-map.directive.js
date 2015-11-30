@@ -8,7 +8,6 @@ app.directive('ghostMap', function(MapFactory){
 		templateUrl: '/js/common/directives/ghost-map/ghost-map.html',
 		restrict: 'E',
 		link: function (scope) {
-			console.log(scope.ghost)
 
 			if (scope.anchors) scope.linksTo = "#/tab/ghost/" + scope.ghost._id
 			else scope.linksTo = false;
@@ -18,6 +17,8 @@ app.directive('ghostMap', function(MapFactory){
 			  	var gmap = new google.maps.Map(document.getElementById(scope.ghost._id), {
 		            zoom: 12,
 		            mapTypeId: google.maps.MapTypeId.TERRAIN,
+		            disableDefaultUI: true,
+		            draggable: false,
 		            center: new google.maps.LatLng(scope.map.wayPoints[0].lat, scope.map.wayPoints[0].lng)
 	        	})
 	        	scope.map.makePolyline();

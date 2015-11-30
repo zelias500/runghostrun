@@ -9,7 +9,7 @@ var Ghost = mongoose.model("Ghost");
 
 // GET all ghosts
 router.get('/', function(req,res,next){
-	Ghost.find({}).then(function(ghosts){
+	Ghost.find({}).populate('owner').then(function(ghosts){
 		res.status(200).json(ghosts)
 	}).then(null, next);
 });
