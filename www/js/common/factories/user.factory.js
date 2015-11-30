@@ -73,7 +73,7 @@ app.factory('UserFactory', function ($http) {
 		.then(toData)
 	}
 	factory.createGhost = function (id, data) {
-		return $http.post('/api/users/' + id + '/ghost', data)
+		return $http.post('/api/users/' + id + '/ghosts', data)
 		.then(toData);
 	};
 	factory.update = function (id, data) {

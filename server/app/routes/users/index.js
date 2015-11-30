@@ -37,8 +37,9 @@ router.get('/:id', function(req,res, next){
 
 // GET user friends by id
 router.get('/:id/friends', function(req,res, next){
-	 req.targetUser.populate('friends').execPopulate().then(function(fd){
-        res.status(200).json(fd)
+	 req.targetUser.populate('friends').execPopulate().then(function(user){
+	 	var myFriend = user.friends;
+        res.status(200).json(myFriend)
 	 }).then(null, next);
 });
 
@@ -57,10 +58,10 @@ router.get('/:id/friends/recent', function(req, res, next){
 // GET user challenges by id
 router.get('/:id/challenges', function(req, res, next){
 	//I can only get all myown challenges now
-     User.findById(req.params.id).populate('ghosts').then(function(challenges){
-          var allGhost = challenges.ghosts
+     User.findById(req.params.id).populate('ghosts').then(function(user){
+          var allGhost = user.ghosts
           res.status(200).json(allGhost)
-     })
+     }).then(null, next)
 
     // Ghost.getChallenger(req.params.id).then(function(challenges){
     // 	 res.status(200).json(challenges)
@@ -71,8 +72,8 @@ router.get('/:id/challenges', function(req, res, next){
 router.get('/:id/challenges/:challengeId', function(req, res, next){
 	Ghost.findById(req.params.challengeId).then(function(ghost){
 		return ghost.getChallengerTime(req.params.id);
-	}).then(function(user){
-		  res.status(200).json(user);
+	}).then(function(ghost){
+		  res.status(200).json(ghost);
 	}).then(null, next);
 });
 
@@ -88,16 +89,14 @@ router.put('/:id', function(req, res, next){
 // PUT user friend list
 
 router.post('/:id/addFriend', function(req, res, next){
-	if (req.targetUser.friends.indexOf(req.body) == -1){
-		req.targetUser.friends.push({_id: req.body.friendid});
-	}
+	req.targetUser.friends.addToSet(req.body.friendid)
 	req.targetUser.save().then(function(user){
 		res.status(201).json(user)
 	}).then(null, next)
 })
 
 // POST new ghost
-router.post('/:id/ghost', function(req,res, next){
+router.post('/:id/ghosts', function(req,res, next){
 	req.targetUser.addGhost(req.body).then(function(update){
 		res.status(201).json(update);
 	}).then(null, next)
