@@ -58,7 +58,7 @@ app.controller('ProfileCtrl', function ($scope,singleUser,allGhost, UserFactory,
     $scope.avgPace = Math.floor(averagePace*60) || 0// unit: km/min
     $scope.avgDis = Math.floor(averageDis) || 0// unit: km
 
-    if($scope.friends.length){
+    if($scope.friends && $scope.friends.length){
         $scope.friends = allFriends.slice(0,3)
     }
 

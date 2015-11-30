@@ -16,13 +16,14 @@
       </div>
     </div>
     <div class="list card">
-      <div class="item item-divider">Recent Ghosts</div>
+      <div class="item item-divider">Most Recent Run</div>
       <div class="item item-body">
         <div ng-show="noGhost">
           <span>You have no recent ghosts</span>
         </div>
         <div>
-          {{myRecentGhost}}
+          <ghost-map ghost='myRecentGhost' anchors='false'></ghost-map>
+          <ghost-stats data='myRecentGhost'></ghost-stats>
         </div>
       </div>
     </div>

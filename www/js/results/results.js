@@ -12,7 +12,7 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory) {
     $scope.stopData = LocationFactory.getStopData();
     $scope.map = MapFactory.getMap();
-    $scope.rangeValue = "Public";
+    $scope.rangeValue = "Friends";
     var privacySettingDiv = document.getElementById("privacySetting");
     
     $scope.checkTick = function (myRange) {
@@ -55,13 +55,5 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
         //MapFactory.emptyMapData();
         $state.go('tab.home');
     }
-
-    $scope.privacyOptions = {
-        value: 1,
-        options: {
-            stepsArray: 'Public,Friends,Private'.split(',')
-        }
-    };
-
 
 });
