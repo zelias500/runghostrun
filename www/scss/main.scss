@@ -57,5 +57,17 @@ ion-tabs.tabs-color-active-positive .tab-item {
 	background-color: $foreground;
 }
 
+.theme-orange {
+	color: $font-orange;
+}
+
+.badge-theme-orange {
+	color: white;
+	background-color: $font-orange;
+}
+.item.item-icon-left {
+	color: $font-blue;
+}
+
 @import 'profile/main';
 @import 'map/main';

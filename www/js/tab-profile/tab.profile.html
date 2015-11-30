@@ -1,23 +1,56 @@
 <ion-view view-title="Profile">
   <ion-content class="padding">
   
-    <div class="list card">
+    <!-- Profile Card -->
+    <div class="list card" id="profile-card">
       <div class="item item-body">
         <div>
           <img class="profile_img" ng-src="img/ghost_profile.jpg" />
-          {{me.email}}
-          <br/>
-          <br/>
-          <div ng-show='notMe()'>
-            <div ng-click="addToFd(me._id)"><img class="add-friend" ng-src="img/add_friend.png">
-              <span>{{successMessage}}</span>
-            </div>
-          </div>
+          <p class="profile-title">{{me.email}}</p>
         </div>
       </div>
     </div>
 
-    <div class="list card">
+    <div class="list" ng-hide='notMe()'>
+      <a class="item item-icon-left" href="#/tab/friends">
+        <i class="icon ion-person-stalker"></i>
+          Friends
+        <span class="badge badge-theme-orange">0</span>
+      </a>
+      <a class="item item-icon-left" href="#/tab/followers">
+        <i class="icon ion-person-stalker"></i>
+          Followers
+        <span class="badge badge-theme-orange">0</span>
+      </a>
+       <a class="item item-icon-left" href="#/tab/statistics">
+        <i class="icon ion-ios-analytics"></i>
+          Statistics
+      </a>
+       <a class="item item-icon-left" href="#/tab/pastruns">
+        <i class="icon ion-clipboard"></i>
+          Your Past Runs
+        <span class="badge badge-theme-orange">0</span>
+      </a>
+    </div>
+
+    <div class="list" ng-show='notMe()'>
+      <a class="item item-icon-left" ng-click="addToFd(me._id)">
+        <i class="icon ion-person-add"></i>
+          Add Friend
+      </a>
+      <a class="item item-icon-left">
+        <i class="icon ion-minus"></i>
+          Remove Friend
+      </a>
+      <a class="item bar bar-positive" ng-show="!!successMessage">{{successMessage}}</a>
+
+    </div>
+
+
+<!-- currently hidden for re-writing -->
+
+    <!-- Recent Runs -->
+    <div class="list card" ng-hide="true">
       <div class="item item-divider">Most Recent Run</div>
       <div class="item item-body">
         <div ng-show="noGhost">
@@ -30,7 +63,7 @@
       </div>
     </div>
 
-    <div class="list card">
+    <div class="list card" ng-hide="true">
       <div class="item item-divider">Statistics</div>
       <div class="item item-body">
         <div>
@@ -39,25 +72,27 @@
            <li>Average Pace:{{avgPace}} km/hr</li>
            <li>Average Distance:{{avgDis}} km per run</li>
          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="list card">
-     <div class="item item-divider">Following</div>
-      <div class="item item-body">
-          <div >
-            <!-- <button type="button" class="btn btn-primary">Friends</button> -->
+    <div class="list card" ng-hide="true">
+      <div class="item item-divider">Following
+        <div class="item item-body">
+          <div>
             <a href="#/tab/friends">Find Friends</a>
           </div>
-          <div >
+          <div>
             <ul>
               <li ng-repeat="friend in friends"><a href='#/tab/profile/{{friend._id}}'>{{friend.email}}</a></li>
             </ul>
 
           </div>
-      </div>
+        </div>
       </div>
     </div>
+
+<!-- end hide -->
 
   </ion-content>
 </ion-view>
