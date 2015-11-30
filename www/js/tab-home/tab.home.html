@@ -1,8 +1,13 @@
 <ion-view view-title="Welcome, {{ user.email }}!">
   <ion-content class="padding">
+
     <div class="list card">
-      <div class="item item-divider">Your Recent Ghosts</div>
-      <div class="item item-body">
+      <div class="item item-divider">
+        <div id="recent-select" class="tmk-tab-select" ng-class="recentTab" ng-click="toggle(true)">Your Recent Ghosts</div>
+        <div id="friend-select" class="tmk-tab-select" ng-class="friendTab" ng-click="toggle(false)">Friend Activity</div>
+      </div>
+
+      <div class="item item-body" ng-show="!!recentTab">
         <p ng-show="{{ghosts.length === 0}}">You have no recent ghost data. Let's go for a run!</p>
         <ion-list>
           <ion-item ng-repeat='ghost in ghosts'> 
@@ -10,9 +15,8 @@
           </ion-item>
         </ion-list>
       </div>
-    <div class="list card">
-      <div class="item item-divider">Recent Friend Activity</div>
-      <div class="item item-body">
+
+      <div class="item item-body" ng-show="!!friendTab">
         <p ng-show="{{friendGhosts.length === 0}}">No recent friend activity. Go make friends!</p>
         <ion-list>
           <ion-item ng-repeat='friend in friendGhosts'>
@@ -20,6 +24,7 @@
           </ion-item>
         </ion-list>
       </div>
+      
     </div>
   </ion-content>
 </ion-view>

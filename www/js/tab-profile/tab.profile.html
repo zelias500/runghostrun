@@ -1,9 +1,10 @@
 <ion-view view-title="Profile">
   <ion-content class="padding">
+  
     <div class="list card">
-      <div class="item item-divider" id="img_parent"><img class="profile_img" ng-src="img/ghost_profile.jpg"></div>
       <div class="item item-body">
-        <div id="img_parent">
+        <div>
+          <img class="profile_img" ng-src="img/ghost_profile.jpg" />
           {{me.email}}
           <br/>
           <br/>
@@ -15,6 +16,7 @@
         </div>
       </div>
     </div>
+
     <div class="list card">
       <div class="item item-divider">Most Recent Run</div>
       <div class="item item-body">
@@ -27,6 +29,7 @@
         </div>
       </div>
     </div>
+
     <div class="list card">
       <div class="item item-divider">Statistics</div>
       <div class="item item-body">
@@ -38,6 +41,7 @@
          </ul>
       </div>
     </div>
+
     <div class="list card">
      <div class="item item-divider">Following</div>
       <div class="item item-body">
@@ -54,5 +58,6 @@
       </div>
       </div>
     </div>
+
   </ion-content>
 </ion-view>

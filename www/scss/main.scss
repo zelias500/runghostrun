@@ -1,2 +1,61 @@
+$background: #2B2B2B;
+$foreground: #383838;
+$font-orange: #FC4C02;
+$font-blue: #387ef5;
+
+// sets the general background color
+ion-content {
+	background-color: $background;
+}
+
+// override Ionic padding
+.padding {
+	padding: 0px;
+}
+
+// sets the general header colors
+div.title.title-center.header-item {
+	color: white;
+}
+ion-header-bar.bar.bar-stable {
+	background-color: $foreground;
+}
+
+// sets lists and item colors
+.list {
+	background-color: $foreground;
+}
+.item {
+	color: white;
+	background-color: $foreground;
+	border-color: $background;
+}
+
+// sets tab bar to background color
+div.tab-nav.tabs {
+	background-color: $background;
+}
+
+// sets tab icon default color to orange
+ion-tabs.tabs-color-active-positive .tab-item {
+	color: $font-orange;
+}
+
+// override back button color
+.bar-stable .button.button-clear {
+	color: $font-orange;
+}
+
+// tab selection on the Home tab
+.tmk-tab-select {
+	padding: 10px;
+	float: left;
+	width: 50%;
+}
+.tmk-tab-select.tmk-active {
+	border-bottom: 3px solid $font-blue;
+	background-color: $foreground;
+}
+
 @import 'profile/main';
 @import 'map/main';

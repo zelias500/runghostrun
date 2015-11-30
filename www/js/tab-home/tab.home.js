@@ -28,5 +28,17 @@ app.controller('HomeCtrl', function ($scope, ghosts, Session, friendGhosts) {
         return a.timestamp > b.timestamp
     }).slice(0, 3);
 
-    $scope.friendGhosts = friendGhosts
+    $scope.friendGhosts = friendGhosts;
+
+    $scope.recentTab = 'tmk-active';
+    $scope.friendTab = '';
+    $scope.toggle = function (bool) {
+        if (bool) {
+            $scope.recentTab = 'tmk-active';
+            $scope.friendTab = '';
+        } else {
+            $scope.recentTab = '';
+            $scope.friendTab = 'tmk-active';
+        }
+    }
 });

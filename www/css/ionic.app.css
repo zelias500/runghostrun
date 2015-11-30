@@ -9089,13 +9089,49 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+ion-content {
+  background-color: #2B2B2B; }
+
+.padding {
+  padding: 0px; }
+
+div.title.title-center.header-item {
+  color: white; }
+
+ion-header-bar.bar.bar-stable {
+  background-color: #383838; }
+
+.list {
+  background-color: #383838; }
+
+.item {
+  color: white;
+  background-color: #383838;
+  border-color: #2B2B2B; }
+
+div.tab-nav.tabs {
+  background-color: #2B2B2B; }
+
+ion-tabs.tabs-color-active-positive .tab-item {
+  color: #FC4C02; }
+
+.bar-stable .button.button-clear {
+  color: #FC4C02; }
+
+.tmk-tab-select {
+  padding: 10px;
+  float: left;
+  width: 50%; }
+
+.tmk-tab-select.tmk-active {
+  border-bottom: 3px solid #387ef5;
+  background-color: #383838; }
+
 .profile_img {
   border-radius: 50%;
-  height: 10%;
-  width: 10%; }
-
-#img_parent {
-  text-align: center; }
+  height: 70px;
+  width: 70px;
+  float: left; }
 
 .add-friend {
   height: 20px;
