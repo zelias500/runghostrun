@@ -8,6 +8,7 @@ app.directive('ghostMap', function(MapFactory){
 		templateUrl: '/js/common/directives/ghost-map/ghost-map.html',
 		restrict: 'E',
 		link: function (scope) {
+			console.log(scope.ghost)
 
 			if (scope.anchors) scope.linksTo = "#/tab/ghost/" + scope.ghost._id
 			else scope.linksTo = false;
@@ -28,4 +29,4 @@ app.directive('ghostMap', function(MapFactory){
 			setTimeout(initialize, 0);
 		}
 	}
-})
+});
