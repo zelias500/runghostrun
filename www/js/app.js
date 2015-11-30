@@ -1,6 +1,6 @@
 window.app = angular.module('runghost', ['ionic', 'ngCordova', 'ngMap', 'fsaPreBuilt'])
 
-app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ionicConfigProvider) {
 
     $urlRouterProvider.when('/auth/:provider', function () {
         window.location.reload();
@@ -9,6 +9,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         var $state = $injector.get('$state');
         $state.go('tab.home');
     });
+    $ionicConfigProvider.views.maxCache(0);
 
 });
 

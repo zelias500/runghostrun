@@ -51,11 +51,8 @@ var schema = new mongoose.Schema({
 schema.pre('save', function(next) {
     if (this.previousTimes.length) {
         this.best = this.previousTimes.reduce(function(prev, curr) {
-             if (prev.time < curr.time) {
-                return prev;
-             } else {
-                return curr;
-             }
+             if (prev.time < curr.time) return prev;
+             else return curr;
         });
     }
     next();
