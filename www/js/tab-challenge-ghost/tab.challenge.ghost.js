@@ -18,10 +18,15 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('NewChallengeCtrl', function ($scope, ghost, MapFactory, $state) {
+app.controller('NewChallengeCtrl', function ($scope, ghost, MapFactory, $state, LocationFactory) {
 	console.log(ghost)
 	$scope.ghost = ghost;
 
+	$scope.ghostRunData = {
+		distance: ghost.totalDistance,
+		avgSpeed: LocationFactory.getGhostAvg(ghost),
+		time: ghost.best.time
+	}
 
     $scope.$on('$ionicView.enter', function(scopes, states) {
     	console.log(states)

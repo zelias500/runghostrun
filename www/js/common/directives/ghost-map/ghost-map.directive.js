@@ -26,7 +26,6 @@ app.directive('ghostMap', function(MapFactory){
 	        	scope.map.makePolyline();
 	        	scope.map.runPath.setMap(gmap);
 	            gmap.fitBounds(scope.map.bounds);
-	            console.log('gmap initialized for ', scope.map.id)
 			}	        		
 				
 			// push rendering the gmap to the event queue to handle async loading of google maps
