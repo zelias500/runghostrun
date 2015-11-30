@@ -12,7 +12,6 @@ app.config(function ($stateProvider) {
 		},
 		resolve: {
 			ghost: function (GhostFactory, $stateParams) {
-				console.log($stateParams)
 				return GhostFactory.fetchById($stateParams.gid);
 			}
 		}

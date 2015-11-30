@@ -17,6 +17,8 @@ name in the environment files.
 
 */
 
+require('babel/register');
+
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
