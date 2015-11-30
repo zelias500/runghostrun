@@ -6,31 +6,31 @@ var _ = require('lodash');
 var schema = new mongoose.Schema({
 	locations: [
         {
-            lat: String, 
+            lat: String,
             lng: String
         }
     ],
     best: {
-        time: Number, 
+        time: Number,
         challenger: {
-            type: mongoose.Schema.Types.ObjectId, 
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
     },
 	totalDistance: Number, // in METERS
 	previousTimes: [
         {
-            time: Number, 
+            time: Number,
             challenger: {
-                type: mongoose.Schema.Types.ObjectId, 
+                type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             },
             timestamp: Number
         }
     ], // in seconds
     owner: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     privacy: {
@@ -56,15 +56,15 @@ schema.pre('save', function(next) {
              } else {
                 return curr;
              }
-        });       
+        });
     }
     next();
 });
 
 // return all one challenger's previous time on this ghost
 schema.methods.getChallengerTime = function (id) {
-   return this.previousTimes.filter(function (time) {
-       return time.challenger == id
+   return this.previousTimes.filter(function (challenge) {
+       return challenge.challenger == id
    });
 }
 
@@ -78,16 +78,6 @@ schema.methods.addNewTime = function(data){
 	return this.save();
 }
 
-schema.virtual('timesRun').get(function(){
-	return this.previousTimes.length;
-});
 
-schema.virtual('totalKM').get(function(){
-	return this.totalDistance/1000;
-});
-
-schema.virtual('totalMiles').get(function(){
-	return Math.round(this.totalKM*0.621371*100)/100;
-});
 
 mongoose.model('Ghost', schema);
