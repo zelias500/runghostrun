@@ -8,10 +8,13 @@
       </div>
 
       <div class="item item-body" ng-show="!!recentTab">
-        <p ng-show="{{ghosts.length === 0}}">You have no recent ghost data. Let's go for a run!</p>
+        <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
         <ion-list>
-          <ion-item ng-repeat='ghost in ghosts'> 
-            <ghost-map ghost='ghost' anchors='false'></ghost-map>
+          <ion-item ng-repeat='run in recentRuns'>
+          You challenged: 
+            <ghost-map ghost='run.ghost' anchors='false' boxes='true'></ghost-map>
+          And ran:
+          <ghost-stats data='run'></ghost-stats>
           </ion-item>
         </ion-list>
       </div>

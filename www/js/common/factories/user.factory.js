@@ -20,8 +20,13 @@ app.factory('UserFactory', function ($http) {
 		.then(toData);
 	};
 
-	factory.fetchAllChallenges = function (id) {
-		return $http.get('/api/users/' + id + '/challenges')
+	factory.fetchAllRuns = function (id) {
+		return $http.get('/api/users/' + id + '/runs')
+		.then(toData);
+	};
+
+	factory.fetchAllGhosts = function (id) {
+		return $http.get('/api/users/' + id + '/ghosts')
 		.then(toData);
 	};
 
@@ -31,11 +36,11 @@ app.factory('UserFactory', function ($http) {
 	};
 
 	factory.fetchAvgPace = function(id){
-	     return this.fetchAllChallenges(id).then(function(Allghosts){
-				var totalDistance = Allghosts.reduce(function(curr, next){
+	     return this.fetchAllRuns(id).then(function(runs){
+				var totalDistance = runs.reduce(function(curr, next){
 					return curr + next.totalDistance
 				},0);
-				var totalTime = Allghosts.reduce(function(curr, next){
+				var totalTime = runs.reduce(function(curr, next){
 					var matches = next.previousTimes.filter(function(time){
 						return time.challenger = id;
 					})
@@ -51,8 +56,8 @@ app.factory('UserFactory', function ($http) {
 	};
 
 	factory.fetchAvgDis = function(id){
-       return this.fetchAllChallenges(id).then(function(Allghosts){
-				var totalDistance = Allghosts.reduce(function(curr, next){
+       return this.fetchAllRuns(id).then(function(runs){
+				var totalDistance = runs.reduce(function(curr, next){
 				return curr + next.totalDistance
 				},0);
 
@@ -60,26 +65,26 @@ app.factory('UserFactory', function ($http) {
        })
 	};
 
-	factory.fetchChallengeById = function (uid, cid) {
-		return $http.get('/api/users/' + uid + '/challenges/' + cid)
-		.then(toData);
-	};
 	factory.createUser = function (data) {
 		return $http.post('/api/users', data)
 		.then(toData);
 	};
-	factory.createFriend = function(userid, friendid){
-		return $http.post('/api/users/' + userid +"/addFriend", {friendid})
+
+	factory.addFriend = function (userid, friendid){
+		return $http.post('/api/users/' + userid + "/addFriend", {friendid})
 		.then(toData)
-	}
+	};
+
 	factory.createGhost = function (id, data) {
 		return $http.post('/api/users/' + id + '/ghosts', data)
 		.then(toData);
 	};
+
 	factory.update = function (id, data) {
 		return $http.put('/api/users/' + id, data)
 		.then(toData);
 	};
+	
 	factory.delete = function (id) {
 		return $http.delete('/api/users/' + id)
 		.then(toData);

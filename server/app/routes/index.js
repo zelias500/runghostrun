@@ -4,6 +4,7 @@ module.exports = router;
 
 router.use('/users', require('./users'));
 router.use('/ghosts', require('./ghosts'));
+router.use('/runs', require('./runs'));
 
 // Make sure this is after all of
 // the registered routes!

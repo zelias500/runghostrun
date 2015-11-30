@@ -3,9 +3,9 @@
 
         <div class="button-bar">
           <a ng-show="!currentRun" ng-click="start()" class="button button-balanced">Start</a>
+          <a ng-show="!currentRun && ghost()" ng-click="removeGhost()" class="button button-balanced">
           <a ng-show="currentRun" ng-click="stop()" class="button button-assertive">Stop</a>
         </div>
-
         <div id="RunMap" style="height:200px;width:350px"> </div>
         <ghost-stats data="currentRun"> </ghost-stats>
   </ion-content>

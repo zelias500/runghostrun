@@ -1,4 +1,4 @@
-app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
+app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostFactory){
 	function errorHandler (err){
 		console.error(err);
 	};
@@ -33,6 +33,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		speedPoints: []
 	}
 
+	var currentGhost;
 
 	var watchId = null;
 	var stopData;
@@ -40,7 +41,8 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 	var theFactory = {
 
 		// clears location data array and attaches a position watcher
-		startNewRun: function(){
+		startNewRun: function () {
+			data.ghost = currentGhost;
 			watchId = navigator.geolocation.watchPosition(function(pos){
 				pos = {
 					lat: pos.coords.latitude,
@@ -63,27 +65,36 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory){
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
 			stopData = data;
+			currentGhost = null;
 			data = {
 				locations: [],
 				distance: 0,
 				time: 0,
-				speedPoints: []
+				speedPoints: []		
 			}
 			return stopData;
 		},
 
+		setGhost: function(ghost) {
+			currentGhost = ghost;
+		},		
+
+		getGhost: function() {
+			return currentGhost;
+		},
+
 		saveRun: function(userId, stopData){
-			return UserFactory.createGhost(userId, {
-        	            locations: stopData.locations,
-        	            previousTimes: [{
-        	                time: stopData.time,
-        	                challenger: userId
-        	            }],
-        	            totalDistance: stopData.distance,
-        	            owner: userId
-        	        }).then(function(user){
-        	        	return user;
-        	        }, errorHandler);
+			if (!stopData.ghost){
+				stopData.runner = userId;
+				stopData.privacy = stopData.privacy.toLowerCase();
+				return UserFactory.createGhost(userId, stopData)
+				.then(function(user){
+	        	        	return user;
+	        	        }, errorHandler);
+			}
+			else {
+				return GhostFactory.addNewRun(stopData.ghost._id, stopData)
+			}
 		},
 
 		getCurrentRunData: function(){

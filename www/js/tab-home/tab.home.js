@@ -11,8 +11,8 @@ app.config(function ($stateProvider) {
             authenticate: true
         },
         resolve: {
-            ghosts: function (UserFactory, Session) {
-                return UserFactory.fetchAllChallenges(Session.user._id);
+            runs: function (UserFactory, Session) {
+                return UserFactory.fetchAllRuns(Session.user._id);
             },
             friendGhosts: function(UserFactory, Session) {
                 return UserFactory.fetchRecentFriendData(Session.user._id);
@@ -21,10 +21,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, ghosts, Session, friendGhosts) {
+app.controller('HomeCtrl', function ($scope, runs, Session, friendGhosts) {
     $scope.user = Session.user;
 
-    $scope.ghosts = ghosts.sort((a,b) => {
+    $scope.recentRuns = runs.sort((a,b) => {
         return a.timestamp > b.timestamp
     }).slice(0, 3);
 

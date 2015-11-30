@@ -12,20 +12,20 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory) {
     $scope.stopData = LocationFactory.getStopData();
     $scope.map = MapFactory.getMap();
-    $scope.rangeValue = "Friends";
+    $scope.privacySetting = "Friends";
     var privacySettingDiv = document.getElementById("privacySetting");
     
-    $scope.checkTick = function (myRange) {
-        if (myRange == 0) {
-            $scope.rangeValue = "Public";
+    $scope.checkTick = function (privacyRange) {
+        if (privacyRange == 0) {
+            $scope.privacySetting = "Public";
             privacySettingDiv.className = "button button-balanced  ng-binding"
         }
-        if (myRange == 1) {
-            $scope.rangeValue = "Friends";
+        if (privacyRange == 1) {
+            $scope.privacySetting = "Friends";
             privacySettingDiv.className = "button button-positive ng-binding"
         }
-        if (myRange == 2) {
-            $scope.rangeValue = "Private";
+        if (privacyRange == 2) {
+            $scope.privacySetting = "Private";
             privacySettingDiv.className = "button button-energized ng-binding"
         }
     };
@@ -42,17 +42,17 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     }
 
     $scope.save = function() {
+        $scope.stopData.privacy = $scope.privacySetting
         LocationFactory.saveRun($rootScope.userId, $scope.stopData)
-        .then(function(user){
-            $state.go('tab.ghost', {gid: user.ghosts[user.ghosts.length-1]});
-        },
-        function(){
+        .then(function(runOrGhost){
+            // if its a ghost
+            if (runOrGhost.best) $state.go('tab.ghost', {gid: runOrGhost._id});
+            else $state.go('tab.ghost', {gid: runOrGhost.ghost})
         })
     }
 
     $scope.discard = function() {
         LocationFactory.emptyStopData();
-        //MapFactory.emptyMapData();
         $state.go('tab.home');
     }
 
