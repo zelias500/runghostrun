@@ -16,9 +16,11 @@ app.config(function ($stateProvider) {
 app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state) {
     $scope.lastLocIndex;
     $scope.currentRun;
+    $scope.barColor = "bar-balanced";
     var interv;
 
     $scope.start = function () {
+        $scope.barColor = "bar-assertive"
         // TODO: fix the need for $interval to update run data below
 
         LocationFactory.startNewRun();

@@ -9127,6 +9127,16 @@ ion-tabs.tabs-color-active-positive .tab-item {
   border-bottom: 3px solid #387ef5;
   background-color: #383838; }
 
+.theme-orange {
+  color: #FC4C02; }
+
+.badge-theme-orange {
+  color: white;
+  background-color: #FC4C02; }
+
+.item.item-icon-left {
+  color: #387ef5; }
+
 .profile_img {
   border-radius: 50%;
   height: 70px;
@@ -9139,6 +9149,11 @@ ion-tabs.tabs-color-active-positive .tab-item {
 
 #search-input {
   border: 1px groove grey; }
+
+p.profile-title {
+  float: right;
+  font-size: 23px;
+  color: #FC4C02; }
 
 .map-directive p {
   color: orange; }
