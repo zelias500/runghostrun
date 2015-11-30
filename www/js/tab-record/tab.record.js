@@ -56,6 +56,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
 
         },1000)
     }
+
     $scope.stop = function () {
 
         $interval.cancel(interv);
@@ -63,5 +64,11 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.currentRun = LocationFactory.stopRun(Session.user._id)
         $scope.lastInd = $scope.currentRun.locations.length-1       
         $state.go("results", {map: $scope.map});
+    }
+
+    $scope.ghost = LocationFactory.getGhost();
+
+    $scope.removeGhost = function() {
+        LocationFactory.setGhost(null);
     }
 });

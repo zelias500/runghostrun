@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
 		views: {
 			'tab-challenge': {
 				templateUrl: 'js/tab-challenge-ghost/tab.challenge.ghost.html',
-				controller: 'NewChallengeCtrl'
+				controller: 'GhostCtrl'
 			}
 		},
 		resolve: {
@@ -18,18 +18,17 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('NewChallengeCtrl', function ($scope, ghost, MapFactory, $state, LocationFactory) {
-	console.log(ghost)
+app.controller('GhostCtrl', function ($scope, ghost, MapFactory, $state, LocationFactory) {
+	// console.log(ghost)
 	$scope.ghost = ghost;
-
-	$scope.ghostRunData = {
-		distance: ghost.totalDistance,
-		avgSpeed: LocationFactory.getGhostAvg(ghost),
-		time: ghost.best.time
-	}
 
     $scope.$on('$ionicView.enter', function(scopes, states) {
     	console.log(states)
         if (states.direction === 'swap') $state.go('tab.challenge', {reload: true});
     });
+
+    $scope.challengeGhost = function() {
+    	LocationFactory.setGhost($scope.ghost);
+    	$state.go('tab.record')
+    }
 });

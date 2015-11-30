@@ -1,4 +1,4 @@
-app.factory('TimeFactory', function ($http) {
+app.factory('TimeFactory', function () {
 	var factory = {};
 
 	factory.timeDisplay = function (timeInSeconds) {

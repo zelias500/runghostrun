@@ -5,18 +5,20 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 var User = mongoose.model("User");
 var Ghost = mongoose.model("Ghost");
-
+var Run = mongoose.model("Run");
 
 // GET all ghosts
 router.get('/', function(req,res,next){
-	Ghost.find({}).populate('owner').then(function(ghosts){
+	Ghost.find({}).populate('owner bestRunner').then(function(ghosts){
 		res.status(200).json(ghosts)
 	}).then(null, next);
 });
 
+// POST is done via User as they can choose to transform a run into a ghost
+
 // id parameter
 router.param('id', function(req, res, next, id){
-	 Ghost.findById(id).populate('owner').then(function(ghost){
+	 Ghost.findById(id).populate('owner bestRunner bestRun').then(function(ghost){
 	 	 req.ghost = ghost
 	 	 next()
 	 }).then(null, next);
@@ -28,12 +30,27 @@ router.get('/:id', function(req,res, next){
 });
 
 
-
-// POST new time
+// POST new run
 router.post('/:id', function(req, res, next){
-	req.ghost.addNewTime(req.body).then(function(update){
-		 res.status(201).json(update)
-	}).then(null, next);
+	var ourUpdatedGhost;
+	var ourRun;
+	Run.create(req.body)
+	.then(function (run){
+		ourRun = run;
+		return req.ghost.addNewRun(run);
+	})
+	.then(function (updatedGhost){
+		ourUpdatedGhost = updatedGhost;
+		return User.find({_id: req.body.runner}).exec();
+	})
+	.then(function (runner){
+		runner.runs.push(ourRun);
+		return runner.save();
+	})
+	.then(function(){
+		res.status(201).json(ourUpdatedGhost);
+	})
+	.then(null, next);
 });
 
 // PUT ghost by id

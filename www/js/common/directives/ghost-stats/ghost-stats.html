@@ -1,8 +1,7 @@
 <div>
-	<ul>
-
-		<li ng-if="data"> Time: {{ displayTime(data.time) }} </li>
+	<ul ng-if="data">
+		<li> Time: {{ displayTime(data.time) }} </li>
 		<li> Distance: {{ data.distance }} </li>
-		<li> Pace (km/h): {{ data.avgPace }} </li>
+		<li> Pace (km/h): {{ calcAveragePace() }} </li>
 	<ul>
 </div>

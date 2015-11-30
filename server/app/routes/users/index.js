@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 var User = mongoose.model("User");
 var Ghost = mongoose.model("Ghost");
+var Run = mongoose.model("Run");
 
 
 // GET all users
@@ -55,30 +56,29 @@ router.get('/:id/friends/recent', function(req, res, next){
 
 })
 
-// GET user challenges by id
-router.get('/:id/challenges', function(req, res, next){
-	//I can only get all myown challenges now
-     User.findById(req.params.id).populate('ghosts').then(function(user){
-          var allGhost = user.ghosts
-          res.status(200).json(allGhost)
-     }).then(null, next)
-
-    // Ghost.getChallenger(req.params.id).then(function(challenges){
-    // 	 res.status(200).json(challenges)
-    // }).then(null, next);
+// GET user runs
+router.get('/:id/runs', function(req, res, next){
+	req.targetUser.populate('runs').execPopulate().then(function(user){
+		var runsToPopulate = user.runs.map(function(run){
+			return run.populate('ghost').execPopulate()
+		})
+		return Promise.all(runsToPopulate)
+	})
+	.then(function(runs){
+		res.status(200).json(runs)
+	})
+	.then(null, next);
 });
 
-// GET user challenges by challenge id
-router.get('/:id/challenges/:challengeId', function(req, res, next){
-	Ghost.findById(req.params.challengeId).then(function(ghost){
-		return ghost.getChallengerTime(req.params.id);
-	}).then(function(ghost){
-		  res.status(200).json(ghost);
+// GET user ghosts
+router.get('/:id/ghosts', function(req, res, next){
+	req.targetUser.populate('ghosts').execPopulate().then(function(user){
+		res.status(200).json(user.ghosts);
 	}).then(null, next);
 });
 
-// PUT user by id
-router.put('/:id', function(req, res, next){
+// PUT user settings update
+router.put('/:id', function (req, res, next){
 	_.extend(req.targetUser, req.body);
 	req.targetUser.save().then(function(update){
 		res.status(201).json(update);
@@ -86,20 +86,40 @@ router.put('/:id', function(req, res, next){
 
 });
 
-// PUT user friend list
-
-router.post('/:id/addFriend', function(req, res, next){
+// POST a new friend
+router.post('/:id/friends', function (req, res, next){
 	req.targetUser.friends.addToSet(req.body.friendid)
 	req.targetUser.save().then(function(user){
 		res.status(201).json(user)
 	}).then(null, next)
 })
 
-// POST new ghost
-router.post('/:id/ghosts', function(req,res, next){
-	req.targetUser.addGhost(req.body).then(function(update){
-		res.status(201).json(update);
-	}).then(null, next)
+// POST new ghost (create a new ghost with rundata)
+router.post('/:id/ghosts', function (req, res, next){
+	var ourRun;
+	Run.create(req.body)
+	.then(function (run){
+		// add run to users runs array
+		ourRun = run;
+		req.targetUser.runs.push(run);
+		return req.targetUser.save();
+	})
+	.then(function (){
+		// create the ghost that matches this run
+		return Ghost.create({
+			owner: req.targetUser._id,
+			locations: ourRun.locations,
+			totalDistance: ourRun.distance
+		})
+	})
+	.then(function (ghost){
+		return ghost.addNewRun(ourRun)
+	})
+	.then(function (ghost){
+		res.status(201).json(ghost);
+	})
+	.then(null, next);
+
 });
 
 router.delete('/:id', function(req, res, next){

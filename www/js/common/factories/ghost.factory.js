@@ -1,4 +1,4 @@
-app.factory('GhostFactory', function ($http) {
+app.factory('GhostFactory', function ($http, $rootScope) {
 	var factory = {};
 
 	function toData (res) {
@@ -15,21 +15,21 @@ app.factory('GhostFactory', function ($http) {
 		.then(toData);
 	};
 
-	factory.createNewTime = function (data) {
-		return $http.post('/api/ghosts', data)
+	factory.addNewRun = function (id, data) {
+		data.runner = $rootScope.userId;
+		return $http.post('/api/ghosts/' + id, data)
 		.then(toData);
 	};
+
 	factory.update = function (id, data) {
 		return $http.put('/api/ghosts/' + id, data)
 		.then(toData);
 	};
+
 	factory.delete = function (id) {
 		return $http.delete('/api/ghosts/' + id)
 		.then(toData);
 	};
-
-
 	
-
 	return factory;
 });
