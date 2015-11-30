@@ -12,12 +12,9 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory) {
     $scope.stopData = LocationFactory.getStopData();
     $scope.map = MapFactory.getMap();
-    $scope.priceSlider = 150;
     $scope.rangeValue = "Public";
     var privacySettingDiv = document.getElementById("privacySetting");
-    console.log(privacySettingDiv.className);
-
-
+    
     $scope.checkTick = function (myRange) {
         if (myRange == 0) {
             $scope.rangeValue = "Public";
