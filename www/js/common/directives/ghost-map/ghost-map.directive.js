@@ -9,12 +9,14 @@ app.directive('ghostMap', function(MapFactory){
 		restrict: 'E',
 		link: function (scope) {
 
+			scope.ghostUniqueId = scope.ghost._id + _.random(0, 1000, false)
+
 			if (scope.anchors) scope.linksTo = "#/tab/ghost/" + scope.ghost._id
 			else scope.linksTo = false;
 
 			function initialize () {
 				scope.map = MapFactory.newMap(scope.ghost);
-			  	var gmap = new google.maps.Map(document.getElementById(scope.ghost._id), {
+			  	var gmap = new google.maps.Map(document.getElementById(scope.ghostUniqueId), {
 		            zoom: 12,
 		            mapTypeId: google.maps.MapTypeId.TERRAIN,
 		            disableDefaultUI: true,
@@ -24,6 +26,7 @@ app.directive('ghostMap', function(MapFactory){
 	        	scope.map.makePolyline();
 	        	scope.map.runPath.setMap(gmap);
 	            gmap.fitBounds(scope.map.bounds);
+	            console.log('gmap initialized for ', scope.map.id)
 			}	        		
 				
 			// push rendering the gmap to the event queue to handle async loading of google maps

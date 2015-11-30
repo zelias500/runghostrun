@@ -16,7 +16,7 @@ router.get('/', function(req,res,next){
 
 // id parameter
 router.param('id', function(req, res, next, id){
-	 Ghost.findById(id).then(function(ghost){
+	 Ghost.findById(id).populate('owner').then(function(ghost){
 	 	 req.ghost = ghost
 	 	 next()
 	 }).then(null, next);
