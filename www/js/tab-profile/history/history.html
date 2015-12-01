@@ -1,8 +1,30 @@
 <ion-view view-title="Run History">
  <ion-content class="padding">
-   <div class="form-group">
   	 <div class="list">
-  	 	<a ng-repeat="run in runs" class="item">{{ run._id }}</a>
+  	 	<div ng-show="runsLastWeek.length > 0">
+	  	 	<div class="item item-divider">
+	  	 		Runs This Week
+	  	 	</div>
+	  	 	<a ng-repeat="run in runsLastWeek" class="item">
+	  	 		<ul style="list-style-type:none">
+	  	 			<li>Run on: {{ run.displayDate }}</li>
+	  	 			<li>Distance: {{ run.distance }} meters</li>
+	  	 			<li>Pace: {{ run.averagePaceKm }} min/km | {{ run.averagePaceMi }} min/mi</li>
+	  	 		</ul>
+	  	 	</a>
+	  	 </div>
+	  	<div ng-show="runs.length > 0">
+	  	 	<div class="item item-divider">
+	  	 		Previous Runs
+	  	 	</div>
+	  	 	<a ng-repeat="run in runs" class="item">
+	  	 		<ul style="list-style-type:none">
+	  	 			<li>Run on: {{ run.displayDate }}</li>
+	  	 			<li>Distance: {{ run.distance }} meters</li>
+	  	 			<li>Pace: {{ run.averagePaceKm }} min/km | {{ run.averagePaceMi }} min/mi</li>
+	  	 		</ul>
+	  	 	</a>
+  		</div>
   	 </div>
    </div>
  </ion-content>

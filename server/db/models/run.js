@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
             lng: String
         }
     ],
-    time: Number, // Check units!
+    time: Number, // in seconds
 	distance: Number, // in METERS
     runner: {
         type: mongoose.Schema.Types.ObjectId,
