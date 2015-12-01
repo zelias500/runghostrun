@@ -12,7 +12,7 @@ app.directive('ghostStats', function (TimeFactory) {
 				return TimeFactory.timeDisplay(scope.data.time);
 			}
 			scope.findDistance = function(){
-				return scope.data.distance.toFixed(2);
+				return Number(scope.data.distance.toFixed(2));
 			}
 			scope.findAvgPace = function(){
 				return scope.data.avgPace;
