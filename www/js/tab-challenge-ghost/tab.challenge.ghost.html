@@ -1,10 +1,28 @@
 <ion-view view-title="{{ghost._id}}">
  	<ion-content>
 		<ghost-map ghost='ghost' anchors="true"></ghost-map>
-		<ghost-stats data='ghost'></ghost-stats>
-		<div>
-			<p> INFO ABOUT YOUR BEST RUN IF IT EXISTS!
+
+		<div class="row">
+			<div class="col">Challenge's Best Results </div>
+			<div ng-if="usersBest" class="col">Your Best Result </div>
 		</div>
+		<div class="row">
+			<div class="col" title="Ghost's Best">
+				<ul class="list">
+					<li class="item"> Time: {{ displayTime('best') }} </li>
+					<li class="item"> Distance: {{ findDistance('best') }} m</li>
+					<li class="item"> Pace (km/h): {{ getAvgSpeed('best', false) }} </li>
+				<ul>
+			</div>
+			<div ng-if="usersBest" class="col">
+				<ul  class="list">
+					<li class="item"> Time: {{ displayTime() }} </li>
+					<li class="item"> Distance: {{ findDistance() }} m</li>
+					<li class="item"> Pace (km/h): {{ getAvgSpeed() }} </li>
+				<ul>
+			</div>
+		</div>
+		
 		<a style="background-color:white" ng-click='setGhost()' href="#/tab/record">CHALLENGE THIS GHOST</a>
 
 	</ion-content>

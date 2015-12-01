@@ -6,7 +6,8 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 	var earthRadius = 6371000 // in km
 	function toRad (degrees){
 		return degrees * Math.PI/180;
-	}
+	};
+
 	function calcGeoDistance(loc1, loc2){
 		var latRads1 = toRad(loc1.lat);
 		var latRads2 = toRad(loc2.lat);
@@ -15,11 +16,11 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 		var a = Math.sin(latDeltaRads/2) * Math.sin(latDeltaRads/2) + Math.cos(latRads1) * Math.cos(latRads2) * Math.sin(longDeltaRads/2) * Math.sin(longDeltaRads/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		return Number((earthRadius * c).toFixed(1));
-	}
+	};
 
 	function calcPointTime(loc1, loc2){
 		return loc2.timestamp - loc1.timestamp;
-	}
+	};
 
 	var options = {
 		enableHighAccuracy: false,
@@ -27,14 +28,11 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 	};
 
 	var data = {
-		locations: [{
-	      lat: "40.70",
-	      lng: "-74.00"
-		}],
+		locations: [],
 		distance: 0,
 		time: 0,
 		speedPoints: []
-	}
+	};
 
 	var currentGhost;
 
@@ -135,7 +133,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 
 		getGhostAvg: function(ghost){
 			var toReturn = (ghost.totalDistance/1000)/(ghost.best.time/3600); // convert to km/hr
-			// if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
+			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
  			return Number(toReturn.toFixed(2));
 		},
 

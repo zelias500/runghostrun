@@ -25,8 +25,20 @@ router.param('id', function(req, res, next, id){
 });
 // GET users best time for that ghost, if any
 router.get("/:id/users/:userId", function (req, res, next){
-	Run.populate(req.ghost.runs)
-	req.ghost.populate()
+	return Run.populate(req.ghost, {path: 'runs'})
+	.then(function(){
+		var userBest = req.ghost.runs.reduce(function(best, run){
+			if (run.runner != req.params.userId) return best;
+			else {
+				if (!best) return run;
+				else {
+					if (best.time > run.time) return run;
+					else return best;
+				}
+			}
+		}, null)
+		res.status(200).json(userBest);
+	})
 })
 
 

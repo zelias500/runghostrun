@@ -33,6 +33,7 @@ app.factory('GhostFactory', function ($http, $rootScope) {
 
 	factory.getUsersBest = function (ghostId, userId) {
 		return $http.get("/api/ghosts/" + ghostId + "/users/" +  userId)
+		.then(toData);
 	}
 	
 	return factory;
