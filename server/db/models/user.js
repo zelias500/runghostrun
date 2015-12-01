@@ -22,6 +22,12 @@ var schema = new mongoose.Schema({
             ref: 'User'
         }
     ],
+    followers: [
+        {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'User'
+        }
+    ],
     ghosts: [
         {
             type: mongoose.Schema.Types.ObjectId, 

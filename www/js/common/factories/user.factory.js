@@ -55,23 +55,28 @@ app.factory('UserFactory', function ($http) {
 	     })
 	};
 
-	factory.fetchAvgDis = function(id){
-       return this.fetchAllRuns(id).then(function(runs){
-				var totalDistance = runs.reduce(function(curr, next){
-				return curr + next.totalDistance
-				},0);
+	// factory.fetchAvgDis = function(id){
+ //       return this.fetchAllRuns(id).then(function(runs){
+	// 			var totalDistance = runs.reduce(function(curr, next){
+	// 			return curr + next.totalDistance
+	// 			},0);
 
-				return Math.round(totalDistance/Allghosts.length *100)/100;
-       })
-	};
+	// 			return Math.round(totalDistance/Allghosts.length *100)/100;
+ //       })
+	// };
 
 	factory.createUser = function (data) {
 		return $http.post('/api/users', data)
 		.then(toData);
 	};
 
-	factory.addFriend = function (userid, friendid){
-		return $http.post('/api/users/' + userid + "/addFriend", {friendid})
+	factory.addFriend = function (userId, friendId) {
+		return $http.post('/api/users/' + userId + "/friends", { friendId: friendId })
+		.then(toData)
+	};
+
+	factory.removeFriend = function (userId, friendId) {
+		return $http.put('/api/users/' + userId + "/friends/remove", { friendId: friendId })
 		.then(toData)
 	};
 

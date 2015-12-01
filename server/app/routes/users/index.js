@@ -38,10 +38,9 @@ router.get('/:id', function(req,res, next){
 
 // GET user friends by id
 router.get('/:id/friends', function(req,res, next){
-	 req.targetUser.populate('friends').execPopulate().then(function(user){
-	 	var myFriend = user.friends;
-        res.status(200).json(myFriend)
-	 }).then(null, next);
+	req.targetUser.populate('friends').execPopulate().then(function(user){
+    	res.status(200).json(user.friends)
+	}).then(null, next);
 });
 
 router.get('/:id/friends/recent', function(req, res, next){
@@ -49,11 +48,7 @@ router.get('/:id/friends/recent', function(req, res, next){
 		req.targetUser.recentFriendActivity().then(recentActivity => {
 			res.status(200).json(recentActivity);
 		})
-	}
-	else {
-		res.status(200).end();
-	}
-
+	} else res.status(200).end();
 })
 
 // GET user runs
@@ -87,12 +82,44 @@ router.put('/:id', function (req, res, next){
 });
 
 // POST a new friend
-router.post('/:id/friends', function (req, res, next){
-	req.targetUser.friends.addToSet(req.body.friendid)
-	req.targetUser.save().then(function(user){
-		res.status(201).json(user)
+router.post('/:id/friends', function (req, res, next) {
+	var friendId = req.body.friendId;
+	var userToReturn;
+
+	req.targetUser.friends.addToSet(friendId);
+	req.targetUser.save()
+	.then(function (user) {
+		userToReturn = user;
+		return User.findById(friendId).exec();
+	})
+	.then(function (friend) {
+		friend.followers.addToSet(userToReturn._id);
+		return friend.save();
+	})
+	.then(function (friend) {
+		res.status(201).json(userToReturn);
 	}).then(null, next)
-})
+});
+
+// PUT to remove a friend
+router.put('/:id/friends/remove', function (req, res, next) {
+	var friendId = req.body.friendId;
+	var userToReturn;
+
+	req.targetUser.friends.pull(friendId);
+	req.targetUser.save()
+	.then(function (user) {
+		userToReturn = user;
+		return User.findById(friendId).exec();
+	})
+	.then(function (friend) {
+		friend.followers.pull(userToReturn._id);
+		return friend.save();
+	})
+	.then(function (friend) {
+		res.status(201).json(userToReturn);
+	}).then(null, next)
+});
 
 // POST new ghost (create a new ghost with rundata)
 router.post('/:id/ghosts', function (req, res, next){
@@ -104,7 +131,7 @@ router.post('/:id/ghosts', function (req, res, next){
 		req.targetUser.runs.push(run);
 		return req.targetUser.save();
 	})
-	.then(function (){
+	.then(function () {
 		// create the ghost that matches this run
 		return Ghost.create({
 			owner: req.targetUser._id,
@@ -119,7 +146,6 @@ router.post('/:id/ghosts', function (req, res, next){
 		res.status(201).json(ghost);
 	})
 	.then(null, next);
-
 });
 
 router.delete('/:id', function(req, res, next){
