@@ -12,51 +12,50 @@ app.config(function ($stateProvider) {
             }
         },
         resolve:{
-            singleUser: function(UserFactory, $stateParams){
-                return UserFactory.fetchById($stateParams.id)
+            singleUser: function (UserFactory, $stateParams) {
+                return UserFactory.fetchById($stateParams.id);
             },
-            allGhost: function(UserFactory, $stateParams){
-                return UserFactory.fetchAllChallenges($stateParams.id)
+            // allGhost: function (UserFactory, $stateParams) {
+            //     return UserFactory.fetchAllChallenges($stateParams.id);
+            // },
+            allFriends:function (UserFactory, $stateParams) {
+                return UserFactory.fetchAllFriends($stateParams.id);
             },
-            allFriends:function(UserFactory, $stateParams){
-                return UserFactory.fetchAllFriends($stateParams.id)
-            },
-            averagePace: function(UserFactory, $stateParams){
-                return UserFactory.fetchAvgPace($stateParams.id)
-            },
-            averageDis: function(UserFactory, $stateParams){
-                return UserFactory.fetchAvgDis($stateParams.id)
+            averagePace: function (UserFactory, $stateParams) {
+                return UserFactory.fetchAvgPace($stateParams.id);
             }
+            // averageDis: function (UserFactory, $stateParams) {
+            //     return UserFactory.fetchAvgDis($stateParams.id);
+            // }
         }
     })
 });
 
-app.controller('ProfileCtrl', function ($scope,singleUser,allGhost, UserFactory, allFriends,averagePace,averageDis, $state) {
+app.controller('ProfileCtrl', function ($scope, singleUser, UserFactory, allFriends, averagePace, $state) {
     $scope.successMessage;
 
-    $scope.$on('$ionicView.enter', function( scopes, states){
-        if (states.stateParams.id != $scope.userId && states.direction == 'swap'){
-            console.log("here")
+    $scope.$on('$ionicView.enter', function(scopes, states) {
+        if (states.stateParams.id != $scope.userId && states.direction == 'swap') {
             $state.go($state.current, {id: $scope.userId}, {reload: true})
         }
     })
 
     $scope.friends = allFriends
     $scope.me = singleUser
-    $scope.notMe = function(){
-        return !(singleUser._id == $scope.userId)
+    $scope.notMe = function () {
+        return !(singleUser._id == $scope.userId);
     }
 
-    $scope.myghosts = allGhost
+    // $scope.myghosts = allGhost
 
-    $scope.noGhost = false;
-    if(! $scope.myghosts.length) $scope.noGhost = true;
+    // $scope.noGhost = false;
+    // if (! $scope.myghosts.length) $scope.noGhost = true;
 
-    $scope.myRecentGhost = allGhost[allGhost.length-1]
+    // $scope.myRecentGhost = allGhost[allGhost.length-1]
 
 
     $scope.avgPace = Math.floor(averagePace*60) || 0// unit: km/min
-    $scope.avgDis = Math.floor(averageDis) || 0// unit: km
+    // $scope.avgDis = Math.floor(averageDis) || 0// unit: km
 
     if($scope.friends && $scope.friends.length){
         $scope.friends = allFriends.slice(0,3)

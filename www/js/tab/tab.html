@@ -6,21 +6,22 @@ navigation history that also transitions its views in and out.
 
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
+  <!-- Home Tab -->
   <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/home">
     <ion-nav-view name="tab-home"></ion-nav-view>
   </ion-tab>
 
-  <!-- Dashboard Tab -->
+  <!-- Profile Tab -->
   <ion-tab title="Profile" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" href="#/tab/profile/{{userId}}">
     <ion-nav-view name="tab-profile"></ion-nav-view>
   </ion-tab>
 
-  <!-- Chats Tab -->
+  <!-- Record Tab -->
   <ion-tab title="Record" icon-off="ion-ios-stopwatch-outline" icon-on="ion-ios-stopwatch" href="#/tab/record">
     <ion-nav-view name="tab-record"></ion-nav-view>
   </ion-tab>
 
-  <!-- Account Tab -->
+  <!-- Challenge Tab -->
   <ion-tab title="Challenge" icon-off="ion-ios-people-outline" icon-on="ion-ios-people" href="#/tab/challenge">
     <ion-nav-view name="tab-challenge"></ion-nav-view>
   </ion-tab>

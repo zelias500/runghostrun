@@ -55,15 +55,15 @@ app.factory('UserFactory', function ($http) {
 	     })
 	};
 
-	factory.fetchAvgDis = function(id){
-       return this.fetchAllRuns(id).then(function(runs){
-				var totalDistance = runs.reduce(function(curr, next){
-				return curr + next.totalDistance
-				},0);
+	// factory.fetchAvgDis = function(id){
+ //       return this.fetchAllRuns(id).then(function(runs){
+	// 			var totalDistance = runs.reduce(function(curr, next){
+	// 			return curr + next.totalDistance
+	// 			},0);
 
-				return Math.round(totalDistance/Allghosts.length *100)/100;
-       })
-	};
+	// 			return Math.round(totalDistance/Allghosts.length *100)/100;
+ //       })
+	// };
 
 	factory.createUser = function (data) {
 		return $http.post('/api/users', data)
