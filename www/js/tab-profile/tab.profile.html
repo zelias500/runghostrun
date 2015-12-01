@@ -11,11 +11,12 @@
       </div>
     </div>
 
+    <!-- Profile Options -->
     <div class="list" ng-hide='notMe()'>
       <a class="item item-icon-left" href="#/tab/friends">
         <i class="icon ion-person-stalker"></i>
           Friends
-        <span class="badge badge-theme-orange">0</span>
+        <span class="badge badge-theme-orange">{{ numFriends }}</span>
       </a>
       <a class="item item-icon-left" href="#/tab/followers">
         <i class="icon ion-person-stalker"></i>
@@ -29,10 +30,11 @@
        <a class="item item-icon-left" href="#/tab/pastruns">
         <i class="icon ion-clipboard"></i>
           Your Past Runs
-        <span class="badge badge-theme-orange">0</span>
+        <span class="badge badge-theme-orange">{{ numRuns }}</span>
       </a>
     </div>
 
+    <!-- Add/Remove Friend Controls -->
     <div class="list" ng-show='notMe()'>
       <a class="item item-icon-left" ng-click="addToFd(me._id)">
         <i class="icon ion-person-add"></i>
@@ -43,14 +45,13 @@
           Remove Friend
       </a>
       <a class="item bar bar-positive" ng-show="!!successMessage">{{successMessage}}</a>
-
     </div>
 
 
 <!-- currently hidden for re-writing -->
 
     <!-- Recent Runs -->
-    <div class="list card" ng-hide="true">
+<!--     <div class="list card" ng-hide="true">
       <div class="item item-divider">Most Recent Run</div>
       <div class="item item-body">
         <div ng-show="noGhost">
@@ -90,7 +91,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 <!-- end hide -->
 
