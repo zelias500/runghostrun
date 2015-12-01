@@ -2,11 +2,11 @@
  <ion-content class="padding">
    <div class="form-group">
   	 <div class="list">
-  	 	<a 
-  	 	   href="#/tab/profile/{{user._id}}" 
+  	 	<a ng-repeat="follower in followers"
+  	 	   href="#/tab/profile/{{follower._id}}" 
   	 	   class="item item-avatar">
   	 	   <img ng-src="img/ghost_profile.jpg" />
-  	 	   Zeke
+  	 	   {{ follower.email }}
   	 	</a>
   	 </div>
    </div>

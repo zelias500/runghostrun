@@ -4,11 +4,11 @@ app.config(function($stateProvider){
         data:{
             authenticate: true
         },
-        views:{
+        views: {
             'tab-profile': {
                 templateUrl: 'js/tab-profile/friends/friends.html',
                 controller: 'friendsCtrl'
-            },
+            }
         },
         resolve: {
             friends: function (UserFactory, Session) {

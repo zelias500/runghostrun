@@ -4,15 +4,21 @@ app.config(function($stateProvider){
         data:{
             authenticate: true
         },
-        views:{
+        views: {
             'tab-profile': {
                 templateUrl: 'js/tab-profile/find/find.html',
                 controller: 'FindCtrl'
-            },
+            }
+        },
+        resolve: {
+            users: function (UserFactory) {
+                return UserFactory.fetchAll();
+            }
         }
     });
 });
 
-app.controller('FindCtrl', function ($scope, $state) {
-
+app.controller('FindCtrl', function ($scope, $state, users, Session) {
+    $scope.users = users;
+    $scope.myName = Session.user.email;
 });

@@ -20,6 +20,11 @@ app.factory('UserFactory', function ($http) {
 		.then(toData);
 	};
 
+	factory.fetchAllFollowers = function (id) {
+		return $http.get('/api/users/' + id + '/followers')
+		.then(toData);
+	};
+
 	factory.fetchAllRuns = function (id) {
 		return $http.get('/api/users/' + id + '/runs')
 		.then(toData);
@@ -30,40 +35,38 @@ app.factory('UserFactory', function ($http) {
 		.then(toData);
 	};
 
-	factory.fetchRecentFriendData = function(id){
+	factory.fetchRecentFriendData = function (id) {
 		return $http.get('/api/users/' + id + '/friends/recent')
 		.then(toData);
 	};
 
-	factory.fetchAvgPace = function(id){
-	     return this.fetchAllRuns(id).then(function(runs){
-				var totalDistance = runs.reduce(function(curr, next){
-					return curr + next.totalDistance
-				},0);
-				var totalTime = runs.reduce(function(curr, next){
-					var matches = next.previousTimes.filter(function(time){
-						return time.challenger = id;
-					})
-					return curr + matches.reduce(function(prev, curr){
-						return prev += curr.time;
-					}, 0)
-				},0 );
-
-   				var totalTimeinMin = Math.floor(totalTime/60);
-				var avgPace = Math.round(totalDistance/totalTimeinMin * 100)/100;
+	factory.fetchAvgPace = function (id) {
+	    return this.fetchAllRuns(id)
+	     	.then(function (runs) {
+				var totalDistance = runs.reduce(function (curr, next) {
+					return curr + next.distance;
+				}, 0);
+				var totalTime = runs.reduce(function (curr, next) {
+					return curr + next.time;
+				}, 0);
+   				var totalTimeinMin = Math.floor(totalTime / 60);
+   				if (totalTimeinMin === 0) return 0; // prevent dividing by zero
+				var avgPace = Math.round(totalDistance / totalTimeinMin * 100) / 100;
 				return avgPace;
-	     })
+	     });
 	};
 
-	// factory.fetchAvgDis = function(id){
- //       return this.fetchAllRuns(id).then(function(runs){
-	// 			var totalDistance = runs.reduce(function(curr, next){
-	// 			return curr + next.totalDistance
-	// 			},0);
+	factory.fetchAvgDistance = function (id) {
+        return this.fetchAllRuns(id)
+        .then(function (runs) {
+        	if (runs.length === 0) return 0; // prevent dividing by zero
 
-	// 			return Math.round(totalDistance/Allghosts.length *100)/100;
- //       })
-	// };
+			var totalDistance = runs.reduce(function(curr, next){
+				return curr + next.distance;
+			}, 0);
+			return Math.round(totalDistance / runs.length * 100) / 100;
+       });
+	};
 
 	factory.createUser = function (data) {
 		return $http.post('/api/users', data)

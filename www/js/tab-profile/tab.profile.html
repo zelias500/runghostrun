@@ -14,86 +14,43 @@
     <!-- Profile Options -->
     <div class="list" ng-hide='notMe()'>
       <a class="item item-icon-left" href="#/tab/friends">
-        <i class="icon ion-person-stalker"></i>
+        <i class="icon ion-person"></i>
           Friends
         <span class="badge badge-theme-orange">{{ numFriends }}</span>
       </a>
       <a class="item item-icon-left" href="#/tab/followers">
         <i class="icon ion-person-stalker"></i>
           Followers
-        <span class="badge badge-theme-orange">0</span>
+        <span class="badge badge-theme-orange">{{ numFollowers }}</span>
       </a>
        <a class="item item-icon-left" href="#/tab/statistics">
         <i class="icon ion-ios-analytics"></i>
           Statistics
       </a>
-       <a class="item item-icon-left" href="#/tab/pastruns">
+       <a class="item item-icon-left" href="#/tab/pastghosts">
         <i class="icon ion-clipboard"></i>
-          Your Past Runs
+          Your Past Ghosts
+        <span class="badge badge-theme-orange">{{ numGhosts }}</span>
+      </a>
+      <a class="item item-icon-left" href="#/tab/history">
+        <i class="icon ion-ios-book"></i>
+          Your History
         <span class="badge badge-theme-orange">{{ numRuns }}</span>
       </a>
     </div>
 
     <!-- Add/Remove Friend Controls -->
     <div class="list" ng-show='notMe()'>
-      <a class="item item-icon-left" ng-click="addFriend(me._id)">
+      <a class="item item-icon-left" ng-click="addFriend(me._id)" ng-show="!isFriend(me._id)">
         <i class="icon ion-person-add"></i>
           Add Friend
       </a>
-      <a class="item item-icon-left" ng-click="removeFriend(me._id)">
+      <a class="item item-icon-left" ng-click="removeFriend(me._id)" ng-show="isFriend(me._id)">
         <i class="icon ion-minus"></i>
           Remove Friend
       </a>
       <a class="item bar bar-positive" ng-show="!!successMessage">{{successMessage}}</a>
     </div>
-
-
-<!-- currently hidden for re-writing -->
-
-    <!-- Recent Runs -->
-<!--     <div class="list card" ng-hide="true">
-      <div class="item item-divider">Most Recent Run</div>
-      <div class="item item-body">
-        <div ng-show="noGhost">
-          <span>You have no recent ghosts</span>
-        </div>
-        <div>
-          <ghost-map ghost='myRecentGhost' anchors='false'></ghost-map>
-          <ghost-stats data='myRecentGhost'></ghost-stats>
-        </div>
-      </div>
-    </div>
-
-    <div class="list card" ng-hide="true">
-      <div class="item item-divider">Statistics</div>
-      <div class="item item-body">
-        <div>
-         <ul>
-           <li>Total Runs: {{myghosts.length}}</li>
-           <li>Average Pace:{{avgPace}} km/hr</li>
-           <li>Average Distance:{{avgDis}} km per run</li>
-         </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="list card" ng-hide="true">
-      <div class="item item-divider">Following
-        <div class="item item-body">
-          <div>
-            <a href="#/tab/friends">Find Friends</a>
-          </div>
-          <div>
-            <ul>
-              <li ng-repeat="friend in friends"><a href='#/tab/profile/{{friend._id}}'>{{friend.email}}</a></li>
-            </ul>
-
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-<!-- end hide -->
 
   </ion-content>
 </ion-view>

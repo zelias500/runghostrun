@@ -37,9 +37,17 @@ router.get('/:id', function(req,res, next){
 });
 
 // GET user friends by id
-router.get('/:id/friends', function(req,res, next){
-	req.targetUser.populate('friends').execPopulate().then(function(user){
+router.get('/:id/friends', function(req,res, next) {
+	req.targetUser.populate('friends').execPopulate()
+	.then(function (user) {
     	res.status(200).json(user.friends)
+	}).then(null, next);
+});
+
+router.get('/:id/followers', function(req,res, next){ 
+	req.targetUser.populate('followers').execPopulate()
+	.then(function (user) {
+    	res.status(200).json(user.followers)
 	}).then(null, next);
 });
 
