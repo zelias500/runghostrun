@@ -9,7 +9,7 @@ app.directive('ghostStats', function (TimeFactory) {
 		templateUrl: '/js/common/directives/ghost-stats/ghost-stats.html',
 		link: function (scope){
 			scope.displayTime = function(){
-				return TimeFactory.timeDisplay(scope.data.best);
+				return TimeFactory.timeDisplay(scope.data.time);
 			}
 			scope.findDistance = function(){
 				return Number(scope.data.distance.toFixed(2));
