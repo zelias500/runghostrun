@@ -5,16 +5,16 @@ app.factory('StatFactory', function () {
 	factory.minMeter = function (run) {		
 		var distance = run.distance; // distance in meters
 		var time = Math.floor(run.time / 60) // time in minutes
-		if (time === 0) return 0; // prevent dividing by zero
-		return Math.round(time / distance);
+		if (distance === 0) return 0; // prevent dividing by zero
+		return (time / distance);
 	};
 
 	// takes a run - returns the average pace in min/km
 	factory.minKm = function (run) {
 		var distance = run.distance; // distance in meters
 		var time = Math.floor(run.time / 60) // time in minutes
-		if (time === 0) return 0; // prevent dividing by zero
-		return Math.round(time / (distance * 100));
+		if ((distance / 1000) === 0) return 0; // prevent dividing by zero
+		return (time / (distance / 1000));
 	};
 
 	// converts pace in min/km to min/mile

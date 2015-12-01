@@ -47,14 +47,14 @@ app.factory('UserFactory', function ($http) {
 
 	     		// total distance in km
 				var totalDistance = runs.reduce(function (curr, next) {
-					return curr + next.distance * 100; // distance is originally in m
+					return curr + (next.distance / 1000); // distance is originally in m, converting to km
 				}, 0);
 
 				// total time in minutes
 				var totalTime = runs.reduce(function (curr, next) {
 					return curr + next.time;
 				}, 0);
-				
+
    				var totalTimeinMin = Math.floor(totalTime / 60);
 
    				if (totalDistance === 0) return 0; // prevent dividing by zero
@@ -72,7 +72,7 @@ app.factory('UserFactory', function ($http) {
         	if (runs.length === 0) return 0; // prevent dividing by zero
 
 			var totalDistance = runs.reduce(function (curr, next) {
-				return curr + next.distance * 100; // distance is originally in m
+				return curr + (next.distance / 1000); // distance is originally in m, converting to km
 			}, 0);
 
 			return Math.floor(totalDistance / runs.length);
