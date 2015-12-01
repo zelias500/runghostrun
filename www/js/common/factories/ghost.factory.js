@@ -30,6 +30,11 @@ app.factory('GhostFactory', function ($http, $rootScope) {
 		return $http.delete('/api/ghosts/' + id)
 		.then(toData);
 	};
+
+	factory.getUsersBest = function (ghostId, userId) {
+		return $http.get("/api/ghosts/" + ghostId + "/users/" +  userId)
+		.then(toData);
+	}
 	
 	return factory;
 });

@@ -24,8 +24,8 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         // TODO: fix the need for $interval to update run data below
 
 
-        $scope.currentRun = LocationFactory.getCurrentRunData();
         LocationFactory.startNewRun();
+        $scope.currentRun = LocationFactory.getCurrentRunData();
         $scope.map = MapFactory.newMap()
         $scope.lastInd = LocationFactory.getLocIndex();
 
@@ -68,7 +68,9 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $state.go("results", {map: $scope.map});
     }
 
-    $scope.ghost = LocationFactory.getGhost();
+    $scope.ghost = function() {
+        return LocationFactory.getGhost();
+    }
 
     $scope.removeGhost = function() {
         LocationFactory.setGhost(null);
