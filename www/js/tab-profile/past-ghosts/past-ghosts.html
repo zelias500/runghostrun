@@ -1,0 +1,15 @@
+<ion-view view-title="Your Ghost Data">
+  <ion-content class="padding">
+
+  <div class="list card">
+    <div class="item item-body">
+      <div ng-show="ghosts.length === 0">You haven't saved any recent ghost data. Let's go running!</div>
+      <div ng-repeat="ghost in ghosts">
+        <ghost-map ghost='ghost' anchors='false'></ghost-map>
+        <ghost-stats data='ghost'></ghost-stats>
+      </div>
+    </div>
+  </div>
+    
+  </ion-content>
+</ion-view>

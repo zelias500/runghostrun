@@ -1,8 +1,28 @@
 <ion-view view-title="Find Friends">
- <ion-content class="padding">
-   <div class="form-group">
-   	  <form>
-   	     <label>Find Friends by Name:</label>
-   	  	 <input type="text" id="search-input" class="form-control" ng-model="searchFd"/>
-  </ion-content>
+	<ion-content class="padding">
+
+		<div class="list list-inset">
+			<form name="searchForm">
+			  	<label class="item item-input">
+				    <i class="icon ion-search placeholder-icon"></i>
+				    <input type="text" 
+				           placeholder="Search By Email or Username" 
+				           ng-model="searchName" 
+				           name="searchInput"
+				           id="search-input">
+			  	</label>
+		  	</form>
+		</div>
+
+   	  	<div class="list" ng-show="searchForm.searchInput.$viewValue !== '' && searchForm.$dirty">
+	   	  	<a ng-repeat="user in users | filter:searchName" 
+	  	 	   href="#/tab/profile/{{ user._id }}" 
+	  	 	   class="item item-avatar">
+	  	 	   <img ng-src="img/ghost_profile.jpg" />
+	  	 	   {{ user.email }}
+	  	 	</a>
+  	 	</div>
+  	 	<div>
+  	 </div>
+  	</ion-content>
 </ion-view>

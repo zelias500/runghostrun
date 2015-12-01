@@ -2,13 +2,16 @@
   <ion-content class="padding">
     <div class="list">
       <a class="item">
-        Total Runs: 3
+        Total Runs Logged: {{ numRuns }}
       </a>
       <a class="item">
-        Average Pace: 7 mi/min
+        Ghost Data Saved: {{ numGhosts }}
       </a>
       <a class="item">
-        Average Distance: 3.1 mi | 5 km
+        Average Pace: {{ averagePaceMi }} min/mi | {{ averagePaceKm }} min/km
+      </a>
+      <a class="item">
+        Average Distance: {{ averageDistanceMi }} mi | {{ averageDistanceKm }} km
       </a>
     </div>
 

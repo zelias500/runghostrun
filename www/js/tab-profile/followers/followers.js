@@ -4,15 +4,20 @@ app.config(function($stateProvider){
         data:{
             authenticate: true
         },
-        views:{
+        views: {
             'tab-profile': {
                 templateUrl: 'js/tab-profile/followers/followers.html',
                 controller: 'FollowersCtrl'
-            },
+            }
+        },
+        resolve: {
+            followers: function (UserFactory, Session) {
+                return UserFactory.fetchAllFollowers(Session.user._id);
+            }
         }
     });
 });
 
-app.controller('FollowersCtrl', function ($scope, $state) {
-
+app.controller('FollowersCtrl', function ($scope, $state, followers) {
+    $scope.followers = followers;
 });
