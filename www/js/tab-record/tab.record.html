@@ -4,11 +4,12 @@
     <div id="RunMap" style="height:200px;width:350px"></div>
     <ghost-stats data="currentRun" ng-show="currentRun"></ghost-stats>
 
-    <div class="bar bar-footer" ng-class="barColor">
+    <div class="bar bar-footer bar-balanced" ng-class="barColor">
       <div ng-show="!currentRun" ng-click="start()" class="title">Start</div>
       <div ng-show="!currentRun && ghost()" ng-click="removeGhost()" class="title">Remove Challenge</div>
-      <div ng-show="currentRun" ng-click="stop()" class="title">Stop</div>
+
+      <div ng-show="currentRun" ng-click="stop()" class="title" >Stop</div>
     </div>
-    
+
   </ion-content>
 </ion-view>

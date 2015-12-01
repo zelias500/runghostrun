@@ -23,8 +23,9 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $scope.barColor = "bar-assertive"
         // TODO: fix the need for $interval to update run data below
 
-        LocationFactory.startNewRun();
+
         $scope.currentRun = LocationFactory.getCurrentRunData();
+        LocationFactory.startNewRun();
         $scope.map = MapFactory.newMap()
         $scope.lastInd = LocationFactory.getLocIndex();
 
@@ -37,6 +38,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
 
         interv = $interval(function () {
             $scope.currentRun.time++;
+
             $scope.currentRun = LocationFactory.getCurrentRunData();
             if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
                 var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations.length-1];
@@ -62,7 +64,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $interval.cancel(interv);
         interv = undefined;
         $scope.currentRun = LocationFactory.stopRun(Session.user._id)
-        $scope.lastInd = $scope.currentRun.locations.length-1       
+        $scope.lastInd = $scope.currentRun.locations.length-1
         $state.go("results", {map: $scope.map});
     }
 

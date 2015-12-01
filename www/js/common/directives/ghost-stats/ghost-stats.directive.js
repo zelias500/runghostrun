@@ -11,9 +11,11 @@ app.directive('ghostStats', function (TimeFactory) {
 			scope.displayTime = function(){
 				return TimeFactory.timeDisplay(scope.data.time);
 			}
-
-			scope.calcAveragePace = function () {
-				return scope.data.distance/scope.data.time
+			scope.findDistance = function(){
+				return scope.data.distance.toFixed(2);
+			}
+			scope.findAvgPace = function(){
+				return scope.data.avgPace;
 			}
 		}
 	}

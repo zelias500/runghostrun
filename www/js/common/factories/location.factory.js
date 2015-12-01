@@ -52,7 +52,14 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 				data.locations.push(pos);
 				var locationsLength = data.locations.length;
 				if (data.locations.length != -1){
-					data.distance+= calcGeoDistance(data.locations[locationsLength-2],data.locations[locationsLength-1]);
+					var calcDistance = calcGeoDistance(data.locations[locationsLength-2],data.locations[locationsLength-1])
+
+					if(calcDistance>10){
+						data.locations.pop()
+					}
+					else{
+                      data.distance += calcDistance;
+					}
 				}
 				return data;
 			}, errorHandler, options)
@@ -61,7 +68,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 		getLocIndex: function(){
 			return data.locations.length-1;
 		},
-		
+
 		stopRun: function (userId) {
 			navigator.geolocation.clearWatch(watchId);
 			stopData = data;
@@ -70,14 +77,14 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 				locations: [],
 				distance: 0,
 				time: 0,
-				speedPoints: []		
+				speedPoints: []
 			}
 			return stopData;
 		},
 
 		setGhost: function(ghost) {
 			currentGhost = ghost;
-		},		
+		},
 
 		getGhost: function() {
 			return currentGhost;
@@ -99,7 +106,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 
 		getCurrentRunData: function(){
 			return data;
-		},		
+		},
 
 		getStopData: function(){
 			return stopData;
