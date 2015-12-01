@@ -76,7 +76,7 @@ app.factory('UserFactory', function ($http) {
 	};
 
 	factory.removeFriend = function (userId, friendId) {
-		return $http.post('/api/users/' + userId + "/friends/remove", { friendId: friendId })
+		return $http.put('/api/users/' + userId + "/friends/remove", { friendId: friendId })
 		.then(toData)
 	};
 

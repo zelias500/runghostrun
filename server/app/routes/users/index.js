@@ -101,8 +101,8 @@ router.post('/:id/friends', function (req, res, next) {
 	}).then(null, next)
 });
 
-// POST a new friend
-router.post('/:id/friends/remove', function (req, res, next) {
+// PUT to remove a friend
+router.put('/:id/friends/remove', function (req, res, next) {
 	var friendId = req.body.friendId;
 	var userToReturn;
 
