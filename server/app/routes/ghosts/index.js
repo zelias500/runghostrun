@@ -23,9 +23,15 @@ router.param('id', function(req, res, next, id){
 	 	 next()
 	 }).then(null, next);
 });
+// GET users best time for that ghost, if any
+router.get("/:id/users/:userId", function (req, res, next){
+	Run.populate(req.ghost.runs)
+	req.ghost.populate()
+})
+
 
 // GET single ghost by id
-router.get('/:id', function(req,res, next){
+router.get('/:id', function (req, res, next){
      res.status(200).json(req.ghost);
 });
 

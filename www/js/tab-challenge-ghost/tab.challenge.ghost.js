@@ -27,8 +27,7 @@ app.controller('GhostCtrl', function ($scope, ghost, MapFactory, $state, Locatio
         if (states.direction === 'swap') $state.go('tab.challenge', {reload: true});
     });
 
-    $scope.challengeGhost = function() {
+    $scope.setGhost = function() {
     	LocationFactory.setGhost($scope.ghost);
-    	$state.go('tab.record')
     }
 });

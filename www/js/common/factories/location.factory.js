@@ -27,7 +27,10 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 	};
 
 	var data = {
-		locations: [],
+		locations: [{
+	      lat: "40.70",
+	      lng: "-74.00"
+		}],
 		distance: 0,
 		time: 0,
 		speedPoints: []

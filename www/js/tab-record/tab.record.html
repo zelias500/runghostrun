@@ -1,15 +1,11 @@
 <ion-view view-title="Record">
   <ion-content class="padding">
-
     <div id="RunMap" style="height:200px;width:350px"></div>
     <ghost-stats data="currentRun" ng-show="currentRun"></ghost-stats>
-
-    <div class="bar bar-footer bar-balanced" ng-class="barColor">
-      <div ng-show="!currentRun" ng-click="start()" class="title">Start</div>
-      <div ng-show="!currentRun && ghost()" ng-click="removeGhost()" class="title">Remove Challenge</div>
-
-      <div ng-show="currentRun" ng-click="stop()" class="title" >Stop</div>
-    </div>
-
+    <div class="button-bar" ng-class="barColor">
+      <a ng-show="!currentRun" ng-click="start()" class="button">Start</a>
+      <a ng-show="!currentRun && ghost()" ng-click="removeGhost()" class="button button-assertive">Remove Challenge</a>
+      <a ng-show="currentRun" ng-click="stop()" class="button">Stop</a>
+	</div>
   </ion-content>
 </ion-view>
