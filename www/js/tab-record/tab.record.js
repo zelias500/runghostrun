@@ -66,7 +66,9 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
         $state.go("results", {map: $scope.map});
     }
 
-    $scope.ghost = LocationFactory.getGhost();
+    $scope.ghost = function() {
+        return LocationFactory.getGhost();
+    }
 
     $scope.removeGhost = function() {
         LocationFactory.setGhost(null);
