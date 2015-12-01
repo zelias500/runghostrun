@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Ghost = mongoose.model('Ghost');
+var Run = mongoose.model('Run');
 var _ = require('lodash');
 
 var schema = new mongoose.Schema({
@@ -44,11 +45,11 @@ schema.methods.addGhost = function(data){
 }
 
 schema.methods.recentFriendActivity = function () {
-    return Promise.all(this.friends.map(friend => Ghost.getChallenger(friend)))
-    .then(friendArray => {
-        return _.flatten(friendArray).sort((a, b) => {
+    return Promise.all(this.friends.map(friend => Run.find({runner: friend})))
+    .then(runArray => {
+        return _.flatten(runArray).sort((a,b) => {
             return a.timestamp > b.timestamp;
-        }).slice(0,3);
+        }).slice(0, 3);
     }).then(null, error => {console.error(error)})
 }
 
