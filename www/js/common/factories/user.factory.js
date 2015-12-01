@@ -70,8 +70,13 @@ app.factory('UserFactory', function ($http) {
 		.then(toData);
 	};
 
-	factory.addFriend = function (userid, friendid){
-		return $http.post('/api/users/' + userid + "/addFriend", {friendid})
+	factory.addFriend = function (userId, friendId) {
+		return $http.post('/api/users/' + userId + "/friends", { friendId: friendId })
+		.then(toData)
+	};
+
+	factory.removeFriend = function (userId, friendId) {
+		return $http.post('/api/users/' + userId + "/friends/remove", { friendId: friendId })
 		.then(toData)
 	};
 

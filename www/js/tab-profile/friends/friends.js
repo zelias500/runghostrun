@@ -1,5 +1,5 @@
 app.config(function($stateProvider){
-	$stateProvider.state('tab.friend', {
+	$stateProvider.state('tab.friends', {
         url: '/friends',
         data:{
             authenticate: true
@@ -7,21 +7,20 @@ app.config(function($stateProvider){
         views:{
             'tab-profile': {
                 templateUrl: 'js/tab-profile/friends/friends.html',
-                controller: 'FriendsCtrl'
+                controller: 'friendsCtrl'
             },
         },
-        resolve:{
-            allUser: function (UserFactory) {
-                return UserFactory.fetchAll()
+        resolve: {
+            friends: function (UserFactory, Session) {
+                return UserFactory.fetchAllFriends(Session.user._id);
             }
         }
     });
 });
 
-app.controller('FriendsCtrl', function ($scope, allUser, $state) {
-	// console.log(allUser);
-   $scope.allusers = allUser;
-   $scope.goFriendPage = function (fdid) {
-      $state.go('tab.friend.profile', {id: fdid})
-   }
+app.controller('friendsCtrl', function ($scope, friends, $state) {
+    $scope.friends = friends;
+    $scope.goFriendPage = function (friendId) {
+      $state.go('tab.friend.profile', {id: friendId})
+    }
 });

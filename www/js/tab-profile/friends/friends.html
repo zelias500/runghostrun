@@ -6,11 +6,11 @@
   	 		<i class="icon ion-person-add"></i>
   	 		Find Friends
   	 	</a>
-  	 	<a ng-repeat="user in allusers | filter: searchFd" 
-  	 	   href="#/tab/profile/{{user._id}}" 
+  	 	<a ng-repeat="friend in friends" 
+  	 	   href="#/tab/profile/{{ friend._id }}" 
   	 	   class="item item-avatar">
   	 	   <img ng-src="img/ghost_profile.jpg" />
-  	 	   {{user.email}}
+  	 	   {{ friend.email }}
   	 	</a>
   	 </div>
    </div>

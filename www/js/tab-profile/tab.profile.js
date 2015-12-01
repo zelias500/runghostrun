@@ -36,11 +36,10 @@ app.controller('ProfileCtrl', function ($scope, me, UserFactory, $state) {
     $scope.numFriends = me.friends.length;
     $scope.numFollowers = me.followers.length;
     $scope.numRuns = me.ghosts.length;
+
     $scope.notMe = function () {
         return !(me._id === $scope.userId);
     }
-
-    console.log(me);
 
     // $scope.successMessage;
 
@@ -67,10 +66,17 @@ app.controller('ProfileCtrl', function ($scope, me, UserFactory, $state) {
     //     $scope.friends = allFriends.slice(0,3)
     // }
 
-    // $scope.addToFd = function () {
-    //     return UserFactory.createFriend($scope.userId, $scope.me._id).then(function() {
-    //         $scope.successMessage = $scope.me.email + ' added to your friends list!'
-    //     });
-    // }
+    $scope.addFriend = function () {
+        return UserFactory.addFriend($scope.userId, $scope.me._id)
+        .then(function () {
+            $scope.successMessage = $scope.me.email + ' added to your friends list!'
+        });
+    }
+    $scope.removeFriend = function () {
+        return UserFactory.removeFriend($scope.userId, $scope.me._id)
+        .then(function () {
+            $scope.successMessage = $scope.me.email + ' Removed from your friends list.'
+        });
+    }
 
 });
