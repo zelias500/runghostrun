@@ -40,31 +40,42 @@ app.factory('UserFactory', function ($http) {
 		.then(toData);
 	};
 
+	// returns pace in min/km
 	factory.fetchAvgPace = function (id) {
 	    return this.fetchAllRuns(id)
 	     	.then(function (runs) {
+
+	     		// total distance in km
 				var totalDistance = runs.reduce(function (curr, next) {
-					return curr + next.distance;
+					return curr + next.distance * 100; // distance is originally in m
 				}, 0);
+
+				// total time in minutes
 				var totalTime = runs.reduce(function (curr, next) {
 					return curr + next.time;
 				}, 0);
+				
    				var totalTimeinMin = Math.floor(totalTime / 60);
-   				if (totalTimeinMin === 0) return 0; // prevent dividing by zero
-				var avgPace = Math.round(totalDistance / totalTimeinMin * 100) / 100;
+
+   				if (totalDistance === 0) return 0; // prevent dividing by zero
+
+				var avgPace = Math.floor(totalTimeinMin / totalDistance);
 				return avgPace;
 	     });
 	};
 
+	// returns average distance in km
 	factory.fetchAvgDistance = function (id) {
         return this.fetchAllRuns(id)
         .then(function (runs) {
+
         	if (runs.length === 0) return 0; // prevent dividing by zero
 
-			var totalDistance = runs.reduce(function(curr, next){
-				return curr + next.distance;
+			var totalDistance = runs.reduce(function (curr, next) {
+				return curr + next.distance * 100; // distance is originally in m
 			}, 0);
-			return Math.round(totalDistance / runs.length * 100) / 100;
+
+			return Math.floor(totalDistance / runs.length);
        });
 	};
 
