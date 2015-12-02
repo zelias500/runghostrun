@@ -61,6 +61,7 @@ router.get('/:id/friends/recent', function(req, res, next){
 
 // GET user runs
 router.get('/:id/runs', function(req, res, next){
+	var ourRuns;
 	req.targetUser.populate('runs').execPopulate().then(function(user){
 		var runsToPopulate = user.runs.map(function(run){
 			return run.populate('ghost').execPopulate()
@@ -68,7 +69,14 @@ router.get('/:id/runs', function(req, res, next){
 		return Promise.all(runsToPopulate)
 	})
 	.then(function(runs){
-		res.status(200).json(runs)
+		ourRuns = runs;
+		var ghostsToPopulate = runs.map(function(run){
+			return run.ghost.populate('owner').execPopulate();
+		})
+		return Promise.all(ghostsToPopulate);
+	})
+	.then(function (){
+		res.status(200).json(ourRuns)
 	})
 	.then(null, next);
 });
@@ -161,7 +169,7 @@ router.post('/:id/ghosts', function (req, res, next){
 		return ourRun.save();
 	})
 	.then(function(){
-		req.targetUser.ghosts.push(ghost);
+		req.targetUser.ghosts.push(ourGhost);
 		return req.targetUser.save();
 	})
 	.then(function(){

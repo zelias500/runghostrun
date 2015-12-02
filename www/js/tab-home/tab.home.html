@@ -11,8 +11,8 @@
         <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
         <ion-list>
           <ion-item ng-repeat='run in recentRuns'>
-          <div ng-if="run.ghost.owner==user._id"> You ran your own challenge {{run.ghost.title}} on {{run.timestamp}}</div>
-          <div ng-if="run.ghost.owner!=user._id"> You ran {{run.ghost.owner}}'s challenge {{run.ghost.title}} on {{run.timestamp}} </div>
+          <div ng-if="run.ghost.owner==user._id"> You ran your own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
+          <div ng-if="run.ghost.owner!=user._id"> You ran {{userName(run.ghost.owner)}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}} </div>
             <ghost-map ghost='run' anchors='false' boxes='false'></ghost-map>
           And ran:
           <ghost-stats data='run'></ghost-stats>
@@ -21,10 +21,13 @@
       </div>
 
       <div class="item item-body" ng-show="!!friendTab">
-        <p ng-show="{{friendGhosts.length === 0}}">No recent friend activity. Go make friends!</p>
+        <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
         <ion-list>
-          <ion-item ng-repeat='friend in friendGhosts'>
-            <ghost-map ghost='friend' anchors='true'></ghost-map>
+          <ion-item ng-repeat='friendRun in friendRuns'>
+            <ghost-map ghost='friendRun' anchors='true'></ghost-map>
+              <div ng-if="friendRun.ghost.owner==friendRun.runner._id"> {{userName(friendRun.owner)}} ran their own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
+              <div ng-if="friendRun.ghost.owner==user._id"> {{userName(friendRun.owner)}} ran your challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
+              <div ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id"> {{userName(friendRun.owner)}} ran {{run.ghost.owner}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}} </div>
           </ion-item>
         </ion-list>
       </div>
