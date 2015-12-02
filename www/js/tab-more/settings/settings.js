@@ -30,9 +30,9 @@ app.controller('SettingsCtrl', function ($scope, SettingFactory,$ionicModal,$cor
         console.log(SettingFactory.getUnit())
 
     };
-    console.log($scope.name);
+
     $scope.changeName = function(){
-        console.log("here")
+
     }
 
 
