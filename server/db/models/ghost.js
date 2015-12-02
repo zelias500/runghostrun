@@ -72,11 +72,14 @@ schema.methods.addNewRun = function(run){
 }
 
 schema.statics.getGhostsNear = function (locationObject) {
-    return this.find().then(allGhosts => {
+    return this.find().populate('owner runs bestRunner').then(allGhosts => {
         return allGhosts.filter(ghost => {
             if (ghost.locations.length){
                 return calcGeoDistance(ghost.locations[0], locationObject) < 5000            
             } else return false;
+        })
+        .sort( (a,b) => { // closest ghosts appear first
+            return calcGeoDistance(a.locations[0], locationObject) - calcGeoDistance(b.locations[0], locationObject)
         })
     })
 }

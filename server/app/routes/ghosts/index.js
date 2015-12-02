@@ -16,12 +16,11 @@ router.get('/', function(req,res,next){
 
 // POST is done via User as they can choose to transform a run into a ghost
 
-// testing: http://localhost:3000/api/ghosts/nearby?lat=40.7052076&lng=-74.0091257
 // GET nearby ghosts (req.query)
 router.get('/nearby', function(req, res, next){
 	Ghost.getGhostsNear({lat: Number(req.query.lat), lng: Number(req.query.lng)}).then(function(nearbyStuff){
 		var privacyCheck = nearbyStuff.filter(ghost => {
-			if (ghost.privacy == 'friends') return req.user.friends.indexOf(ghost.owner) != -1;
+		if (ghost.privacy == 'friends' && req.user) return req.user.friends.indexOf(ghost.owner._id) != -1;
 			return ghost.privacy == 'public'
 		})
 		res.status(200).json(privacyCheck);
