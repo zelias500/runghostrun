@@ -34,7 +34,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state, Gh
 
     function byLength() {
         $scope.ghosts.sort( (a,b) => {
-            return b.totalDistance - a.totalDistance
+            return b.distance - a.distance
         })  
     }
 

@@ -156,7 +156,7 @@ router.post('/:id/ghosts', function (req, res, next){
 		return Ghost.create({
 			owner: req.targetUser._id,
 			locations: ourRun.locations,
-			totalDistance: ourRun.distance,
+			distance: ourRun.distance,
 			title: title
 		})
 	})
