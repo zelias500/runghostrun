@@ -153,7 +153,7 @@ router.post('/:id/ghosts', function (req, res, next){
 	})
 	.then(function (ghost){
 		ourGhost = ghost;
-		req.targetUser.ghosts.push(ghost);
+		req.targetUser.ghosts.push(ourGhost);
 		return req.targetUser.save();
 	})
 	.then(function(){

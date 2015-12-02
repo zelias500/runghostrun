@@ -16,15 +16,19 @@ app.config(function ($stateProvider) {
 app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state, $rootScope) {
     $scope.lastLocIndex;
     $scope.currentRun;
+    $scope.challengedGhost = LocationFactory.getGhost();
     $scope.barColor = "bar-balanced";
     var interv;
 
     $scope.start = function () {
+
         $scope.barColor = "bar-assertive"
         LocationFactory.startNewRun();
         $scope.currentRun = LocationFactory.getCurrentRunData();
         $scope.lastInd = LocationFactory.getLocIndex();
-        $rootScope.$emit('start');
+
+        if ($scope.challengedGhost) $rootScope.$emit('startChallenge');
+        else $rootScope.$emit('start');
 
         interv = $interval(function () {
             $scope.currentRun.time++;
@@ -34,6 +38,7 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
     }
 
     $scope.stop = function () {
+
         $interval.cancel(interv);
         interv = undefined;
         $scope.currentRun = LocationFactory.stopRun(Session.user._id);
