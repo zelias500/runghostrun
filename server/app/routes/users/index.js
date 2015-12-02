@@ -131,6 +131,7 @@ router.put('/:id/friends/remove', function (req, res, next) {
 
 // POST new ghost (create a new ghost with rundata)
 router.post('/:id/ghosts', function (req, res, next){
+	var ourGhost;
 	var ourRun;
 	Run.create(req.body)
 	.then(function (run){
@@ -151,7 +152,12 @@ router.post('/:id/ghosts', function (req, res, next){
 		return ghost.addNewRun(ourRun)
 	})
 	.then(function (ghost){
-		res.status(201).json(ghost);
+		ourGhost = ghost;
+		req.targetUser.ghosts.push(ghost);
+		return req.targetUser.save();
+	})
+	.then(function(){
+		res.status(201).json(ourGhost);		
 	})
 	.then(null, next);
 });
