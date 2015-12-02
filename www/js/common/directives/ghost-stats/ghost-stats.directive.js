@@ -8,6 +8,7 @@ app.directive('ghostStats', function (TimeFactory, StatFactory) {
 		restrict: 'E',
 		templateUrl: '/js/common/directives/ghost-stats/ghost-stats.html',
 		link: function (scope) {
+			if (!scope.data) return;
 
 			var run = scope.data;
 		    function parseDisplayDate(date) {
