@@ -14,21 +14,21 @@ app.config(function ($stateProvider) {
             runs: function (UserFactory, Session) {
                 return UserFactory.fetchAllRuns(Session.user._id);
             },
-            friendGhosts: function(UserFactory, Session) {
+            friendRuns: function(UserFactory, Session) {
                 return UserFactory.fetchRecentFriendData(Session.user._id);
             }
         }
     });
 });
 
-app.controller('HomeCtrl', function ($scope, runs, Session, friendGhosts) {
+app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFactory) {
     $scope.user = Session.user;
 
     $scope.recentRuns = runs.sort((a,b) => {
-        return a.timestamp > b.timestamp
+        return b.timestamp > a.timestamp
     }).slice(0, 3);
 
-    $scope.friendGhosts = friendGhosts;
+    $scope.friendRuns = friendRuns;
 
     $scope.recentTab = 'tmk-active';
     $scope.friendTab = '';
@@ -40,5 +40,13 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendGhosts) {
             $scope.recentTab = '';
             $scope.friendTab = 'tmk-active';
         }
+    }
+
+    $scope.userName = function(friend){
+        return friend.displayName || friend.email;
+    }
+
+    $scope.timeStampToReadable = function(timestamp){
+        return TimeFactory.parseDisplayDate(timestamp);
     }
 });

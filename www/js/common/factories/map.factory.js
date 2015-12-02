@@ -46,15 +46,31 @@ app.factory('MapFactory', function () {
 			this.wayPoints.push(location);
 		}
 
-		Map.prototype.makePolyline = function() {
+		Map.prototype.makePolyline = function () {
 			this.runPath = new google.maps.Polyline({
 				path: this.wayPoints,
 				geodesic: true,
-				strokeColor: 'red',
+				strokeColor: '#FC4C02',
 			    strokeOpacity: 0.8,
 			    strokeWeight: 2
 			});
 		}
+
+		Map.prototype.makeOtherPolyline = function (ghost) {
+			var otherWayPoints = makeWayPoints(ghost);
+			this.existingPath = new google.maps.Polyline({
+				path: otherWayPoints,
+				geodesic: true,
+				strokeColor: '#387ef5',
+			    strokeOpacity: 0.8,
+			    strokeWeight: 2
+			});
+			otherWayPoints.forEach(loc => {
+				loc = new google.maps.LatLng(loc.lat, loc.lng)
+				this.bounds.extend(loc);
+			});
+		}	
+
 		if (ghost) return new Map(ghost);
 		else {
 			ourMap = new Map(ghost);

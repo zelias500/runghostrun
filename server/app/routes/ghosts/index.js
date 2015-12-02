@@ -16,6 +16,17 @@ router.get('/', function(req,res,next){
 
 // POST is done via User as they can choose to transform a run into a ghost
 
+// GET nearby ghosts (req.query)
+router.get('/nearby', function(req, res, next){
+	Ghost.getGhostsNear({lat: Number(req.query.lat), lng: Number(req.query.lng)}).then(function(nearbyStuff){
+		var privacyCheck = nearbyStuff.filter(ghost => {
+		if (ghost.privacy == 'friends' && req.user) return req.user.friends.indexOf(ghost.owner._id) != -1;
+			return ghost.privacy == 'public'
+		})
+		res.status(200).json(privacyCheck);
+	}).then(null, next);
+})
+
 // id parameter
 router.param('id', function(req, res, next, id){
 	 Ghost.findById(id).populate('owner bestRunner bestRun').then(function(ghost){
@@ -23,6 +34,7 @@ router.param('id', function(req, res, next, id){
 	 	 next()
 	 }).then(null, next);
 });
+
 // GET users best time for that ghost, if any
 router.get("/:id/users/:userId", function (req, res, next){
 	return Run.populate(req.ghost, {path: 'runs'})
@@ -52,6 +64,8 @@ router.get('/:id', function (req, res, next){
 router.post('/:id', function(req, res, next){
 	var ourUpdatedGhost;
 	var ourRun;
+	req.body.timestamp = Date.now();
+	req.body.ghost = req.ghost._id;
 	Run.create(req.body)
 	.then(function (run){
 		ourRun = run;
