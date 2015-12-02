@@ -40,42 +40,42 @@ app.factory('UserFactory', function ($http) {
 		.then(toData);
 	};
 
-	// returns pace in min/km
+	// returns a user's overall average pace in min/km
 	factory.fetchAvgPace = function (id) {
 	    return this.fetchAllRuns(id)
 	     	.then(function (runs) {
-
 	     		// total distance in km
 				var totalDistance = runs.reduce(function (curr, next) {
 					return curr + (next.distance / 1000); // distance is originally in m, converting to km
 				}, 0);
 
-				// total time in minutes
+				// check to prevent dividing by zero
+   				if (totalDistance === 0) return 0;
+
+				// total time in seconds
 				var totalTime = runs.reduce(function (curr, next) {
 					return curr + next.time;
 				}, 0);
 
-   				var totalTimeinMin = Math.floor(totalTime / 60);
-
-   				if (totalDistance === 0) return 0; // prevent dividing by zero
-
-				var avgPace = Math.floor(totalTimeinMin / totalDistance);
-				return avgPace;
+   				var totalTimeinMin = (totalTime / 60);
+				var avgPace = (totalTimeinMin / totalDistance).toFixed(2);
+				return Number(avgPace);
 	     });
 	};
 
-	// returns average distance in km
+	// returns a user's overall average distance in km
 	factory.fetchAvgDistance = function (id) {
         return this.fetchAllRuns(id)
         .then(function (runs) {
-
-        	if (runs.length === 0) return 0; // prevent dividing by zero
+        	// check to prevent dividing by zero
+        	if (runs.length === 0) return 0;
 
 			var totalDistance = runs.reduce(function (curr, next) {
 				return curr + (next.distance / 1000); // distance is originally in m, converting to km
 			}, 0);
 
-			return Math.floor(totalDistance / runs.length);
+			var avgDistance = (totalDistance / runs.length).toFixed(2);
+			return Number(avgDistance);
        });
 	};
 
