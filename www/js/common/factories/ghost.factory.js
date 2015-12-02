@@ -39,7 +39,7 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	factory.getNearbyGhosts = function () {
 		return $cordovaGeolocation.getCurrentPosition().then(function(position){
 			return $http.get('/api/ghosts/nearby?'+'lat='+position.coords.latitude+'&lng='+position.coords.longitude)
-			.then(toData);			
+			.then(toData)
 		}).then(null, alert)
 	};
 	

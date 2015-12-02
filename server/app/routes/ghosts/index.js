@@ -20,7 +20,11 @@ router.get('/', function(req,res,next){
 // GET nearby ghosts (req.query)
 router.get('/nearby', function(req, res, next){
 	Ghost.getGhostsNear({lat: Number(req.query.lat), lng: Number(req.query.lng)}).then(function(nearbyStuff){
-		res.status(200).json(nearbyStuff);
+		var privacyCheck = nearbyStuff.filter(ghost => {
+			if (ghost.privacy == 'friends') return req.user.friends.indexOf(ghost.owner) != -1;
+			return ghost.privacy == 'public'
+		})
+		res.status(200).json(privacyCheck);
 	}).then(null, next);
 })
 

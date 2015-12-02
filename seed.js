@@ -60,7 +60,8 @@ connectToDb.then(function () {
                   lng: '-74.012384'  
                 }
             ],
-            totalDistance: 2336
+            totalDistance: 2336,
+            privacy: 'friends'
         })
     })
     .then(function(ghost){
