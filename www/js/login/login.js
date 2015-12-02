@@ -12,5 +12,4 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('LoginCtrl', function ($scope, AuthService, $state) {
-	console.log(window.localStorage.getItem('user'))
 });
