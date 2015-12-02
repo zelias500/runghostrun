@@ -51,10 +51,10 @@ schema.methods.addGhost = function(data){
 }
 
 schema.methods.recentFriendActivity = function () {
-    return Promise.all(this.friends.map(friend => Run.find({runner: friend})))
+    return Promise.all(this.friends.map(friend => Run.find({runner: friend}).populate("runner ghost")))
     .then(runArray => {
         return _.flatten(runArray).sort((a,b) => {
-            return a.timestamp > b.timestamp;
+            return b.timestamp > a.timestamp;
         }).slice(0, 3);
     }).then(null, error => {console.error(error)})
 }

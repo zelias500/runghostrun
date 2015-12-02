@@ -13,59 +13,37 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state) {
+app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state, $rootScope) {
     $scope.lastLocIndex;
     $scope.currentRun;
+    $scope.challengedGhost = LocationFactory.getGhost();
     $scope.barColor = "bar-balanced";
     var interv;
 
     $scope.start = function () {
+
         $scope.barColor = "bar-assertive"
-        // TODO: fix the need for $interval to update run data below
-
-
         LocationFactory.startNewRun();
         $scope.currentRun = LocationFactory.getCurrentRunData();
-        $scope.map = MapFactory.newMap()
         $scope.lastInd = LocationFactory.getLocIndex();
 
-        var gmap = new google.maps.Map(document.getElementById("RunMap"), {
-            zoom: 12,
-            mapTypeId: google.maps.MapTypeId.TERRAIN
-        })
-
-        $scope.map.runPath.setMap(gmap);
+        if ($scope.challengedGhost) $rootScope.$emit('startChallenge');
+        else $rootScope.$emit('start');
 
         interv = $interval(function () {
             $scope.currentRun.time++;
-
             $scope.currentRun = LocationFactory.getCurrentRunData();
-            if ($scope.currentRun.locations.length > $scope.map.wayPoints.length){
-                var lastLocation = $scope.currentRun.locations[$scope.currentRun.locations.length-1];
-                $scope.map.addWayPoint(
-                {
-                    lat: Number(lastLocation.lat),
-                    lng: Number(lastLocation.lng)
-                })
-                gmap.fitBounds($scope.map.bounds);
-                var lastWayPointIndex = $scope.map.wayPoints.length - 1;
-            }
-            $scope.currentRun.avgPace = LocationFactory.getAvgSpeed();
-
-            $scope.lastInd = LocationFactory.getLocIndex();
-            $scope.map.makePolyline();
-            $scope.map.runPath.setMap(gmap);
-
-        },1000)
+            $rootScope.$emit('tick');
+        }, 1000);
     }
 
     $scope.stop = function () {
 
         $interval.cancel(interv);
         interv = undefined;
-        $scope.currentRun = LocationFactory.stopRun(Session.user._id)
-        $scope.lastInd = $scope.currentRun.locations.length-1
-        $state.go("results", {map: $scope.map});
+        $scope.currentRun = LocationFactory.stopRun(Session.user._id);
+        $scope.lastInd = $scope.currentRun.locations.length - 1;
+        $state.go("results");
     }
 
     $scope.ghost = function() {

@@ -10,8 +10,8 @@
       <ion-item ng-repeat="ghost in ghosts">
       	<p>{{ghost.title || "Untitled Ghost"}}</p>
       	<p>Owned by {{ghost.owner.displayName || ghost.owner.email}}</p>
-        <ghost-map ghost='ghost' anchors="true" boxes="true"></ghost-map>
-        <p ng-show='ghost.myPrevTime'>Your previous time: {{ghost.myPrevTime}}</p>
+        <ghost-map ghost='ghost' anchors="true" boxes="false"></ghost-map>
+        <ghost-stats data="ghost"></ghost-map>
       </ion-item>
     </ion-list>
   </ion-content>

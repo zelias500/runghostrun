@@ -1,4 +1,4 @@
-app.directive('ghostMap', function(MapFactory){
+app.directive('ghostMap', function (MapFactory) {
 	return {
 		scope: {
 			ghost: '=',
@@ -9,6 +9,7 @@ app.directive('ghostMap', function(MapFactory){
 		restrict: 'E',
 		link: function (scope) {
 			// Note: this directive may take either a run or a ghost. The term 'ghost' is used interchangeably in this scope.
+			// However, only maps that are completed (not meant to be updated) should be passed into this.
 
 			scope.ghostUniqueId = scope.ghost._id + _.random(0, 1000, false)
 

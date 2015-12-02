@@ -3,8 +3,8 @@ app.factory('StatFactory', function () {
 
 	// takes a run - returns the average pace in min/m
 	factory.minMeter = function (run) {		
-		var distance = run.distance; // distance in meters
-		var time = (run.time / 60) // time in minutes
+		var distance = run.distance || run.totalDistance; // distance in meters
+		var time = ((run.time || run.best) / 60) // time in minutes
 		if (distance === 0) return 0; // prevent dividing by zero
 		var pace = (time / distance).toFixed(2);
 		return Number(pace);
@@ -12,8 +12,8 @@ app.factory('StatFactory', function () {
 
 	// takes a run - returns the average pace in min/km
 	factory.minKm = function (run) {
-		var distance = run.distance; // distance in meters
-		var time = (run.time / 60); // time in minutes
+		var distance = run.distance || run.totalDistance; // distance in meters
+		var time = ((run.time || run.best) / 60); // time in minutes
 		if ((distance / 1000) === 0) return 0; // prevent dividing by zero
 		var pace = (time / (distance / 1000).toFixed(2));
 		return Number(pace);
