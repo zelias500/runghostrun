@@ -1,4 +1,4 @@
-<a class="button button-full icon-left {{ buttonIcon }} {{ buttonColor }}" href="/auth/{{ providerName | lowercase }}">
+<a class="button button-full icon-left {{ buttonIcon }} {{ buttonColor }}" ng-click='authStuff(providerName)'>
 	<i class="fa fa-{{ providerName | lowercase }}"></i>
 	<span>Sign in with {{ providerName }}</span>
 </a>
