@@ -1,5 +1,48 @@
 <ion-view view-title="Settings">
   <ion-content class="padding">
+     <div class="list">
+     	<div class="item item-divider">
+     	  Distance Unit
+     	</div>
+		  <label class="item item-radio ">
+		    <input type="radio" name="group" ng-click="useKm()">
+              <div class="radio-content">
+			      <div class="item-content" id="unit" >
+			        Kilometer
+			      </div>
+		      <i  class="radio-icon ion-checkmark"></i>
+		      </div>
+		  </label>
+		  <label class="item item-radio ">
+		    <input type="radio" name="group" ng-click="useMile()">
+              <div class="radio-content">
+			      <div class="item-content" id="unit" >
+			        Mile
+			      </div>
+		      <i class="radio-icon ion-checkmark"></i>
+		      </div>
+		  </label>
+		  <div class="item item-toggle">
+		    Privacy
+			<label class="toggle">
+				<input type="checkbox" ng-click="changePrivacy()">
+				<div class="track">
+				<div class="handle"></div>
+				</div>
+			</label>
+		  </div>
+		<div class="item item-divider">
+			Profile
+		</div>
+		<label class="item item-input item-stacked-label">
+			<span class="input-label" id="display">Display Name</span>
+			<input type="text" ng-model="name" placeholder="Your name Here">
+			<br/>
+			<button class="button button-calm button-small" ng-click="changeName()">Submit</button>
+
+		</label>
+		<div class="item" id="unit" ng-click="modal.show()">Profile Picture</div>
+     </div>
 
   </ion-content>
 </ion-view>

@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('ghostStats', function (TimeFactory, StatFactory) {
+app.directive('ghostStats', function (TimeFactory, StatFactory, SettingFactory) {
 	return {
 		scope: {
 			data: '='
@@ -25,6 +25,13 @@ app.directive('ghostStats', function (TimeFactory, StatFactory) {
         	scope.distance = run.distance;
         	scope.averagePaceKm = StatFactory.minKm(run);
         	scope.averagePaceMi = StatFactory.minKm2minMi(scope.averagePaceKm);
+
+            if(SettingFactory.getUnit() == 'km'){
+            	scope.useKm = true;
+            }
+            if(SettingFactory.getUnit() =='mi'){
+            	scope.useMi = true
+            }
         	return run;
     	}
 	}
