@@ -61,7 +61,6 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
             // otherwise, if no user is logged in, go to "login" state.
             if (user) {
                 $rootScope.userId = Session.user._id;
-                window.localStorage.set('user', JSON.stringify(Session.user))
                 $state.go(toState.name, toParams);
             } else {
                 $state.go('login');
