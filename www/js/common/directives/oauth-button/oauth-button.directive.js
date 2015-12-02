@@ -13,7 +13,6 @@ app.directive('oauthButton', function ($http, $cordovaInAppBrowser, $state) {
 		templateUrl: '/js/common/directives/oauth-button/oauth-button.html',
 		link: function (scope) {
 			scope.authStuff = function(providerName){
-				var requestToken;
 				var loginWindow = $cordovaInAppBrowser.open('http://murmuring-brook-3057.herokuapp.com/auth/google','_blank', options)
 			}
 			if (scope.providerName === 'google') {
