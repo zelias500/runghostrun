@@ -3,6 +3,7 @@
 		<li>Run on: {{ displayDate }}</li>
 		<li>Distance: {{ distance }} meters</li>
 		<li>Time: {{ displayTime }}
-		<li>Pace: {{ averagePaceKm }} min/km | {{ averagePaceMi }} min/mi</li>
+		<li ng-show="useKm">Pace: {{ averagePaceKm }} min/km</li>
+		<li ng-show="useMi">Pace: {{ averagePaceMi }} min/mi</li>
 	</ul>
 </a>

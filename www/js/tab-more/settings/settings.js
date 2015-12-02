@@ -13,6 +13,63 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('SettingsCtrl', function ($scope, $state) {
+app.controller('SettingsCtrl', function ($scope, SettingFactory,$ionicModal,$cordovaCamera) {
+
+    $scope.check = SettingFactory.getPrivacy()
+    $scope.changePrivacy = function(){
+        $scope.check = !$scope.check
+        SettingFactory.setPrivacy($scope.check)
+    };
+
+    $scope.useKm = function(){
+        SettingFactory.setUnit("km")
+        console.log(SettingFactory.getUnit())
+    };
+    $scope.useMile = function(){
+        SettingFactory.setUnit("mi")
+        console.log(SettingFactory.getUnit())
+
+    };
+
+    $scope.changeName = function(){
+
+    }
+
+
+
+    // document.addEventListener("deviceready", function () {
+
+    //     var options = {
+    //       quality: 50,
+    //       destinationType: Camera.DestinationType.DATA_URL,
+    //       sourceType: Camera.PictureSourceType.CAMERA,
+    //       allowEdit: true,
+    //       encodingType: Camera.EncodingType.JPEG,
+    //       targetWidth: 100,
+    //       targetHeight: 100,
+    //       popoverOptions: CameraPopoverOptions,
+    //       saveToPhotoAlbum: false,
+    //       correctOrientation:true
+    //     };
+
+    //     $cordovaCamera.getPicture(options).then(function(imageData) {
+    //         console.log(imageData)
+    //       // var image = document.getElementById('myImage');
+    //       // image.src = "data:image/jpeg;base64," + imageData;
+    //     }, function(err) {
+    //        console.log(err)
+    //     });
+
+    //   }, false);
+
+
+   $ionicModal.fromTemplateUrl('js/tab-more/settings/profile-pic.html', function($ionicModal) {
+        $scope.modal = $ionicModal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-up'
+    });
+
+
 
 });

@@ -9137,11 +9137,11 @@ ion-tabs.tabs-color-active-positive .tab-item {
 .item.item-icon-left {
   color: #387ef5; }
 
-.filterers {
-  display: flex;
-  justify-content: center; }
-  .filterers button {
-    padding: 0; }
+#unit {
+  background-color: #2B2B2B; }
+
+#display {
+  color: #ffffff; }
 
 .profile_img {
   border-radius: 50%;
