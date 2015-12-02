@@ -1,17 +1,21 @@
-<ion-view view-title="More">
+<ion-view view-title="Results">
   <ion-content class="padding">
 
-  <div class="item range">
-    <input type="range" min="0" max="2" value="0" name="privacyRange" ng-model="privacyRange" ng-change="checkTick(privacyRange)">
-  </div>
+    <div class="item range">
+      <input type="range" min="0" max="2" value="0" name="privacyRange" ng-model="privacyRange" ng-change="checkTick(privacyRange)">
+    </div>
+
     <div class="button-bar">
       <div id="privacySetting" class="button button-positive"> {{privacySetting}} </div>
     </div>
-    <div id="RanMap" style="height:200px;width:350px"> </div>
-    <ghost-stats data="stopData"> </ghost-stats>
+
+    <run-map result="map"></run-map>
+    <ghost-stats data="stopData"></ghost-stats>
+
     <div class="button-bar">
       <a ng-click="save()" class="button button-balanced">Save</a>
       <a ng-click="discard()" class="button button-assertive">Discard</a>
     </div>
+
   </ion-content>
 </ion-view>

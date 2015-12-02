@@ -3,27 +3,20 @@
 		<ghost-map ghost='ghost' anchors="true"></ghost-map>
 
 		<div class="row">
-			<div class="col">Challenge's Best Results </div>
-			<div ng-if="usersBest" class="col">Your Best Result </div>
+			<div class="item col">Ghost Best</div>
+			<div class="item col" ng-if="usersBest">Your Best</div>
 		</div>
 		<div class="row">
-			<div class="col" title="Ghost's Best">
-				<ul class="list">
-					<li class="item"> Time: {{ displayTime('best') }} </li>
-					<li class="item"> Distance: {{ findDistance('best') }} m</li>
-					<li class="item"> Pace (km/h): {{ getAvgSpeed('best', false) }} </li>
-				<ul>
+			<div class="col" title="ghostBest">
+				<ghost-stats data="ghost"></ghost-stats>
 			</div>
 			<div ng-if="usersBest" class="col">
-				<ul  class="list">
-					<li class="item"> Time: {{ displayTime() }} </li>
-					<li class="item"> Distance: {{ findDistance() }} m</li>
-					<li class="item"> Pace (km/h): {{ getAvgSpeed() }} </li>
-				<ul>
+				<ghost-stats data="usersBest"></ghost-stats>
 			</div>
 		</div>
-		
-		<a style="background-color:white" ng-click='setGhost()' href="#/tab/record">CHALLENGE THIS GHOST</a>
+		<div class="button-bar bar-balanced" ng-click='setGhost()'>
+			<a href="#/tab/record" class="button">Challenge Ghost</a>
+		</div>
 
 	</ion-content>
 </ion-view>
