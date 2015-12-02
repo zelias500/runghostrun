@@ -8,6 +8,7 @@ app.directive('ghostMap', function(MapFactory){
 		templateUrl: '/js/common/directives/ghost-map/ghost-map.html',
 		restrict: 'E',
 		link: function (scope) {
+			// Note: this directive may take either a run or a ghost. The term 'ghost' is used interchangeably in this scope.
 
 			scope.ghostUniqueId = scope.ghost._id + _.random(0, 1000, false)
 
