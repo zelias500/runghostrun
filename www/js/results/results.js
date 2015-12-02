@@ -42,7 +42,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     }
 
     $scope.save = function() {
-        $scope.stopData.privacy = $scope.privacySetting
+        $scope.stopData.privacy = $scope.privacySetting.toLowerCase();
         LocationFactory.saveRun($rootScope.userId, $scope.stopData)
         .then(function(runOrGhost){
             // if its a ghost
