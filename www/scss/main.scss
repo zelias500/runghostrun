@@ -69,5 +69,13 @@ ion-tabs.tabs-color-active-positive .tab-item {
 	color: $font-blue;
 }
 
+.filterers {
+	display: flex;
+	justify-content: center;
+	button {
+		padding: 0;
+	}
+}
+
 @import 'profile/main';
 @import 'map/main';

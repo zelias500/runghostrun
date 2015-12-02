@@ -1,5 +1,6 @@
-app.factory('GhostFactory', function ($http, $rootScope) {
+app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	var factory = {};
+	var ghostDistanceOrder; // for 'nearby' ghosts: preserve original order so we know which ghosts were closest
 
 	function toData (res) {
 		return res.data;
@@ -34,7 +35,24 @@ app.factory('GhostFactory', function ($http, $rootScope) {
 	factory.getUsersBest = function (ghostId, userId) {
 		return $http.get("/api/ghosts/" + ghostId + "/users/" +  userId)
 		.then(toData);
+	};
+
+	factory.getNearbyGhosts = function () {
+		var pos;
+		return $cordovaGeolocation.getCurrentPosition().then(function(position){
+			pos = position;
+			return $http.get('/api/ghosts/nearby?'+'lat='+position.coords.latitude+'&lng='+position.coords.longitude)
+			.then(toData)
+			.then(ghosts => {
+				ghostDistanceOrder = ghosts;
+				return angular.copy(ghostDistanceOrder);
+			})
+		}).then(null, console.error)
+	};
+
+	factory.getOrderCache = function () {
+		return angular.copy(ghostDistanceOrder);
 	}
-	
+
 	return factory;
 });

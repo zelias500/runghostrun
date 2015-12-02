@@ -25,6 +25,7 @@ var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Ghost = Promise.promisifyAll(mongoose.model('Ghost'));
+var Run = Promise.promisifyAll(mongoose.model('Run'));
 
 var seedUsers = function () {
 
@@ -44,15 +45,64 @@ var seedUsers = function () {
 };
 
 connectToDb.then(function () {
-    User.create({email: 'zack@123.com'}).then(function(user){
-        return user.addGhost({
-            locations: [
-            {lat: '40.704570', lng: '-74.009413'}, 
-            {lat:'40.780168', lng:'-73.975204'}, 
-            {lat:'40.752981',lng:'-73.940470'}],
-            totalDistance: 6598,
-            owner: user,
+    var userId, theGhost;
+    User.create({email: 'zack@123.com', displayName: 'Zack'}).then(function(user){
+        userId = user._id;
+        return Ghost.create({
+            owner: user._id,
+            title: 'Seed run',
+            locations: [{
+                    lat: '40.7048981',
+                    lng: '-74.012385'
+                },
+                {
+                  lat: '40.7069985',
+                  lng: '-74.012384'  
+                }
+            ],
+            totalDistance: 2336,
+            privacy: 'friends'
         })
+    })
+    .then(function(ghost){
+        theGhost = ghost;
+        var runArray = [{
+          locations: [{
+                lat: '40.7048981',
+                lng: '-74.012385'
+                },
+                {
+                  lat: '40.7069985',
+                  lng: '-74.012384'  
+                }
+            ],
+            distance: 2336,
+            time: 60,
+            ghost: ghost._id,
+            runner: userId
+        },
+        {
+          locations: [{
+                lat: '40.7048981',
+                lng: '-74.012385'
+                },
+                {
+                  lat: '40.7069985',
+                  lng: '-74.012384'  
+                }
+            ],
+            distance: 2336,
+            time: 71,
+            ghost: ghost._id,
+            runner: userId
+        }]
+
+        return Run.create(runArray)
+    })
+    .then(function(runs){
+        return Promise.all(runs.map(run => {
+            return theGhost.addNewRun(run);
+        }))
     })
     .then(function(){
         // User.findAsync({}).then(function (users) {

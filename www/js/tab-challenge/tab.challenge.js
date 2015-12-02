@@ -12,18 +12,49 @@ app.config(function ($stateProvider) {
         },
         resolve: {
             ghosts: function (GhostFactory) {
-                return GhostFactory.fetchAll();
+                return GhostFactory.getNearbyGhosts();
             }
         }
 	});
 });
 
-app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state) {
+app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state, GhostFactory) {
+    $scope.predicate = 'nearest';
+    function byPopularity() {
+        $scope.ghosts.sort( (a,b) => {
+            return b.runs.length - a.runs.length
+        })
+    }
 
-    // testing filter to remove junk data
-    ghosts = ghosts.filter(ghost => ghost.locations.length !== 0);
-    ghosts = ghosts.filter(ghost => ghost.owner !== null);
-    ghosts = ghosts.filter(ghost => ghost.best !== null);
+    function byRecency() {
+        $scope.ghosts.sort( (a,b) => {
+            return new Date(a.runs[a.runs.length-1].timestamp) - new Date(b.runs[b.runs.length-1].timestamp)
+        })         
+    }
+
+    function byLength() {
+        $scope.ghosts.sort( (a,b) => {
+            return b.totalDistance - a.totalDistance
+        })  
+    }
+
+    $scope.sortGhosts = function (sortMethod) {
+        $scope.predicate = sortMethod;
+        if (sortMethod == 'popular'){
+            byPopularity();
+        }
+        else if (sortMethod == 'recency') {
+            byRecency();
+        }
+        else if (sortMethod == 'runLength') {
+            byLength();
+        }
+        else {
+            $scope.ghosts = GhostFactory.getOrderCache();
+        }
+    }
+
+
     $scope.ghosts = ghosts;
 
 });
