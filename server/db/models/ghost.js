@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
         required: true
     },
     title: {
-        type: String
+        type: String,
     },
     bestRun: {
         type: mongoose.Schema.Types.ObjectId,

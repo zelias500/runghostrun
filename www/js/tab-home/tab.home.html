@@ -11,7 +11,8 @@
         <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
         <ion-list>
           <ion-item ng-repeat='run in recentRuns'>
-          You challenged: 
+          <div ng-if="run.ghost.owner==user._id"> You ran {{run.ghost.owner}}'s challenge {{run.ghost.title}} </div>
+          <div ng-if="run.ghost.owner!=user._id"> You ran X's challenge TITLE </div>
             <ghost-map ghost='run' anchors='false' boxes='false'></ghost-map>
           And ran:
           <ghost-stats data='run'></ghost-stats>

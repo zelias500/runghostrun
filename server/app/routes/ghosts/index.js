@@ -52,6 +52,8 @@ router.get('/:id', function (req, res, next){
 router.post('/:id', function(req, res, next){
 	var ourUpdatedGhost;
 	var ourRun;
+	req.body.timestamp = Date.now();
+	req.body.ghost = req.ghost._id;
 	Run.create(req.body)
 	.then(function (run){
 		ourRun = run;
