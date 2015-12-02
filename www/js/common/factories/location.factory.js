@@ -133,7 +133,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 		},
 
 		getGhostAvg: function(ghost){
-			var toReturn = (ghost.totalDistance/1000)/(ghost.best.time/3600); // convert to km/hr
+			var toReturn = (ghost.distance / 1000)/(ghost.time / 3600); // convert to km/hr
 			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
  			return Number(toReturn.toFixed(2));
 		},

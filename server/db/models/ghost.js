@@ -29,7 +29,7 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Run'
     },
-    best: { // either time or distance
+    time: { // either time or distance
         type: Number
     },
     bestRunner: {
@@ -46,25 +46,23 @@ var schema = new mongoose.Schema({
             lng: String
         }
     ],
-    totalDistance: Number, // in METERS
+    distance: Number, // in METERS
     privacy: {
     	type: String,
     	enum: ['private', 'friends', 'public'],
     	required: true,
     	default: 'public'
     },
-    ghostType: {
-    	type: String,
-    	enum: ['route', 'time', 'distance'],
-    	required: true,
-    	default: 'route'
+    timestamp: {
+        type: Date,
+        default: Date.now
     }
 });
 
 schema.methods.addNewRun = function(run){
-    if (!this.best || run.time < this.best){
+    if (!this.time || run.time < this.time){
         this.bestRun = run._id;
-        this.best = run.time;
+        this.time = run.time;
         this.bestRunner = run.runner;
     }
 	this.runs.push(run._id);
