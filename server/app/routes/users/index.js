@@ -133,26 +133,34 @@ router.put('/:id/friends/remove', function (req, res, next) {
 router.post('/:id/ghosts', function (req, res, next){
 	var ourGhost;
 	var ourRun;
+	var ourGhost;
+	req.body.timestamp = Date.now();
 	Run.create(req.body)
 	.then(function (run){
-		// add run to users runs array
 		ourRun = run;
 		req.targetUser.runs.push(run);
 		return req.targetUser.save();
 	})
 	.then(function () {
 		// create the ghost that matches this run
+		var title = req.targetUser.displayName || req.targetUser.email;
+		title+= "-" + req.targetUser.ghosts.length;
 		return Ghost.create({
 			owner: req.targetUser._id,
 			locations: ourRun.locations,
-			totalDistance: ourRun.distance
+			totalDistance: ourRun.distance,
+			title: title
 		})
 	})
 	.then(function (ghost){
+		ourGhost = ghost;
 		return ghost.addNewRun(ourRun)
 	})
 	.then(function (ghost){
-		ourGhost = ghost;
+		ourRun.ghost = ghost._id;
+		return ourRun.save();
+	})
+	.then(function(){
 		req.targetUser.ghosts.push(ghost);
 		return req.targetUser.save();
 	})
