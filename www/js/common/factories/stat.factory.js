@@ -15,7 +15,8 @@ app.factory('StatFactory', function () {
 		var distance = run.distance; // distance in meters
 		var time = ((run.time) / 60); // time in minutes
 		if ((distance / 1000) === 0) return 0; // prevent dividing by zero
-		var pace = (time / (distance / 1000).toFixed(2));
+
+		var pace = (time / (distance / 1000)).toFixed(2);
 		return Number(pace);
 	};
 

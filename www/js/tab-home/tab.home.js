@@ -46,7 +46,7 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFact
         return user.displayName || user.email;
     }
 
-    $scope.timeStampToReadable = function(timestamp){
+    $scope.timeStampToReadable = function(timestamp, run){
         return TimeFactory.parseDisplayDate(timestamp);
     }
 });
