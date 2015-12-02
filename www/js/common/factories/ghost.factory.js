@@ -1,4 +1,4 @@
-app.factory('GhostFactory', function ($http, $rootScope) {
+app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	var factory = {};
 
 	function toData (res) {
@@ -34,7 +34,14 @@ app.factory('GhostFactory', function ($http, $rootScope) {
 	factory.getUsersBest = function (ghostId, userId) {
 		return $http.get("/api/ghosts/" + ghostId + "/users/" +  userId)
 		.then(toData);
-	}
+	};
+
+	factory.getNearbyGhosts = function () {
+		return $cordovaGeolocation.getCurrentPosition().then(function(position){
+			return $http.get('/api/ghosts/nearby?'+'lat='+position.coords.latitude+'&lng='+position.coords.longitude)
+			.then(toData);			
+		}).then(null, alert)
+	};
 	
 	return factory;
 });
