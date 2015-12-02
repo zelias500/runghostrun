@@ -19,7 +19,7 @@ app.config(function ($stateProvider) {
     })
 });
 
-app.controller('ProfileCtrl', function ($scope, $state, me, UserFactory, Session) {
+app.controller('ProfileCtrl', function ($scope, $state, $timeout, me, UserFactory, Session) {
     $scope.me = me;
     $scope.numFriends = me.friends.length;
     $scope.numFollowers = me.followers.length;
@@ -36,13 +36,19 @@ app.controller('ProfileCtrl', function ($scope, $state, me, UserFactory, Session
     $scope.addFriend = function () {
         return UserFactory.addFriend($scope.userId, $scope.me._id)
         .then(function () {
-            $scope.successMessage = $scope.me.email + ' added to your friends list!'
+            $scope.successMessage = $scope.me.email + ' added to your friends list!';
+            $timeout(function () {
+                $scope.successMessage = false;
+            }, 3000);
         });
     }
     $scope.removeFriend = function () {
         return UserFactory.removeFriend($scope.userId, $scope.me._id)
         .then(function () {
-            $scope.successMessage = $scope.me.email + ' Removed from your friends list.'
+            $scope.successMessage = $scope.me.email + ' Removed from your friends list.';
+            $timeout(function () {
+                $scope.successMessage = false;
+            }, 3000);
         });
     }
 
