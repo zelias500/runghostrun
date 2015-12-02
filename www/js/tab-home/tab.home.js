@@ -41,4 +41,8 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendGhosts) {
             $scope.friendTab = 'tmk-active';
         }
     }
+
+    $scope.timeStampToReadable = function(timestamp){
+
+    }
 });

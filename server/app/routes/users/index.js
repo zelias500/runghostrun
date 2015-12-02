@@ -143,7 +143,7 @@ router.post('/:id/ghosts', function (req, res, next){
 	.then(function () {
 		// create the ghost that matches this run
 		var title = req.targetUser.displayName || req.targetUser.email;
-		title+= req.targetUser.ghosts.length;
+		title+= "-" + req.targetUser.ghosts.length;
 		return Ghost.create({
 			owner: req.targetUser._id,
 			locations: ourRun.locations,

@@ -13,6 +13,14 @@ app.factory('TimeFactory', function () {
 		return minutes + ":" + seconds;
 
 	}
+
+	factory.parseDisplayDate = function(date) {
+        return new Date(date)
+    	.toString()
+    	.split(' ')
+    	.slice(0, 4)
+    	.join(' ');
+    }
 	
 	return factory;
 });
