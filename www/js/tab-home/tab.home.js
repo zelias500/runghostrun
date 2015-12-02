@@ -42,8 +42,8 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFact
         }
     }
 
-    $scope.userName = function(friend){
-        return friend.displayName || friend.email;
+    $scope.userName = function(user){
+        return user.displayName || user.email;
     }
 
     $scope.timeStampToReadable = function(timestamp){

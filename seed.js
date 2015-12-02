@@ -100,7 +100,7 @@ connectToDb.then(function () {
         return Run.create(runArray)
     })
     .then(function(runs){
-        return Promise.all(runs.map(run => {
+        return Promise.all(runs.map(function(run){
             return theGhost.addNewRun(run);
         }))
     })
