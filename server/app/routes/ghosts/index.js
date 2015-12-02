@@ -59,7 +59,7 @@ router.post('/:id', function(req, res, next){
 	})
 	.then(function (updatedGhost){
 		ourUpdatedGhost = updatedGhost;
-		return User.find({_id: req.body.runner}).exec();
+		return User.findById(req.body.runner).exec();
 	})
 	.then(function (runner){
 		runner.runs.push(ourRun);
