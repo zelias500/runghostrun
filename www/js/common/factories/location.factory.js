@@ -57,7 +57,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 				var locationsLength = data.locations.length;
 				if (data.locations.length >= 1) {
 					var calcDistance = calcGeoDistance(data.locations[locationsLength - 2], data.locations[locationsLength - 1])
-					if (calcDistance > 25 ) data.locations.pop();
+					if (calcDistance > 5000 ) data.locations.pop();
 					else data.distance += calcDistance;
 				}
 				return data;
