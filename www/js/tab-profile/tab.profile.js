@@ -12,46 +12,46 @@ app.config(function ($stateProvider) {
             }
         },
         resolve: {
-            me: function (UserFactory, $stateParams) {
+            user: function (UserFactory, $stateParams) {
                 return UserFactory.fetchById($stateParams.id);
             }
         }
     })
 });
 
-app.controller('ProfileCtrl', function ($scope, $state, $timeout, me, UserFactory, Session) {
-    $scope.me = me;
-    $scope.numFriends = me.friends.length;
-    $scope.numFollowers = me.followers.length;
-    $scope.numGhosts = me.ghosts.length;
-    $scope.numRuns = me.runs.length;
-    if(me.displayName.length){
-        $scope.name = me.displayName
+app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, UserFactory, Session) {
+    $scope.user = user;
+    $scope.numFriends = user.friends.length;
+    $scope.numFollowers = user.followers.length;
+    $scope.numGhosts = user.ghosts.length;
+    $scope.numRuns = user.runs.length;
+    if(user.displayName && user.displayName.length){
+        $scope.name = user.displayName
     }
     else{
-        $scope.name = me.email
+        $scope.name = user.email
     }
 
     $scope.notMe = function () {
-        return !(me._id === $scope.userId);
+        return !(user._id === $scope.userId);
     }
     $scope.isFriend = function (id) {
         return Session.user.friends.indexOf(id) !== -1;
     }
 
     $scope.addFriend = function () {
-        return UserFactory.addFriend($scope.userId, $scope.me._id)
+        return UserFactory.addFriend($scope.userId, $scope.user._id)
         .then(function () {
-            $scope.successMessage = $scope.me.email + ' added to your friends list!';
+            $scope.successMessage = $scope.user.email + ' added to your friends list!';
             $timeout(function () {
                 $scope.successMessage = false;
             }, 3000);
         });
     }
     $scope.removeFriend = function () {
-        return UserFactory.removeFriend($scope.userId, $scope.me._id)
+        return UserFactory.removeFriend($scope.userId, $scope.user._id)
         .then(function () {
-            $scope.successMessage = $scope.me.email + ' Removed from your friends list.';
+            $scope.successMessage = $scope.user.email + ' Removed from your friends list.';
             $timeout(function () {
                 $scope.successMessage = false;
             }, 3000);
