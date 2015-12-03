@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('runStats', function (TimeFactory, StatFactory) {
+app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
 	return {
 		scope: {
 			data: '='
@@ -30,6 +30,9 @@ app.directive('runStats', function (TimeFactory, StatFactory) {
 	        		return scope.distance;
         		}
         	}
+
+            if (SettingFactory.getUnit() == 'km') scope.useKm = true;
+            if (SettingFactory.getUnit() =='mi') scope.useMi = true;
     	}
 	}
 });

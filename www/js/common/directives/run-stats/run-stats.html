@@ -1,5 +1,6 @@
 <div class="list">
 	<a class="item">Time: {{ calculateTime() }}</a>
 	<a class="item">Distance: {{ calculateDistance() }} meters</a>
-	<a class="item">Pace: {{ calculatePaceKm() }} min/km | {{ calculatePaceMi() }} min/mi</a>
+	<a class="item" ng-show="useKm">Pace: {{ calculatePaceKm() }} min/km</a>
+	<a class="item" ng-show="useMi">Pace: {{ calculatePaceMi() }} min/mi</a>
 </div>
