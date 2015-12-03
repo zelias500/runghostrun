@@ -26,7 +26,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 	};
 
 	var options = {
-		enableHighAccuracy: false,
+		enableHighAccuracy: true,
 		timeout: 5000
 	};
 
@@ -46,8 +46,8 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function () {
-			data.ghost = currentGhost;
-			watchId = navigator.geolocation.watchPosition(function (pos) {
+
+			var watchCb = _.throttle(function (pos) {
 				pos = {
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude,
@@ -61,7 +61,10 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 					else data.distance += calcDistance;
 				}
 				return data;
-			}, errorHandler, options)
+			}, 500)
+
+			data.ghost = currentGhost;
+			watchId = navigator.geolocation.watchPosition(watchCb, errorHandler, options);
 		},
 
 		getLocIndex: function () {
