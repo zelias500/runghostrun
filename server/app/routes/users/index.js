@@ -44,7 +44,7 @@ router.get('/:id/friends', function(req,res, next) {
 	}).then(null, next);
 });
 
-router.get('/:id/followers', function(req,res, next){ 
+router.get('/:id/followers', function(req,res, next){
 	req.targetUser.populate('followers').execPopulate()
 	.then(function (user) {
     	res.status(200).json(user.followers)
@@ -71,7 +71,8 @@ router.get('/:id/runs', function(req, res, next){
 	.then(function(runs){
 		ourRuns = runs;
 		var ghostsToPopulate = runs.map(function(run){
-			return run.ghost.populate('owner').execPopulate();
+			if(run.ghost){
+			return run.ghost.populate('owner').execPopulate()};
 		})
 		return Promise.all(ghostsToPopulate);
 	})
@@ -173,11 +174,28 @@ router.post('/:id/ghosts', function (req, res, next){
 		return req.targetUser.save();
 	})
 	.then(function(){
-		res.status(201).json(ourGhost);		
+		res.status(201).json(ourGhost);
 	})
 	.then(null, next);
 });
 
+router.put('/:id/removeghosts', function(req, res, next){
+    var index = req.targetUser.ghosts.indexOf(req.body.ghostid)
+    var  gid = req.body.ghostid
+	  _.pullAt(req.targetUser.ghosts, index)
+
+	 var removeRun = function(n){
+	 	return n.ghost == gid;
+	 }
+    req.targetUser.populate('runs').execPopulate().then(function(user){
+    	_.remove(user.runs, removeRun)
+      user.save().then(function(updateUser){
+		   res.status(200).json(updateUser)
+		})
+
+    })
+
+})
 router.delete('/:id', function(req, res, next){
     User.remove({_id :req.params.id}).then(function(){
       return res.status(200).json(req.targetUser);

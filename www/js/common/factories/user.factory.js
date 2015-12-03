@@ -103,11 +103,16 @@ app.factory('UserFactory', function ($http) {
 		return $http.put('/api/users/' + id, data)
 		.then(toData);
 	};
-	
+
 	factory.delete = function (id) {
 		return $http.delete('/api/users/' + id)
 		.then(toData);
 	};
+
+	factory.deleteGhost = function (userId, ghostId) {
+	return $http.put('/api/users/'+ userId +'/removeghosts', ghostId)
+	.then(toData);
+};
 
 	return factory;
 });
