@@ -1,9 +1,11 @@
-app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostFactory){
-	function errorHandler (err){
+app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, GhostFactory) {
+
+	function errorHandler (err) {
 		console.error(err);
 	};
 
 	var earthRadius = 6371000 // in km
+
 	function toRad (degrees){
 		return degrees * Math.PI/180;
 	};
@@ -40,12 +42,12 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 	var watchId = null;
 	var stopData;
 
-	var theFactory = {
+	var factory = {
 
 		// clears location data array and attaches a position watcher
 		startNewRun: function () {
 			data.ghost = currentGhost;
-			watchId = navigator.geolocation.watchPosition(function(pos){
+			watchId = navigator.geolocation.watchPosition(function (pos) {
 				pos = {
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude,
@@ -53,21 +55,16 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 				}
 				data.locations.push(pos);
 				var locationsLength = data.locations.length;
-				if (data.locations.length >= 1){
-					var calcDistance = calcGeoDistance(data.locations[locationsLength-2],data.locations[locationsLength-1])
-
-					if(calcDistance>25){
-						data.locations.pop()
-					}
-					else{
-                      data.distance += calcDistance;
-					}
+				if (data.locations.length >= 1) {
+					var calcDistance = calcGeoDistance(data.locations[locationsLength - 2], data.locations[locationsLength - 1])
+					if (calcDistance > 25 ) data.locations.pop();
+					else data.distance += calcDistance;
 				}
 				return data;
 			}, errorHandler, options)
 		},
 
-		getLocIndex: function(){
+		getLocIndex: function () {
 			return data.locations.length-1;
 		},
 
@@ -84,15 +81,15 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 			return stopData;
 		},
 
-		setGhost: function(ghost) {
+		setGhost: function (ghost) {
 			currentGhost = ghost;
 		},
 
-		getGhost: function() {
+		getGhost: function () {
 			return currentGhost;
 		},
 
-		saveRun: function(userId, stopData){
+		saveRun: function (userId, stopData) {
 			if (!stopData.ghost){
 				stopData.runner = userId;
 				stopData.privacy = stopData.privacy.toLowerCase();
@@ -101,21 +98,19 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 	        	        	return user;
 	        	        }, errorHandler);
 			}
-			else {
-				return GhostFactory.addNewRun(stopData.ghost._id, stopData)
-			}
+			else return GhostFactory.addNewRun(stopData.ghost._id, stopData);
 		},
 
-		getCurrentRunData: function(){
+		getCurrentRunData: function () {
 			return data;
 		},
 
-		getStopData: function(){
+		getStopData: function () {
 			return stopData;
 		},
 
 		// fills data.speedPoints with the velocity between two points in data.locations
-		calcSpeed: function(){
+		calcSpeed: function () {
 			data.locations.reduce(function(prev, curr){
 				var d = calcGeoDistance(prev, curr);
 				var t = calcPointTime(prev, curr);
@@ -125,28 +120,29 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 			return data;
 		},
 
-		// speed conversions
-		getAvgSpeed: function(inMiles){
+		// speed conversions - DO NOT USE
+/*		getAvgSpeed: function (inMiles) {
 			var toReturn = (data.distance/1000)/(data.time/3600); // convert to km/hr
 			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
  			return Number(toReturn.toFixed(2));
 		},
-
-		getGhostAvg: function(ghost){
+*/
+		// DO NOT USE
+/*		getGhostAvg: function (ghost) {
 			var toReturn = (ghost.distance / 1000)/(ghost.time / 3600); // convert to km/hr
 			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
  			return Number(toReturn.toFixed(2));
 		},
-
+*/
 		// FOR TESTING PURPOSES ONLY
-		addLocationPoint: function(point){
+		addLocationPoint: function (point) {
 			data.locations.push(point);
 		},
 
-		emptyStopData: function(){
+		emptyStopData: function () {
 			stopData = undefined;
 		}
 	}
 
-	return theFactory;
+	return factory;
 })
