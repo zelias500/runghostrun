@@ -10,6 +10,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ion
         $state.go('tab.home');
     });
     $ionicConfigProvider.views.maxCache(0);
+    $ionicConfigProvider.scrolling.jsScrolling(false);
 
 });
 

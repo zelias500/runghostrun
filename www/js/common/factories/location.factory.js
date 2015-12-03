@@ -90,15 +90,14 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 		},
 
 		saveRun: function (userId, stopData) {
-			if (!stopData.ghost){
+			if (!stopData.ghost) {
 				stopData.runner = userId;
 				stopData.privacy = stopData.privacy.toLowerCase();
 				return UserFactory.createGhost(userId, stopData)
-				.then(function(user){
-	        	        	return user;
+				.then(function (ghost) {
+	        	        	return ghost;
 	        	        }, errorHandler);
-			}
-			else return GhostFactory.addNewRun(stopData.ghost._id, stopData);
+			} else return GhostFactory.addNewRun(stopData.ghost._id, stopData);
 		},
 
 		getCurrentRunData: function () {
@@ -141,6 +140,20 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 
 		emptyStopData: function () {
 			stopData = undefined;
+		},
+
+		validateDistance: function(loc1, loc2) {
+
+			// account for typing weirdness
+			loc1.lat = Number(loc1.lat);
+			loc1.lng = Number(loc1.lng);
+			loc2.lng = Number(loc2.lng);
+			loc2.lat = Number(loc2.lat);
+
+
+			var dist = Math.abs(calcGeoDistance(loc1, loc2));
+			// 300 meters?
+			return dist < 300;
 		}
 	}
 
