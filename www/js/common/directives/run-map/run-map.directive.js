@@ -49,7 +49,6 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			// google maps initialization when challenging, or viewing a result
 			function initChallenge () {
 				scope.map = MapFactory.newMap(scope.challenge);
-				console.log('map', scope.map)
 				createGoogleMap()
 				.then(function () {
 		        	scope.map.wayPoints = [];
@@ -69,8 +68,20 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 				})
 			}
 
-			// process the google map for the result
+			function initEmpty () {
+				scope.map = MapFactory.newMap();
+				createGoogleMap()
+				.then(function () {
+					MapFactory.clearMap();
+				})
+			}
+
+			// process default google map
 			if (scope.result) $timeout(initResult, 0);
+			else {
+				if (!scope.challenge) $timeout(initEmpty, 0);
+				if (scope.challenge) $timeout(initChallenge, 0)
+			}
 
 			// handling of events during an active run
 			var start = $rootScope.$on('start', initNew);

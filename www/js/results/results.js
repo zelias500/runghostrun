@@ -12,8 +12,6 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory) {
     $scope.stopData = LocationFactory.getStopData(); // data from the run
     $scope.map = MapFactory.getMap(); // map data from the run
-    console.log('$scope.stopData?', $scope.stopData)
-    console.log('$scope.map?', $scope.map)
 
     // privacy controls
     $scope.privacySetting = "Friends";

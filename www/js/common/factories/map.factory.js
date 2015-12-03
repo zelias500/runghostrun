@@ -4,8 +4,12 @@ app.factory('MapFactory', function () {
 
 	var ourMap = undefined;
 
-	factory.getMap = function() {
+	factory.getMap = function () {
 		return ourMap;
+	}
+
+	factory.clearMap = function () {
+		ourMap = undefined;
 	}
 
 	// returns a new map instance from the entered ghost data
@@ -71,11 +75,11 @@ app.factory('MapFactory', function () {
 			});
 		}	
 
-		if (ghost) return new Map(ghost);
-		else {
+		// if (ghost) return new Map(ghost);
+		// else {
 			ourMap = new Map(ghost);
 			return ourMap;
-		}
+		// }
 	}
 
 	return factory;
