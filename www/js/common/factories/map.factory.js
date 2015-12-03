@@ -4,8 +4,12 @@ app.factory('MapFactory', function () {
 
 	var ourMap = undefined;
 
-	factory.getMap = function() {
+	factory.getMap = function () {
 		return ourMap;
+	}
+
+	factory.clearCache = function () {
+		ourMap = undefined;
 	}
 
 	// returns a new map instance from the entered ghost data
@@ -23,7 +27,7 @@ app.factory('MapFactory', function () {
 
 		// Map constructor function - if no ghost, returns empty map
 		function Map (ghost) {
-			if (ghost){
+			if (ghost) {
 				// for our own benefit - may remove eventually
 				this.id = ghost._id;
 				this.ghost = ghost;
@@ -51,7 +55,7 @@ app.factory('MapFactory', function () {
 				path: this.wayPoints,
 				geodesic: true,
 				strokeColor: '#FC4C02',
-			    strokeOpacity: 0.8,
+			    strokeOpacity: 0.5,
 			    strokeWeight: 2
 			});
 		}
@@ -62,7 +66,7 @@ app.factory('MapFactory', function () {
 				path: otherWayPoints,
 				geodesic: true,
 				strokeColor: '#387ef5',
-			    strokeOpacity: 0.8,
+			    strokeOpacity: 0.5,
 			    strokeWeight: 2
 			});
 			otherWayPoints.forEach(loc => {
@@ -71,11 +75,8 @@ app.factory('MapFactory', function () {
 			});
 		}	
 
-		if (ghost) return new Map(ghost);
-		else {
-			ourMap = new Map(ghost);
-			return ourMap;
-		}
+		ourMap = new Map(ghost);
+		return ourMap;
 	}
 
 	return factory;

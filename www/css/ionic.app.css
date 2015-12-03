@@ -9103,11 +9103,15 @@ ion-header-bar.bar.bar-stable {
 
 .list {
   background-color: #383838; }
+  .list a {
+    color: white; }
 
 .item {
   color: white;
   background-color: #383838;
   border-color: #2B2B2B; }
+  .item ul li {
+    color: white; }
 
 div.tab-nav.tabs {
   background-color: #2B2B2B; }

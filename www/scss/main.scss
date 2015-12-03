@@ -24,11 +24,19 @@ ion-header-bar.bar.bar-stable {
 // sets lists and item colors
 .list {
 	background-color: $foreground;
+
+	a {
+		color: white;
+	}
 }
 .item {
 	color: white;
 	background-color: $foreground;
 	border-color: $background;
+
+	ul li {
+		color: white;
+	}
 }
 
 // sets tab bar to background color
