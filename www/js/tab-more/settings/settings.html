@@ -34,15 +34,16 @@
 		<div class="item item-divider">
 			Profile
 		</div>
-		<label class="item item-input item-stacked-label">
-			<span class="input-label" id="display">Display Name</span>
-			<input type="text" ng-model="name" placeholder="Your name Here">
-			<br/>
-			<button class="button button-calm button-small" ng-click="changeName()">Submit</button>
-
-		</label>
-		<div class="item" id="unit" ng-click="modal.show()">Profile Picture</div>
+		  <div class="item item-input-inset" id="unit">
+		  <span>Display Name&nbsp;</span>
+		    <label class="item-input-wrapper">
+		      <input type="text" ng-model="name" placeholder="Your Name Here"/>
+		    </label>
+		    <button class="button button-calm button-small" ng-click="changeName(name)">Submit</button>
+		  </div>
+		<div class="item" id="unit">
+			 <a class="button icon icon-right ion-chevron-right" ng-click="openModal()">Profile Picture</a>
+		</div>
      </div>
-
   </ion-content>
 </ion-view>

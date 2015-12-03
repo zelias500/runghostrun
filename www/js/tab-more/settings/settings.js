@@ -13,7 +13,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('SettingsCtrl', function ($scope, SettingFactory,$ionicModal,$cordovaCamera) {
+app.controller('SettingsCtrl', function ($scope, SettingFactory,UserFactory, Session, $ionicModal) {
 
     $scope.check = SettingFactory.getPrivacy()
     $scope.changePrivacy = function(){
@@ -23,53 +23,29 @@ app.controller('SettingsCtrl', function ($scope, SettingFactory,$ionicModal,$cor
 
     $scope.useKm = function(){
         SettingFactory.setUnit("km")
-        console.log(SettingFactory.getUnit())
     };
     $scope.useMile = function(){
         SettingFactory.setUnit("mi")
-        console.log(SettingFactory.getUnit())
-
     };
 
-    $scope.changeName = function(){
+    $scope.changeName = function(name){
+
+        UserFactory.update(Session.user._id, {displayName: name})
 
     }
 
-
-
-    // document.addEventListener("deviceready", function () {
-
-    //     var options = {
-    //       quality: 50,
-    //       destinationType: Camera.DestinationType.DATA_URL,
-    //       sourceType: Camera.PictureSourceType.CAMERA,
-    //       allowEdit: true,
-    //       encodingType: Camera.EncodingType.JPEG,
-    //       targetWidth: 100,
-    //       targetHeight: 100,
-    //       popoverOptions: CameraPopoverOptions,
-    //       saveToPhotoAlbum: false,
-    //       correctOrientation:true
-    //     };
-
-    //     $cordovaCamera.getPicture(options).then(function(imageData) {
-    //         console.log(imageData)
-    //       // var image = document.getElementById('myImage');
-    //       // image.src = "data:image/jpeg;base64," + imageData;
-    //     }, function(err) {
-    //        console.log(err)
-    //     });
-
-    //   }, false);
-
-
-   $ionicModal.fromTemplateUrl('js/tab-more/settings/profile-pic.html', function($ionicModal) {
-        $scope.modal = $ionicModal;
-    }, {
-        scope: $scope,
-        animation: 'slide-in-up'
+     $ionicModal.fromTemplateUrl('js/tab-more/settings/profile-pic.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
     });
-
+    $scope.openModal = function(){
+        $scope.modal.show();
+    };
+    $scope.closeModal = function(){
+        $scope.modal.hide();
+    };
 
 
 });

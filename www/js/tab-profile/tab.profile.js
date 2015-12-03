@@ -21,10 +21,17 @@ app.config(function ($stateProvider) {
 
 app.controller('ProfileCtrl', function ($scope, $state, $timeout, me, UserFactory, Session) {
     $scope.me = me;
+    console.log(me)
     $scope.numFriends = me.friends.length;
     $scope.numFollowers = me.followers.length;
     $scope.numGhosts = me.ghosts.length;
     $scope.numRuns = me.runs.length;
+    if(me.displayName.length){
+        $scope.name = me.displayName
+    }
+    else{
+        $scope.name = me.email
+    }
 
     $scope.notMe = function () {
         return !(me._id === $scope.userId);
