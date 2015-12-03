@@ -1,4 +1,3 @@
-
 app.factory('MapFactory', function () {
 	var factory = {};
 
