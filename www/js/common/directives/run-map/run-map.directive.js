@@ -32,21 +32,29 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 				})
 			}
 
+			function drawAndSetPolyline () {
+				scope.map.makePolyline();
+			    scope.map.runPath.setMap(gmap);
+			}
+
+			function initResult () {
+				scope.map = scope.result;
+				createGoogleMap()
+				.then(function () {
+			        drawAndSetPolyline();
+			        gmap.fitBounds(scope.map.bounds);
+			    })
+			}
+
 			// google maps initialization when challenging, or viewing a result
-			function initExisting () {
-				scope.map = scope.result || MapFactory.newMap(scope.challenge);
+			function initChallenge () {
+				scope.map = MapFactory.newMap(scope.challenge);
 				console.log('map', scope.map)
 				createGoogleMap()
 				.then(function () {
-					if (scope.result) {
-			        	scope.map.makePolyline();
-			        	scope.map.runPath.setMap(gmap);
-					}
-		        	if (scope.challenge) {
-		        		scope.map.wayPoints = [];
-		        		scope.map.makeOtherPolyline(scope.challenge);
-		        		scope.map.existingPath.setMap(gmap);
-		        	}
+		        	scope.map.wayPoints = [];
+		        	scope.map.makeOtherPolyline(scope.challenge);
+		        	scope.map.existingPath.setMap(gmap);
 		            gmap.fitBounds(scope.map.bounds);
 				})
 			}
@@ -56,18 +64,17 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 				scope.map = MapFactory.newMap(scope.runData);
 				createGoogleMap()
 				.then(function () {
-		        	scope.map.makePolyline();
-		        	scope.map.runPath.setMap(gmap);
+		        	drawAndSetPolyline();
 		            gmap.fitBounds(scope.map.bounds);
 				})
 			}
 
 			// process the google map for the result
-			if (scope.result) $timeout(initExisting, 0);
+			if (scope.result) $timeout(initResult, 0);
 
 			// handling of events during an active run
 			var start = $rootScope.$on('start', initNew);
-			var startChallenge = $rootScope.$on('startChallenge', initExisting);
+			var startChallenge = $rootScope.$on('startChallenge', initChallenge);
 			var tick = $rootScope.$on('tick', function () {
 
 				if (scope.runData.locations && (scope.runData.locations.length > scope.map.wayPoints.length)) {
@@ -78,8 +85,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 	                })
 	                gmap.fitBounds(scope.map.bounds);
 	            }
-	            scope.map.makePolyline();
-	            scope.map.runPath.setMap(gmap);
+	            drawAndSetPolyline();
 			});
 
 			scope.$on('$destroy', function () {
