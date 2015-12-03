@@ -9141,6 +9141,10 @@ ion-tabs.tabs-color-active-positive .tab-item {
 .item.item-icon-left {
   color: #387ef5; }
 
+.popup {
+  background-color: #2B2B2B;
+  color: #383838; }
+
 #unit {
   background-color: #2B2B2B; }
 
