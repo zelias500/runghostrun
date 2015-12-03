@@ -12,7 +12,6 @@ app.directive('ghostStats', function (TimeFactory, StatFactory, SettingFactory) 
 
 			var run = scope.data;
 		    function parseDisplayDate(date) {
-		    	console.log(scope.data);
 		        return new Date(date)
 	        	.toString()
 	        	.split(' ')

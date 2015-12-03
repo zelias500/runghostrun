@@ -23,7 +23,7 @@ app.factory('MapFactory', function () {
 
 		// Map constructor function - if no ghost, returns empty map
 		function Map (ghost) {
-			if (ghost){
+			if (ghost) {
 				// for our own benefit - may remove eventually
 				this.id = ghost._id;
 				this.ghost = ghost;
@@ -71,6 +71,7 @@ app.factory('MapFactory', function () {
 			});
 		}	
 
+		console.log('in map factory', ghost)
 		if (ghost) return new Map(ghost);
 		else {
 			ourMap = new Map(ghost);
