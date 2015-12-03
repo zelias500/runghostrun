@@ -1,4 +1,4 @@
-<ion-view view-title="{{ghost._id}}">
+<ion-view view-title="{{ghost.title}}">
  	<ion-content>
 		<ghost-map ghost='ghost' anchors="true"></ghost-map>
 
@@ -8,7 +8,7 @@
 		</div>
 		<div class="row">
 			<div class="col" title="ghostBest">
-				<ghost-stats data="ghost"></ghost-stats>
+				<ghost-stats data="ghost.bestRun"></ghost-stats>
 			</div>
 			<div ng-if="usersBest" class="col">
 				<ghost-stats data="usersBest"></ghost-stats>

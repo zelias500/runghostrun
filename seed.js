@@ -60,7 +60,8 @@ connectToDb.then(function () {
                   lng: '-74.012384'  
                 }
             ],
-            totalDistance: 2336,
+            distance: 2336,
+            time: 60,
             privacy: 'friends'
         })
     })
@@ -100,20 +101,11 @@ connectToDb.then(function () {
         return Run.create(runArray)
     })
     .then(function(runs){
-        return Promise.all(runs.map(run => {
+        return Promise.all(runs.map(function(run){
             return theGhost.addNewRun(run);
         }))
     })
     .then(function(){
-        // User.findAsync({}).then(function (users) {
-        //     if (users.length === 0) {
-        //         return seedUsers();
-        //     } else {
-        //         console.log(chalk.magenta('Seems to already be user data, exiting!'));
-        //         process.kill(0);
-        //     }
-        // })
-        // .then(function () {
             console.log(chalk.green('Seed successful!'));
             process.kill(0);
         }).then(null, function (err) {

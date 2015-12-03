@@ -36,7 +36,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
         LocationFactory.saveRun($rootScope.userId, $scope.stopData)
         .then(function (runOrGhost) {
             // if its a ghost
-            if (runOrGhost.best) $state.go('tab.ghost', {gid: runOrGhost._id});
+            if (runOrGhost.time) $state.go('tab.ghost', {gid: runOrGhost._id});
             else $state.go('tab.ghost', {gid: runOrGhost.ghost});
         });
     }

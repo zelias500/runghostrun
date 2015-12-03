@@ -9,6 +9,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 	};
 
 	function calcGeoDistance(loc1, loc2){
+		if (!loc1 || !loc2) return 0;
 		var latRads1 = toRad(loc1.lat);
 		var latRads2 = toRad(loc2.lat);
 		var latDeltaRads = toRad(loc2.lat-loc1.lat);
@@ -52,7 +53,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 				}
 				data.locations.push(pos);
 				var locationsLength = data.locations.length;
-				if (data.locations.length != -1){
+				if (data.locations.length >= 1){
 					var calcDistance = calcGeoDistance(data.locations[locationsLength-2],data.locations[locationsLength-1])
 
 					if(calcDistance>25){
@@ -132,7 +133,7 @@ app.factory('LocationFactory', function($cordovaGeolocation, UserFactory, GhostF
 		},
 
 		getGhostAvg: function(ghost){
-			var toReturn = (ghost.totalDistance/1000)/(ghost.best.time/3600); // convert to km/hr
+			var toReturn = (ghost.distance / 1000)/(ghost.time / 3600); // convert to km/hr
 			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
  			return Number(toReturn.toFixed(2));
 		},

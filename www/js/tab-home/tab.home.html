@@ -24,9 +24,9 @@
         <ion-list>
           <ion-item ng-repeat='friendRun in friendRuns'>
             <ghost-map ghost='friendRun' anchors='true'></ghost-map>
-              <div ng-if="friendRun.ghost.owner==friendRun.runner._id"> {{userName(friendRun.owner)}} ran their own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
-              <div ng-if="friendRun.ghost.owner==user._id"> {{userName(friendRun.owner)}} ran your challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
-              <div ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id"> {{userName(friendRun.owner)}} ran {{run.ghost.owner}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}} </div>
+              <div ng-if="friendRun.ghost.owner==friendRun.runner._id"> {{userName(friendRun.runner)}} ran their own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
+              <div ng-if="friendRun.ghost.owner==user._id"> {{userName(friendRun.runner)}} ran your challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
+              <div ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id"> {{userName(friendRun.runner)}} ran {{run.ghost.owner}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}} </div>
             <run-stats data='run'></ghost-stats>
           </ion-item>
         </ion-list>

@@ -12,6 +12,7 @@ app.directive('ghostStats', function (TimeFactory, StatFactory, SettingFactory) 
 
 			var run = scope.data;
 		    function parseDisplayDate(date) {
+		    	console.log(scope.data);
 		        return new Date(date)
 	        	.toString()
 	        	.split(' ')
@@ -21,9 +22,9 @@ app.directive('ghostStats', function (TimeFactory, StatFactory, SettingFactory) 
 
         	run.timestamp = Date.parse(run.timestamp);
 
-        	scope.displayTime = TimeFactory.timeDisplay(run.time || run.best);
+        	scope.displayTime = TimeFactory.timeDisplay(run.time);
         	scope.displayDate = parseDisplayDate(run.timestamp);
-        	scope.distance = run.distance || run.totalDistance;
+        	scope.distance = run.distance;
         	scope.averagePaceKm = StatFactory.minKm(run);
         	scope.averagePaceMi = StatFactory.minKm2minMi(scope.averagePaceKm);
 
