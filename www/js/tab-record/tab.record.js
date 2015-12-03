@@ -17,7 +17,6 @@ app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Ses
     $scope.lastLocIndex;
     $scope.currentRun;
     $scope.challengedGhost = LocationFactory.getGhost();
-    console.log('we are challenging this ghost:', $scope.challengedGhost);
     $scope.barColor = "bar-balanced";
     var interv;
 
