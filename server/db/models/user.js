@@ -9,6 +9,10 @@ var schema = new mongoose.Schema({
     email: {
         type: String
     },
+    picture: {
+        type: String,
+        default: 'img/ghost_profile.jpg'
+    },
     facebook: {
         id: String
     },
