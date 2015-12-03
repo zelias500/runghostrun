@@ -106,6 +106,7 @@
     app.service('Session', function ($rootScope, AUTH_EVENTS, UserFactory, $ionicPopup) {
 
         var self = this;
+        var notSeenSyncedContactAlert = true;
 
         $rootScope.$on(AUTH_EVENTS.notAuthenticated, function () {
             self.destroy();
@@ -135,9 +136,10 @@
         this.create = function (sessionId, user) {
             this.id = sessionId;
             this.user = user;
-            if (this.user.friends.length == 0) {
+            if (this.user.friends.length == 0 && notSeenSyncedContactAlert) {
+                notSeenSyncedContactAlert = false;
                 return contactSync(this.user).then(user => {
-                    this.user = user
+                    if (user) self.user = user;
                 })
             }
         };
