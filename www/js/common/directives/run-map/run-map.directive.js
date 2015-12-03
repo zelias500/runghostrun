@@ -38,13 +38,12 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 				console.log('map', scope.map)
 				createGoogleMap()
 				.then(function () {
-					console.log('result', scope.result)
-					console.log('challenge', scope.challenge)
 					if (scope.result) {
 			        	scope.map.makePolyline();
 			        	scope.map.runPath.setMap(gmap);
 					}
 		        	if (scope.challenge) {
+		        		scope.map.wayPoints = [];
 		        		scope.map.makeOtherPolyline(scope.challenge);
 		        		scope.map.existingPath.setMap(gmap);
 		        	}
@@ -64,14 +63,12 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			}
 
 			// process the google map for the result
-			console.log('scope.result?', scope.result)
 			if (scope.result) $timeout(initExisting, 0);
 
 			// handling of events during an active run
 			var start = $rootScope.$on('start', initNew);
 			var startChallenge = $rootScope.$on('startChallenge', initExisting);
 			var tick = $rootScope.$on('tick', function () {
-				console.log('runData on tick', scope.runData)
 
 				if (scope.runData.locations && (scope.runData.locations.length > scope.map.wayPoints.length)) {
                 	var lastLocation = scope.runData.locations[scope.runData.locations.length - 1];

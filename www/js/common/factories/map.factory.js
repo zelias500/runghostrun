@@ -51,7 +51,7 @@ app.factory('MapFactory', function () {
 				path: this.wayPoints,
 				geodesic: true,
 				strokeColor: '#FC4C02',
-			    strokeOpacity: 0.8,
+			    strokeOpacity: 0.5,
 			    strokeWeight: 2
 			});
 		}
@@ -62,7 +62,7 @@ app.factory('MapFactory', function () {
 				path: otherWayPoints,
 				geodesic: true,
 				strokeColor: '#387ef5',
-			    strokeOpacity: 0.8,
+			    strokeOpacity: 0.5,
 			    strokeWeight: 2
 			});
 			otherWayPoints.forEach(loc => {
@@ -71,7 +71,6 @@ app.factory('MapFactory', function () {
 			});
 		}	
 
-		console.log('in map factory', ghost)
 		if (ghost) return new Map(ghost);
 		else {
 			ourMap = new Map(ghost);
