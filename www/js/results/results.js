@@ -13,7 +13,6 @@ app.config(function ($stateProvider) {
 
 app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFactory, $stateParams, MapFactory, $timeout, TimeFactory, ValidationFactory, $ionicPopup) {
     $scope.stopData = LocationFactory.getStopData(); // data from the run
-    console.log('stopdata', $scope.stopData);
     $scope.map = MapFactory.getMap(); // map data from the run
 
     // privacy controls
