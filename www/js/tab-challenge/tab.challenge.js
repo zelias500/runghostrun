@@ -11,8 +11,13 @@ app.config(function ($stateProvider) {
         	}
         },
         resolve: {
-            ghosts: function (GhostFactory) {
-                return GhostFactory.getNearbyGhosts();
+            ghosts: function (GhostFactory, $ionicLoading) {
+                $ionicLoading.show();
+                return GhostFactory.getNearbyGhosts()
+                    .then(function (ghosts) {
+                        $ionicLoading.hide();
+                        return ghosts;
+                    });
             }
         }
 	});

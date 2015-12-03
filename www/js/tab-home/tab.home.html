@@ -7,7 +7,7 @@
         <div id="friend-select" class="tmk-tab-select" ng-class="friendTab" ng-click="toggle(false)">Friend Activity</div>
       </div>
 
-      <div class="item item-body" ng-show="!!recentTab">
+      <div class="item item-body" ng-if="!!recentTab">
         <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
         <ion-list>
           <ion-item ng-repeat='run in recentRuns'>
@@ -19,7 +19,7 @@
         </ion-list>
       </div>
 
-      <div class="item item-body" ng-show="!!friendTab">
+      <div class="item item-body" ng-if="!!friendTab">
         <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
         <ion-list>
           <ion-item ng-repeat='friendRun in friendRuns'>
