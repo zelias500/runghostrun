@@ -80,7 +80,10 @@ router.post('/:id', function(req, res, next){
 		return runner.save();
 	})
 	.then(function(){
-		res.status(201).json(ourUpdatedGhost);
+		return Run.populate(ourUpdatedGhost, {path: 'runs'})
+	})
+	.then(function (ghost) {
+		res.status(201).json(ghost);
 	})
 	.then(null, next);
 });

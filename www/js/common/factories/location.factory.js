@@ -90,15 +90,14 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 		},
 
 		saveRun: function (userId, stopData) {
-			if (!stopData.ghost){
+			if (!stopData.ghost) {
 				stopData.runner = userId;
 				stopData.privacy = stopData.privacy.toLowerCase();
 				return UserFactory.createGhost(userId, stopData)
-				.then(function(user){
-	        	        	return user;
+				.then(function (ghost) {
+	        	        	return ghost;
 	        	        }, errorHandler);
-			}
-			else return GhostFactory.addNewRun(stopData.ghost._id, stopData);
+			} else return GhostFactory.addNewRun(stopData.ghost._id, stopData);
 		},
 
 		getCurrentRunData: function () {
