@@ -8,7 +8,7 @@ app.factory('MapFactory', function () {
 		return ourMap;
 	}
 
-	factory.clearMap = function () {
+	factory.clearCache = function () {
 		ourMap = undefined;
 	}
 
@@ -75,11 +75,8 @@ app.factory('MapFactory', function () {
 			});
 		}	
 
-		// if (ghost) return new Map(ghost);
-		// else {
-			ourMap = new Map(ghost);
-			return ourMap;
-		// }
+		ourMap = new Map(ghost);
+		return ourMap;
 	}
 
 	return factory;
