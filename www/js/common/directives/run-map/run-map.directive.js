@@ -1,4 +1,4 @@
-app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFactory) {
+app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFactory, $ionicLoading) {
 	return {
 		scope: {
 			runData: '=',	// accepts run data from the location factory during an active run
@@ -15,6 +15,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			// creates and renders a google map.
 			// takes an optional parameter to show the user's current position with a marker
 			function createGoogleMap (showPosition) {
+				$ionicLoading.show();
 				return new Promise(function (resolve, reject) {
 					var initialLocation;
 					if (navigator.geolocation) {
@@ -35,6 +36,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 								})
 								marker.setMap(gmap);
 							}
+							$ionicLoading.hide();
 							resolve(gmap);
 						});
 					} else console.error('Unable to get geolocation')
