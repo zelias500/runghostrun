@@ -41,11 +41,11 @@
 
     <!-- Add/Remove Friend Controls -->
     <div class="list" ng-show='notMe()'>
-      <a class="item item-icon-left" ng-click="addFriend(me._id)" ng-show="!isFriend(me._id)">
+      <a class="item item-icon-left" ng-click="addFriend(user._id)" ng-show="!isFriend(user._id)">
         <i class="icon ion-person-add"></i>
           Add Friend
       </a>
-      <a class="item item-icon-left" ng-click="removeFriend(me._id)" ng-show="isFriend(me._id)">
+      <a class="item item-icon-left" ng-click="removeFriend(user._id)" ng-show="isFriend(user._id)">
         <i class="icon ion-minus"></i>
           Remove Friend
       </a>
