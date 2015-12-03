@@ -11,3 +11,4 @@ public
 .DS_Store
 coverage
 server/env/dev.js
+www/css/
