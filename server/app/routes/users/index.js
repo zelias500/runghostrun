@@ -118,6 +118,23 @@ router.post('/:id/friends', function (req, res, next) {
 	}).then(null, next)
 });
 
+// contact sync route
+router.post('/:id/friends/sync', function (req, res, next){
+	User.find().then(allUsers => {
+		var validContacts = allUsers.filter(user => {
+			return _.find(req.body.contacts, function(i){
+				return req.body.contacts[i].emails.some(email => {
+					return email.value == user.email;
+				})
+			})
+		})
+		req.user.friends.push(validContacts);
+		req.user.save().then(user => {
+			res.status(200).json(user);
+		})
+	})
+})
+
 // PUT to remove a friend
 router.put('/:id/friends/remove', function (req, res, next) {
 	var friendId = req.body.friendId;
