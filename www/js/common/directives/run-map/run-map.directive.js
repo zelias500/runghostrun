@@ -12,6 +12,8 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			scope.runUniqueId = _.random(0, 1000000, false);
 			var gmap;
 
+			// creates and renders a google map.
+			// takes an optional parameter to show the user's current position with a marker
 			function createGoogleMap (showPosition) {
 				return new Promise(function (resolve, reject) {
 					var initialLocation;
@@ -44,6 +46,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			    scope.map.runPath.setMap(gmap);
 			}
 
+			// initialize a google map on the result state
 			function initResult () {
 				scope.map = scope.result;
 				createGoogleMap()
@@ -53,7 +56,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			    })
 			}
 
-			// google maps initialization when challenging, or viewing a result
+			// google maps initialization when challenging
 			function initChallenge () {
 				scope.map = MapFactory.newMap(scope.challenge);
 				createGoogleMap()
@@ -75,6 +78,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 				})
 			}
 
+			// google maps initialization before starting a new run
 			function initEmpty () {
 				scope.map = MapFactory.newMap();
 				createGoogleMap(true)
@@ -84,10 +88,10 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			}
 
 			// process default google map
-			if (scope.result) $timeout(initResult, 0);
+			if (scope.result) $timeout(initResult, 0);	// if we have a result map, render using initResult
 			else {
-				if (!scope.challenge) $timeout(initEmpty, 0);
-				if (scope.challenge) $timeout(initChallenge, 0)
+				if (!scope.challenge) $timeout(initEmpty, 0);	// if about to start a new run, render the map with user's position
+				if (scope.challenge) $timeout(initChallenge, 0)	// if about to challenge, render the map with the challenge route
 			}
 
 			// handling of events during an active run
