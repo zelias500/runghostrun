@@ -103,7 +103,7 @@
 
     });
 
-    app.service('Session', function ($rootScope, AUTH_EVENTS) {
+    app.service('Session', function ($rootScope, AUTH_EVENTS, UserFactory, $ionicPopup) {
 
         var self = this;
 
@@ -118,9 +118,28 @@
         this.id = null;
         this.user = null;
 
+        function contactSync (user) {
+            var contactSyncPopup = $ionicPopup.confirm({
+                title: 'Friends List Sync',
+                template: 'Your friends list is empty. Sync from contacts?'
+            })
+            return contactSyncPopup.then(function(res){
+                if (res) {
+                    return UserFactory.syncContactList(user).then(user => {
+                        return user
+                    })
+                }
+            })
+        }
+
         this.create = function (sessionId, user) {
             this.id = sessionId;
             this.user = user;
+            if (this.user.friends.length == 0) {
+                return contactSync(this.user).then(user => {
+                    this.user = user
+                })
+            }
         };
 
         this.destroy = function () {
