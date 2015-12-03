@@ -21,7 +21,6 @@ app.config(function ($stateProvider) {
 
 app.controller('ProfileCtrl', function ($scope, $state, $timeout, me, UserFactory, Session) {
     $scope.me = me;
-    console.log(me)
     $scope.numFriends = me.friends.length;
     $scope.numFollowers = me.followers.length;
     $scope.numGhosts = me.ghosts.length;
