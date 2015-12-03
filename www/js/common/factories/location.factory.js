@@ -47,7 +47,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 		// clears location data array and attaches a position watcher
 		startNewRun: function () {
 
-			function watchCb (pos) {
+			var watchCb = _.throttle(function (pos) {
 				pos = {
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude,
@@ -61,7 +61,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 					else data.distance += calcDistance;
 				}
 				return data;
-			}
+			}, 500)
 
 			data.ghost = currentGhost;
 			watchId = navigator.geolocation.watchPosition(watchCb, errorHandler, options);
