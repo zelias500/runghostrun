@@ -9147,6 +9147,13 @@ ion-tabs.tabs-color-active-positive .tab-item {
 #display {
   color: #ffffff; }
 
+.add .modal {
+  width: 20px;
+  height: 20px; }
+
+.modal-open .modal, .modal-open .modal-backdrop {
+  text-align: center; }
+
 .profile_img {
   border-radius: 50%;
   height: 70px;

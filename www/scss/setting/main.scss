@@ -5,3 +5,12 @@
 #display {
    color: #ffffff;
 }
+
+.add .modal{
+	width: 20px;
+	height:20px;
+}
+
+.modal-open .modal, .modal-open .modal-backdrop{
+	text-align:center;
+}
