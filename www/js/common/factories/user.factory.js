@@ -103,17 +103,24 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 		return $http.put('/api/users/' + id, data)
 		.then(toData);
 	};
-	
+
 	factory.delete = function (id) {
 		return $http.delete('/api/users/' + id)
 		.then(toData);
 	};
+
+
+	factory.deleteGhost = function (userId, data) {
+	return $http.put('/api/users/'+ userId +'/removeghosts', data)
+	.then(toData);
+    };
 
 	factory.syncContactList = function (user) {
 		return $cordovaContacts.find().then(contactArray => {
 			return $http.post('/api/users/'+user._id+'/friends/sync', {contacts: contactArray})
 		}).then(toData) // get back modified user
 	}
+
 
 	return factory;
 });

@@ -52,7 +52,7 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 
 	factory.getOrderCache = function () {
 		return angular.copy(ghostDistanceOrder);
-	}
+	};
 
 	return factory;
 });
