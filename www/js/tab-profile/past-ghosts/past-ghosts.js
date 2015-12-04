@@ -39,7 +39,6 @@ app.controller('PastGhostsCtrl', function ($scope, $state, ghosts,$ionicModal,Gh
     };
 
     $scope.updateGhost = function(edit){
-        console.log(edit)
         GhostFactory.update($scope.selectGhost._id, edit)
         UserFactory.fetchAllGhosts(Session.user._id).then(function(update){
            $scope.ghosts = update;
@@ -47,12 +46,13 @@ app.controller('PastGhostsCtrl', function ($scope, $state, ghosts,$ionicModal,Gh
         $scope.modal.hide();
     }
 
-    $scope.deleteGhost= function(){
-       UserFactory.deleteGhost(Session.user._id,{ghostid:$scope.selectGhost._id})
-       GhostFactory.delete($scope.selectGhost._id)
-       UserFactory.fetchAllGhosts(Session.user._id).then(function(update){
-           $scope.ghosts = update;
+    $scope.deleteGhost= function() {
+        var ghostToRemove = $scope.selectGhost._id;
+        UserFactory.deleteGhost(Session.user._id, {ghostId: $scope.selectGhost._id})
+        .then(function (updatedUser) {
+            Session.user.ghosts = Session.user.ghosts.filter(ghostId => ghostId !== ghostToRemove);
+            $scope.ghosts = $scope.ghosts.filter(ghost => ghost._id !== ghostToRemove);
         })
-       $scope.modal.hide();
+        $scope.modal.hide();
     }
 });

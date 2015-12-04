@@ -11,10 +11,23 @@
         <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
         <ion-list>
           <ion-item ng-repeat='run in recentRuns'>
-          <div class="item-text-wrap" ng-if="run.ghost.owner._id==user._id"> You ran your own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}</div>
-          <div class="item-text-wrap" ng-if="run.ghost.owner._id!=user._id"> You ran {{userName(run.ghost.owner)}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}} </div>
-          <ghost-map ghost='run' anchors='false' boxes='false'></ghost-map>
-          <run-stats data='run'></ghost-stats>
+            <!-- If ghost has not been deleted -->
+            <div ng-if="run.ghost">
+              <div class="item-text-wrap" ng-if="run.ghost.owner._id==user._id">
+                You ran your own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}
+              </div>
+              <div class="item-text-wrap" ng-if="run.ghost.owner._id!=user._id">
+                You ran {{userName(run.ghost.owner)}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}
+              </div>
+            </div>
+            <!-- If ghost has been deleted -->
+            <div class="item-text-wrap" ng-if="!run.ghost">
+              You ran against a ghost that has since been deleted.
+            </div>
+            <!-- Google map and run data -->
+            <ghost-map ghost='run' anchors='false' boxes='false'></ghost-map>
+            <run-stats data='run'></ghost-stats>
+
           </ion-item>
         </ion-list>
       </div>
@@ -23,25 +36,37 @@
         <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
         <ion-list>
           <ion-item ng-repeat='friendRun in friendRuns'>
+            <!-- If ghost has not been deleted -->
+            <div ng-if="friendRun.ghost">
+              <div class="item-text-wrap" ng-if="friendRun.ghost.owner==friendRun.runner._id">
+                {{userName(friendRun.runner)}} ran their own challenge
+                {{friendRun.ghost.title}} on
+                {{timeStampToReadable(friendRun.timestamp)}}
+              </div>
+              <div class="item-text-wrap" ng-if="friendRun.ghost.owner==user._id">
+                {{userName(friendRun.runner)}} ran your challenge
+                {{friendRun.ghost.title}} on
+                {{timeStampToReadable(friendRun.timestamp)}}
+              </div>
+              <div class="item-text-wrap" ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id">
+                {{userName(friendRun.runner)}} ran
+                {{friendRun.ghost.owner}}'s challenge
+                {{friendRun.ghost.title}} on
+                {{timeStampToReadable(friendRun.timestamp)}}
+              </div>
+            </div>
+            <!-- If ghost has been deleted -->
+            <div class="item-text-wrap" ng-if="!friendRun.ghost">
+              You ran against a ghost that has since been deleted.
+            </div>
+            <!-- Google map and run data -->
             <ghost-map ghost='friendRun' anchors='true'></ghost-map>
-              <div class="item-text-wrap" ng-if="friendRun.ghost.owner==friendRun.runner._id"> 
-                {{userName(friendRun.runner)}} ran their own challenge 
-                {{friendRun.ghost.title}} on 
-                {{timeStampToReadable(friendRun.timestamp)}}</div>
-              <div class="item-text-wrap" ng-if="friendRun.ghost.owner==user._id"> 
-                {{userName(friendRun.runner)}} ran your challenge 
-                {{friendRun.ghost.title}} on 
-                {{timeStampToReadable(friendRun.timestamp)}}</div>
-              <div class="item-text-wrap" ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id"> 
-                {{userName(friendRun.runner)}} ran 
-                {{friendRun.ghost.owner}}'s challenge 
-                {{friendRun.ghost.title}} on 
-                {{timeStampToReadable(friendRun.timestamp)}} </div>
             <run-stats data='friendRun'></ghost-stats>
+
           </ion-item>
         </ion-list>
       </div>
-      
+
     </div>
   </ion-content>
 </ion-view>

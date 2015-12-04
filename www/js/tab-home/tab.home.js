@@ -4,7 +4,7 @@ app.config(function ($stateProvider) {
         views: {
             'tab-home': {
                 templateUrl: 'js/tab-home/tab.home.html',
-                controller: 'HomeCtrl'   
+                controller: 'HomeCtrl'
             }
         },
         data: {
@@ -42,7 +42,8 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFact
         }
     }
 
-    $scope.userName = function(user){
+    $scope.userName = function (user) {
+
         return user.displayName || user.email;
     }
 

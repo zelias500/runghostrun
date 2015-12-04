@@ -8,6 +8,7 @@ var Ghost = mongoose.model("Ghost");
 var Run = mongoose.model("Run");
 
 
+
 // GET all users
 router.get('/', function(req,res,next){
 	User.find({}).then(function(users){
@@ -196,23 +197,21 @@ router.post('/:id/ghosts', function (req, res, next){
 	.then(null, next);
 });
 
-router.put('/:id/removeghosts', function(req, res, next){
-    var index = req.targetUser.ghosts.indexOf(req.body.ghostid)
-    var  gid = req.body.ghostid
-	  _.pullAt(req.targetUser.ghosts, index)
-
-	 var removeRun = function(n){
-	 	return n.ghost == gid;
-	 }
-    req.targetUser.populate('runs').execPopulate().then(function(user){
-    	_.remove(user.runs, removeRun)
-      user.save().then(function(updateUser){
-		   res.status(200).json(updateUser)
-		})
-
-    })
-
+router.put('/:id/removeghosts', function (req, res, next) {
+	var ghostId = req.body.ghostId;
+	var ourUser;
+	req.targetUser.ghosts.pull(ghostId);
+	req.targetUser.save()
+	.then(function (user) {
+		ourUser = user;
+		return Ghost.remove({_id: ghostId}).exec()
+	})
+	.then(function () {
+		res.status(201).json(ourUser);
+	}).then(null, next);
 })
+
+
 router.delete('/:id', function(req, res, next){
     User.remove({_id :req.params.id}).then(function(){
       return res.status(200).json(req.targetUser);

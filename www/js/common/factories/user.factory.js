@@ -110,8 +110,8 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 	};
 
 
-	factory.deleteGhost = function (userId, ghostId) {
-	return $http.put('/api/users/'+ userId +'/removeghosts', ghostId)
+	factory.deleteGhost = function (userId, data) {
+	return $http.put('/api/users/'+ userId +'/removeghosts', data)
 	.then(toData);
     };
 
