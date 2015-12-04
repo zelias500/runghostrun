@@ -1,5 +1,8 @@
 app.factory('MapFactory', function ($ionicLoading) {
 	var factory = {};
+	const startIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/green.png";
+	const finishIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png";
+	const currentIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/red.png";
 
 	const mapStyle = [{"elementType":"geometry","stylers":[{"hue":"#ff4400"},{"saturation":-68},{"lightness":-4},{"gamma":0.72}]},{"featureType":"road","elementType":"labels.icon"},{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"hue":"#0077ff"},{"gamma":3.1}]},{"featureType":"water","stylers":[{"hue":"#00ccff"},{"gamma":0.44},{"saturation":-33}]},{"featureType":"poi.park","stylers":[{"hue":"#44ff00"},{"saturation":-23}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"hue":"#007fff"},{"gamma":0.77},{"saturation":65},{"lightness":99}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"gamma":0.11},{"weight":5.6},{"saturation":99},{"hue":"#0091ff"},{"lightness":-86}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"lightness":-48},{"hue":"#ff5e00"},{"gamma":1.2},{"saturation":-23}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"saturation":-64},{"hue":"#ff9100"},{"lightness":16},{"gamma":0.47},{"weight":2.7}]}];
 
@@ -47,7 +50,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 	        	});
 
 			if (options.showPosition) {
-				drawMarker(initialLocation, "https://maps.gstatic.com/mapfiles/ms2/micons/green.png");
+				drawMarker(initialLocation, startIcon);
 			}
 
 			if (options.challengeGhost) {
@@ -64,7 +67,6 @@ app.factory('MapFactory', function ($ionicLoading) {
 		return new Promise(function (resolve, reject) {
 			if (options.centerOnInitialPosition) {
 				getGeoPosition().then(function(coords) {
-					console.log(coords);
 					initialLocation = coords;
 					resolve(createMap());
 				})
@@ -160,14 +162,14 @@ app.factory('MapFactory', function ($ionicLoading) {
                 }
 	            this.addWayPoint(LatLng);
 	            if (cachedMap.frontMarker) cachedMap.frontMarker.setMap(null);
-	            cachedMap.frontMarker = drawMarker(lastLocation, "https://maps.gstatic.com/mapfiles/ms2/micons/red.png")
+	            cachedMap.frontMarker = drawMarker(lastLocation, currentIcon)
 	        }
 	       	this.drawAndSetPolyline();
 		}	
 
 		Map.prototype.drawEndPointMarkers = function(){
-			drawMarker(this.wayPoints[0], "https://maps.gstatic.com/mapfiles/ms2/micons/green.png");
-			drawMarker(this.wayPoints[this.wayPoints.length-1], "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png");
+			drawMarker(this.wayPoints[0], startIcon);
+			drawMarker(this.wayPoints[this.wayPoints.length-1], finishIcon);
 		}
 
 		cachedMap = new Map(ghost);
