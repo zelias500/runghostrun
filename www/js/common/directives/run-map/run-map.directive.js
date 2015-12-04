@@ -34,7 +34,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			// google maps initialization when this is a brand new run
 			function initNew () {
 				MapFactory.newMap(scope.runData, scope.runUniqueId, {
-					showPosition: false,
+					showPosition: true,
 					centerOnInitialPosition: true
 				}).then(function (map) {
 					scope.map = map;
