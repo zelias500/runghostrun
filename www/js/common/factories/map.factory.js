@@ -47,11 +47,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 	        	});
 
 			if (options.showPosition) {
-				var marker = new google.maps.Marker({
-					position: initialLocation,
-					map: cachedMap.gmap
-				})
-				marker.setMap(cachedMap.gmap);
+				drawMarker(initialLocation, "https://maps.gstatic.com/mapfiles/ms2/micons/green.png");
 			}
 
 			if (options.challengeGhost) {
@@ -68,6 +64,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 		return new Promise(function (resolve, reject) {
 			if (options.centerOnInitialPosition) {
 				getGeoPosition().then(function(coords) {
+					console.log(coords);
 					initialLocation = coords;
 					resolve(createMap());
 				})
@@ -163,15 +160,14 @@ app.factory('MapFactory', function ($ionicLoading) {
                 }
 	            this.addWayPoint(LatLng);
 	            if (cachedMap.frontMarker) cachedMap.frontMarker.setMap(null);
-	            cachedMap.frontMarker = drawMarker(lastLocation, null)
+	            cachedMap.frontMarker = drawMarker(lastLocation, "https://maps.gstatic.com/mapfiles/ms2/micons/red.png")
 	        }
 	       	this.drawAndSetPolyline();
 		}	
 
 		Map.prototype.drawEndPointMarkers = function(){
-			console.log(this);
-			drawMarker(this.wayPoints[0], null);
-			drawMarker(this.wayPoints[this.wayPoints.length-1], "flag");
+			drawMarker(this.wayPoints[0], "https://maps.gstatic.com/mapfiles/ms2/micons/green.png");
+			drawMarker(this.wayPoints[this.wayPoints.length-1], "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png");
 		}
 
 		cachedMap = new Map(ghost);
@@ -180,15 +176,24 @@ app.factory('MapFactory', function ($ionicLoading) {
 	}
 
 	function drawMarker(coords, ourIcon){
-		if (ourIcon == null) ourIcon = "grn_blank";
-		console.log(ourIcon);
-		var marker = new google.maps.Marker({
-					position: {
-						lat: Number(coords.lat),
-						lng: Number(coords.lng)
-					},
-					map: cachedMap.gmap
-				})
+		var marker;
+		if (typeof coords.lat == "function"){
+			marker = new google.maps.Marker({
+				position: coords,
+				map: cachedMap.gmap,
+				icon: ourIcon
+			})		
+		}
+		else {
+			marker = new google.maps.Marker({
+				position: {
+					lat: Number(coords.lat),
+					lng: Number(coords.lng)
+				},
+				map: cachedMap.gmap,
+				icon: ourIcon
+			})
+		}
 		marker.setMap(cachedMap.gmap);
 		return marker;
 	}
