@@ -8,6 +8,7 @@ var Ghost = mongoose.model("Ghost");
 var Run = mongoose.model("Run");
 
 
+
 // GET all users
 router.get('/', function(req,res,next){
 	User.find({}).then(function(users){
@@ -44,7 +45,7 @@ router.get('/:id/friends', function(req,res, next) {
 	}).then(null, next);
 });
 
-router.get('/:id/followers', function(req,res, next){ 
+router.get('/:id/followers', function(req,res, next){
 	req.targetUser.populate('followers').execPopulate()
 	.then(function (user) {
     	res.status(200).json(user.followers)
@@ -71,7 +72,8 @@ router.get('/:id/runs', function(req, res, next){
 	.then(function(runs){
 		ourRuns = runs;
 		var ghostsToPopulate = runs.map(function(run){
-			return run.ghost.populate('owner').execPopulate();
+			if(run.ghost){
+			return run.ghost.populate('owner').execPopulate()};
 		})
 		return Promise.all(ghostsToPopulate);
 	})
@@ -190,10 +192,25 @@ router.post('/:id/ghosts', function (req, res, next){
 		return req.targetUser.save();
 	})
 	.then(function(){
-		res.status(201).json(ourGhost);		
+		res.status(201).json(ourGhost);
 	})
 	.then(null, next);
 });
+
+router.put('/:id/removeghosts', function (req, res, next) {
+	var ghostId = req.body.ghostId;
+	var ourUser;
+	req.targetUser.ghosts.pull(ghostId);
+	req.targetUser.save()
+	.then(function (user) {
+		ourUser = user;
+		return Ghost.remove({_id: ghostId}).exec()
+	})
+	.then(function () {
+		res.status(201).json(ourUser);
+	}).then(null, next);
+})
+
 
 router.delete('/:id', function(req, res, next){
     User.remove({_id :req.params.id}).then(function(){
