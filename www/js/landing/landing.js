@@ -42,7 +42,7 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
             })
     }
     $scope.share = function() {
-          window.plugins.socialsharing.
+          window.plugins.socialsharing
             .shareViaFacebook(null, null, "murmuring-brook-3057.herokuapp.com")
             .then(function(result) {
                 console.log("SUCCESS!")
