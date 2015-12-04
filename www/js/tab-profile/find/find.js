@@ -18,7 +18,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('FindCtrl', function ($scope, $state, users, Session) {
+app.controller('FindCtrl', function ($scope, users, Session) {
     $scope.users = users;
     $scope.myName = Session.user.email;
 });

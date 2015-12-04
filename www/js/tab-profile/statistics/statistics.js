@@ -27,18 +27,17 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('StatisticsCtrl', function ($scope, $state, user, averagePace, averageDistance, StatFactory, userRuns) {
+app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, StatFactory, userRuns) {
     $scope.user = user;
     $scope.numRuns = user.runs.length;
     $scope.numGhosts = user.ghosts.length;
 
     $scope.averagePaceKm = averagePace;
-    $scope.averagePaceMi = StatFactory.minKm2minMi($scope.averagePaceKm);
+    $scope.averagePaceMi = StatFactory.convertPaceMetricToMiles($scope.averagePaceKm);
     $scope.averageDistanceKm = averageDistance;
     $scope.averageDistanceMi = StatFactory.km2mi($scope.averageDistanceKm);
     $scope.runs = userRuns.slice(-7)
 
-    console.log($scope.runs)
     $scope.date = moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
 
     $scope.options = {
@@ -70,21 +69,19 @@ app.controller('StatisticsCtrl', function ($scope, $state, user, averagePace, av
                 text: 'Recent Run Distance'
             }
         };
-        var count = 1;
-        var distanceData = $scope.runs.map(function(run){
+    var count = 1;
+    var distanceData = $scope.runs.map(function(run){
 
-          var obj = {
-             "label": count++,
-             "value": run.distance || 0
-            }
-           return obj;
-          })
-        $scope.data = [
-            {
-                key: "You Run Distance",
-                values: distanceData
-            }
-        ]
-
-
+      var obj = {
+         "label": count++,
+         "value": run.distance || 0
+        }
+       return obj;
+      })
+    $scope.data = [
+        {
+            key: "You Run Distance",
+            values: distanceData
+        }
+    ]
 });

@@ -18,7 +18,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('PastGhostsCtrl', function ($scope, $state, ghosts,$ionicModal,GhostFactory,UserFactory,Session) {
+app.controller('PastGhostsCtrl', function ($scope, $ionicModal, ghosts, GhostFactory, UserFactory, Session) {
 
     $scope.ghosts = ghosts;
     $scope.editGhost = function(ghost){

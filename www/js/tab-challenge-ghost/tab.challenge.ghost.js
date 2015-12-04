@@ -21,7 +21,7 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('GhostCtrl', function ($scope, ghost, usersBest, MapFactory, $state, LocationFactory, TimeFactory) {
+app.controller('GhostCtrl', function ($scope, $state, ghost, usersBest, LocationFactory) {
 
 	$scope.ghost = ghost;
 	$scope.ghostBest = ghost.bestRun;
