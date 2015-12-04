@@ -1,4 +1,4 @@
-window.app = angular.module('runghost', ['ionic', 'ngCordova', 'fsaPreBuilt'])
+window.app = angular.module('runghost', ['ionic', 'ngCordova', 'fsaPreBuilt','nvd3'])
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ionicConfigProvider) {
 
