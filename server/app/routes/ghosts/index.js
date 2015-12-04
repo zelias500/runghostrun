@@ -96,25 +96,6 @@ router.put('/:id', function(req, res, next){
 	}).then(null, next);
 });
 
-//PUT delete ghost reference
-// router.put('/:id/removeRun', function(req, res, next){
-//    var ghost = req.ghost;
-//     Run.find({}).then(function(runs){
-//     	console.log(runs)
-//     	var promise = []
-//     	runs.forEach(function(run){
-//     		console.log(run)
-//     		// if(run.ghost == req.params.id){
-//     		// 	promise.push(Run.remove({_id:run._id}))
-//     		// }
-//     	})
-//         Promise.all(promise).then(function(){
-//         	res.status.json(ghost)
-//         })
-//     })
-
-// })
-
 router.delete('/:id', function(req, res, next){
     Ghost.remove({_id :req.params.id}).then(function(){
       return res.status(200).json(req.ghost);
