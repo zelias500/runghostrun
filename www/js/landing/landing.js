@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory) {
+app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, $cordovaSocialSharing) {
 	$scope.runData = $stateParams.data;
 	$scope.isGhost = $stateParams.identity === 'ghosts';
     $scope.showTitleSavedAlert = false;
@@ -40,6 +40,15 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
                     $scope.showTitleSavedAlert = false;
                 }, 3000)
             })
+    }
+    $scope.share = function() {
+          window.plugins.socialsharing.
+            .shareViaFacebook(null, null, "murmuring-brook-3057.herokuapp.com")
+            .then(function(result) {
+                console.log("SUCCESS!")
+            }, function(err) {
+                console.log("FAILURE!", err);
+        });
     }
 
 });
