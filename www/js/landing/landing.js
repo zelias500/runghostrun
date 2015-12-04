@@ -42,8 +42,8 @@ app.controller('LandingCtrl', function ($rootScope, $scope, $state, $stateParams
             })
     }
     $scope.share = function() {
-          $cordovaSocialSharing
-            .shareViaFacebook("Some Msg", "http://zoarchurch.co.uk/content/pages/uploaded_images/91.png", "murmuring-brook-3057.herokuapp.com")
+          window.plugins.socialsharing.
+            .shareViaFacebook(null, null, "murmuring-brook-3057.herokuapp.com")
             .then(function(result) {
                 console.log("SUCCESS!")
             }, function(err) {
