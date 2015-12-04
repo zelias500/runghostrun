@@ -18,7 +18,7 @@ app.directive('ghostStats', function (TimeFactory, StatFactory, SettingFactory) 
 	        	.slice(0, 4)
 	        	.join(' ');
 		    }
-
+          //you should use Moment.js for your times
         	run.timestamp = Date.parse(run.timestamp);
 
         	scope.displayTime = TimeFactory.timeDisplay(run.time);

@@ -22,6 +22,7 @@ app.controller('LandingCtrl', function ($rootScope, $scope, $state, $stateParams
 	$scope.goHome = function () {
 		$state.go('tab.home');
 	}
+    //you may want to use $growl
     $scope.saveTitle = function () {
         $scope.saveTitleDisabled = true;
         GhostFactory.update($scope.runData._id, $scope.runData)

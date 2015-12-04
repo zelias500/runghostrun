@@ -9,7 +9,7 @@ app.factory('StatFactory', function () {
 		var pace = (time / distance).toFixed(2);
 		return Number(pace);
 	};
-
+	//could possible name these functions better, minKm sounds like the minimum number of km, not the pace
 	// takes a run - returns the average pace in min/km
 	factory.minKm = function (run) {
 		var distance = run.distance; // distance in meters
@@ -21,7 +21,7 @@ app.factory('StatFactory', function () {
 
 	// converts pace in min/km to min/mile
 	factory.minKm2minMi = function (pace) {
-        var pace = (pace * 1.609344).toFixed(2);
+        var pace = (pace * 1.609344).toFixed(2); //Maybe define your constants, so people know what they are
         return Number(pace);
 	};
 

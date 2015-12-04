@@ -30,7 +30,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state, Gh
             return b.runs.length - a.runs.length
         })
     }
-
+    //byDate?
     function byRecency() {
         $scope.ghosts.sort( (a,b) => {
             return new Date(a.runs[a.runs.length-1].timestamp) - new Date(b.runs[b.runs.length-1].timestamp)
