@@ -31,7 +31,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state, Gh
         })
     }
 
-    function byRecency() {
+    function byMostRecent() {
         $scope.ghosts.sort( (a,b) => {
             return new Date(a.runs[a.runs.length-1].timestamp) - new Date(b.runs[b.runs.length-1].timestamp)
         })         
@@ -48,8 +48,8 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state, Gh
         if (sortMethod == 'popular'){
             byPopularity();
         }
-        else if (sortMethod == 'recency') {
-            byRecency();
+        else if (sortMethod == 'recent') {
+            byMostRecent();
         }
         else if (sortMethod == 'runLength') {
             byLength();
