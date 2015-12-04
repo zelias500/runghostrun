@@ -155,20 +155,42 @@ app.factory('MapFactory', function ($ionicLoading) {
 		}
 
 		Map.prototype.tick = function (runData) {
-			console.log(runData.locations);
-			console.log(this.wayPoints);
 			if (runData.locations && (runData.locations.length > this.wayPoints.length)) {
                 var lastLocation = runData.locations[runData.locations.length - 1];
-	            this.addWayPoint({
+				var LatLng = {
                     lat: Number(lastLocation.lat),
                     lng: Number(lastLocation.lng)
-                })
+                }
+	            this.addWayPoint(LatLng);
+	            if (cachedMap.frontMarker) cachedMap.frontMarker.setMap(null);
+	            cachedMap.frontMarker = drawMarker(lastLocation, null)
 	        }
 	       	this.drawAndSetPolyline();
 		}	
 
+		Map.prototype.drawEndPointMarkers = function(){
+			console.log(this);
+			drawMarker(this.wayPoints[0], null);
+			drawMarker(this.wayPoints[this.wayPoints.length-1], "flag");
+		}
+
 		cachedMap = new Map(ghost);
 		return factory.configureGoogleMap(elementId, options);
+
+	}
+
+	function drawMarker(coords, ourIcon){
+		if (ourIcon == null) ourIcon = "grn_blank";
+		console.log(ourIcon);
+		var marker = new google.maps.Marker({
+					position: {
+						lat: Number(coords.lat),
+						lng: Number(coords.lng)
+					},
+					map: cachedMap.gmap
+				})
+		marker.setMap(cachedMap.gmap);
+		return marker;
 	}
 
 	return factory;
