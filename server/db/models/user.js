@@ -32,12 +32,14 @@ var schema = new mongoose.Schema({
             ref: 'User'
         }
     ],
+    //reference should be on the ghosts schema and point to the user
     ghosts: [
         {
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Ghost'
         }
     ],
+    //reference should be on the runs schema and point to the user
     runs: [
         {
             type: mongoose.Schema.Types.ObjectId, 

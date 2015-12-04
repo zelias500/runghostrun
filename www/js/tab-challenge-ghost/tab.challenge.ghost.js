@@ -20,7 +20,7 @@ app.config(function ($stateProvider) {
 		}
 	});
 });
-
+//may want to remove injections you are not using
 app.controller('GhostCtrl', function ($scope, ghost, usersBest, MapFactory, $state, LocationFactory, TimeFactory) {
 
 	$scope.ghost = ghost;

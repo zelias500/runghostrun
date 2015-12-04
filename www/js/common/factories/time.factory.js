@@ -1,6 +1,6 @@
 app.factory('TimeFactory', function () {
 	var factory = {};
-
+  //both of these functions could be moment.js functions
 	factory.timeDisplay = function (timeInSeconds) {
 	    var seconds = timeInSeconds %60
 		timeInSeconds -= seconds;
