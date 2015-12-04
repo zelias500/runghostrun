@@ -12,3 +12,4 @@ public
 coverage
 server/env/dev.js
 www/css/
+www/lib/
