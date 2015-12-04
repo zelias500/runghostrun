@@ -14,13 +14,13 @@ app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
         	}
         	scope.calculatePaceKm = function () {
         		if (scope.data) {
-	        		scope.averagePaceKm = StatFactory.minKm(scope.data);
+	        		scope.averagePaceKm = StatFactory.calculatePaceKilometers(scope.data);
 	        		return scope.averagePaceKm;
         		}
         	}
         	scope.calculatePaceMi = function () {
         		if (scope.data) {
-	        		scope.averagePaceMi = StatFactory.minKm2minMi(scope.averagePaceKm);
+	        		scope.averagePaceMi = StatFactory.convertPaceMetricToMiles(scope.averagePaceKm);
 	        		return scope.averagePaceMi;
         		}
         	}

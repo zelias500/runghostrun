@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LandingCtrl', function ($rootScope, $scope, $state, $stateParams, $timeout, GhostFactory, $cordovaSocialSharing) {
+app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, $cordovaSocialSharing) {
 	$scope.runData = $stateParams.data;
 	$scope.isGhost = $stateParams.identity === 'ghosts';
     $scope.showTitleSavedAlert = false;

@@ -13,7 +13,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('SettingsCtrl', function ($scope, SettingFactory,UserFactory, Session, $ionicModal) {
+app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, UserFactory, Session) {
 
     $scope.check = SettingFactory.getPrivacy()
     $scope.changePrivacy = function(){

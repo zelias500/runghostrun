@@ -18,7 +18,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('HistoryCtrl', function ($scope, $state, runs, StatFactory) {
+app.controller('HistoryCtrl', function ($scope, runs) {
     var week = 604800000;       // milliseconds in a week
     var today = Date.now();     // milliseconds from the Unix epoch at the moment of execution
 
