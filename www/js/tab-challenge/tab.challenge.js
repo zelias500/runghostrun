@@ -23,7 +23,7 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('ChallengeCtrl', function ($scope, ghosts, MapFactory, $state, GhostFactory) {
+app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
     $scope.predicate = 'nearest';
     function byPopularity() {
         $scope.ghosts.sort( (a,b) => {

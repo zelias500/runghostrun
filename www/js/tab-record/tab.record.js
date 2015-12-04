@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, LocationFactory, UserFactory, Session, $interval, MapFactory, $state, $rootScope) {
+app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, LocationFactory, Session) {
     $scope.lastLocIndex;
     $scope.currentRun;
     $scope.challengedGhost = LocationFactory.getGhost();

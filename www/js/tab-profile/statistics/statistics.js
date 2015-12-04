@@ -24,7 +24,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('StatisticsCtrl', function ($scope, $state, user, averagePace, averageDistance, StatFactory) {
+app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, StatFactory) {
     $scope.user = user;
     $scope.numRuns = user.runs.length;
     $scope.numGhosts = user.ghosts.length;

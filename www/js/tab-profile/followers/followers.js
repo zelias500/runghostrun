@@ -18,6 +18,6 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('FollowersCtrl', function ($scope, $state, followers) {
+app.controller('FollowersCtrl', function ($scope, followers) {
     $scope.followers = followers;
 });

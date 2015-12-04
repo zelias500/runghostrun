@@ -5,11 +5,7 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/login/login.html',
         data: {
             authenticate: false
-        },
-        controller: 'LoginCtrl'
+        }
     });
 
-});
-
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
 });
