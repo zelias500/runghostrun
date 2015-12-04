@@ -30,7 +30,7 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.numGhosts = user.ghosts.length;
 
     $scope.averagePaceKm = averagePace;
-    $scope.averagePaceMi = StatFactory.minKm2minMi($scope.averagePaceKm);
+    $scope.averagePaceMi = StatFactory.convertPaceMetricToMiles($scope.averagePaceKm);
     $scope.averageDistanceKm = averageDistance;
-    $scope.averageDistanceMi = StatFactory.km2mi($scope.averageDistanceKm);
+    $scope.averageDistanceMi = StatFactory.convertDistanceMetricToMiles($scope.averageDistanceKm);
 });
