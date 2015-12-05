@@ -21,8 +21,8 @@ router.post('/', function (req, res, next) {
 	.then(null, next);
 });
 
-// GET nearby ghosts (req.query)
-router.get('/nearby', function (req, res, next) {
+// GET nearby ghosts
+router.get('/nearby/:lat?/:lng?', function (req, res, next) {
 	Ghost.getGhostsNear({
 		lat: Number(req.query.lat), 
 		lng: Number(req.query.lng)

@@ -3,6 +3,7 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	var ghostDistanceOrder; // for 'nearby' ghosts: preserve original order so we know which ghosts were closest
 
 	function toData (res) {
+		console.log('res', res)
 		return res.data;
 	}
 
@@ -15,6 +16,11 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 		return $http.get('/api/ghosts/' + id)
 		.then(toData);
 	};
+
+	factory.fetchRuns = function (id) {
+		return $http.get('/api/ghosts/' + id + '/runs')
+		.then(toData);
+	}
 
 	factory.create = function (data) {
 		return $http.post('/api/ghosts/', data)
@@ -42,17 +48,32 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 		.then(toData);
 	};
 
-	factory.getNearbyGhosts = function () {
-		var pos;
-		return $cordovaGeolocation.getCurrentPosition().then(function(position){
-			pos = position;
-			return $http.get('/api/ghosts/nearby?'+'lat='+position.coords.latitude+'&lng='+position.coords.longitude)
-			.then(toData)
-			.then(ghosts => {
-				ghostDistanceOrder = ghosts;
-				return angular.copy(ghostDistanceOrder);
-			})
-		}).then(null, console.error)
+	factory.getNearbyGhostsWithRuns = function () {
+		return $cordovaGeolocation.getCurrentPosition()
+		.then(position => $http.get('/api/ghosts/nearby/', {
+			params: {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			}
+		}))
+		.then(toData)
+		.then(ghosts => {
+			var promises = [];
+            ghosts.forEach(ghost => {
+            	var promise = factory.fetchRuns(ghost._id)
+                .then(runs => {
+                    ghost.runs = runs;
+                    return ghost;
+                })
+                promises.push(promise);
+            })
+            return Promise.all(promises);
+        })
+        .then(ghostArr => {
+        	ghostDistanceOrder = _.flatten(ghostArr);
+        	return angular.copy(ghostDistanceOrder);
+        })
+		.then(null, console.error)
 	};
 
 	factory.getOrderCache = function () {
