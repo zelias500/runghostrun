@@ -38,7 +38,7 @@ var schema = new mongoose.Schema({
 
 // validates bestRun, bestRunner and time on the run's ghost
 schema.pre('save', function (next) {
-    mongoose.model('Ghost').findById(this.ghost._id)
+    mongoose.model('Ghost').findById(this.ghost)
     .then(ghost => {
         if (!ghost.bestRun) {
             ghost.bestRun = this._id;

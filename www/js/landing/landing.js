@@ -13,13 +13,19 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, $cordovaSocialSharing, $ionicPopup) {
+app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, TimeFactory, $cordovaSocialSharing, $ionicPopup) {
 	$scope.runData = $stateParams.data;
 	$scope.isGhost = $stateParams.identity === 'ghosts';
     $scope.titleSavedMessage;
 
+    console.log($scope.runData.timestamp)
+
 	$scope.goHome = function () {
-		$state.go('tab.home');
+        if (!$scope.runData.title && $scope.isGhost) {
+            var defaultTitle = 'Run on ' + TimeFactory.parseDisplayDate($scope.runData.timestamp)
+            GhostFactory.update($scope.runData.ghost, {title: defaultTitle})
+            .then(() => $state.go('tab.home'));
+        } else $state.go('tab.home');
 	}
     
     $scope.saveTitle = function () {
