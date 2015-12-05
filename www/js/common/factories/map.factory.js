@@ -60,6 +60,8 @@ app.factory('MapFactory', function ($ionicLoading) {
         		cachedMap.gmap.fitBounds(cachedMap.bounds);
 			} else cachedMap.drawAndSetPolyline();
 
+			if (options.drawEndPoints) cachedMap.drawEndPointMarkers();
+
 			$ionicLoading.hide();
 			return cachedMap;
 		};
@@ -177,9 +179,9 @@ app.factory('MapFactory', function ($ionicLoading) {
 
 	}
 
-	function drawMarker(coords, ourIcon){
+	function drawMarker (coords, ourIcon) {
 		var marker;
-		if (typeof coords.lat == "function"){
+		if (typeof coords.lat == "function") {
 			marker = new google.maps.Marker({
 				position: coords,
 				map: cachedMap.gmap,

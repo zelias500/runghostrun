@@ -15,8 +15,9 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			function initResult () {
 				scope.map = scope.result;
 				MapFactory.setCache(scope.map)
-				MapFactory.configureGoogleMap(scope.runUniqueId, {});
-				scope.map.drawEndPointMarkers();
+				MapFactory.configureGoogleMap(scope.runUniqueId, {
+					drawEndPoints: true
+				});
 			}
 
 			// google maps initialization when challenging

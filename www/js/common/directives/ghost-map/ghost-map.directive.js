@@ -20,7 +20,8 @@ app.directive('ghostMap', function (MapFactory) {
 			setTimeout(function () {
 				scope.map = MapFactory.newMap(scope.ghost, scope.ghostUniqueId, {
 					centerOnInitialPosition: false,
-					showPosition: false
+					showPosition: false,
+					drawEndPoints: true
 				});
 			}, 0);
 		}
