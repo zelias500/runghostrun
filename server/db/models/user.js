@@ -36,7 +36,7 @@ var schema = new mongoose.Schema({
         type: String,
         enum: ['Private', 'Friends', 'Public'],
         required: true,
-        default: 'public'
+        default: 'Public'
     },
     isMetric: {
         type: Boolean,
