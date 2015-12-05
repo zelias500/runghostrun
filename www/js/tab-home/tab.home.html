@@ -11,6 +11,7 @@
         <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
         <ion-list>
           <ion-item ng-repeat='run in recentRuns'>
+
             <!-- If ghost has not been deleted -->
             <div ng-if="run.ghost">
               <div class="item-text-wrap" ng-if="run.ghost.owner._id==user._id">
@@ -36,6 +37,7 @@
         <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
         <ion-list>
           <ion-item ng-repeat='friendRun in friendRuns'>
+          
             <!-- If ghost has not been deleted -->
             <div ng-if="friendRun.ghost">
               <div class="item-text-wrap" ng-if="friendRun.ghost.owner==friendRun.runner._id">

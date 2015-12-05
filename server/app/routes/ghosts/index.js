@@ -38,9 +38,10 @@ router.get('/nearby', function (req, res, next) {
 
 // id parameter
 router.param('id', function (req, res, next, id) {
-	 Ghost.findById(id).populate('owner bestRunner bestRun').then(function (ghost) {
-	 	 req.ghost = ghost
-	 	 next()
+	 Ghost.findById(id).populate('owner bestRunner bestRun').exec()
+	 .then(function (ghost) {
+	 	req.ghost = ghost;
+	 	next();
 	 }).then(null, next);
 });
 
@@ -49,7 +50,7 @@ router.get("/:id/users/:userId", function (req, res, next) {
 	req.ghost.getRuns()
 	.then(runs => {
 		var userBest = runs.reduce((best, run) => {
-			if (run.runner !== req.params.userId) return best;
+			if (run.runner != req.params.userId) return best;
 			else {
 				if (!best) return run;
 				else {
@@ -57,7 +58,7 @@ router.get("/:id/users/:userId", function (req, res, next) {
 					else return best;
 				}
 			}
-		}, null)
+		}, null);
 		res.status(200).json(userBest);
 	})
 	.then(null, next)
@@ -76,9 +77,12 @@ router.get('/:id/runs', function (req, res, next) {
 });
 
 // PUT ghost by id
-router.put('/:id', function (req, res, next){
-	_.extend(req.ghost, req.body)
-	req.ghost.save().then(function (update) {
+router.put('/:id', function (req, res, next) {
+	console.log(req.ghost)
+	console.log(req.body)
+	_.extend(req.ghost, req.body);
+	req.ghost.save()
+	.then(function (update) {
 		res.status(200).json(update)
 	}).then(null, next);
 });

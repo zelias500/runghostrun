@@ -46,7 +46,7 @@ var seedUsers = function () {
 
 connectToDb.then(function () {
     var userId, theGhost;
-    User.create({email: 'zack@123.com', displayName: 'Zack'}).then(function(user){
+    User.create({email: 'zack@123.com', displayName: 'Zack'}).then(function (user) {
         userId = user._id;
         return Ghost.create({
             owner: user._id,
@@ -65,7 +65,7 @@ connectToDb.then(function () {
             privacy: 'friends'
         })
     })
-    .then(function(ghost){
+    .then(function (ghost) {
         theGhost = ghost;
         var runArray = [{
           locations: [{
@@ -100,20 +100,19 @@ connectToDb.then(function () {
 
         return Run.create(runArray)
     })
-    .then(function(runs){
-        return Promise.all(runs.map(function(run){
+    .then(function (runs) {
+        return Promise.all(runs.map(function (run) {
             return theGhost.addNewRun(run);
         }))
     })
-    .then(function(){
+    .then(function () {
             console.log(chalk.green('Seed successful!'));
             process.kill(0);
         }).then(null, function (err) {
             console.error(err);
             process.kill(1);
         });
-    });        
-// })
+});
 
 
 

@@ -49,7 +49,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
             title: 'Challenge validation failed!',
             template: "Your run doesn't match the ghost. Save as new ghost?"
         });
-        confirmPopup.then(function(res){
+        confirmPopup.then(function (res) {
             if (res) {
                 delete $scope.stopData.ghost;
                 $scope.executeSave();
@@ -60,16 +60,17 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
         })
     }
 
-    $scope.executeSave = function() {
+    $scope.executeSave = function () {
         LocationFactory.saveRun($rootScope.userId, $scope.stopData)
         .then(function (data) {
-            // if the run is being saved as a new ghost
-            if (!data.ghost) $state.go('landing', {identity: 'ghosts', data: data})
+            $state.go('landing', {run: data});
+            var isChallenge = LocationFactory.getChallengeState();
+            if (!isChallenge) $state.go('landing', {identity: 'ghosts', data: data})
             else $state.go('landing', {identity: 'runs', data: data})
         });     
     }
 
-    $scope.discard = function() {
+    $scope.discard = function () {
         LocationFactory.emptyStopData();
         $state.go('tab.home');
     }

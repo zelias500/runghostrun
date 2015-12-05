@@ -1,4 +1,4 @@
-app.config(function($stateProvider){
+app.config(function ($stateProvider) {
 	$stateProvider.state('tab.pastghosts', {
         url: '/pastghosts',
         data:{
@@ -21,16 +21,19 @@ app.config(function($stateProvider){
 app.controller('PastGhostsCtrl', function ($scope, $ionicModal, ghosts, GhostFactory, UserFactory, Session) {
 
     $scope.ghosts = ghosts;
-    $scope.editGhost = function(ghost){
-      $scope.modal.show();
-      $scope.selectGhost = ghost
+
+    $scope.editGhost = function (ghost) {
+        $scope.modal.show();
+        $scope.selectGhost = ghost
     }
+
     $scope.edit = {privacy:'public'};
 
-     $ionicModal.fromTemplateUrl('js/tab-profile/past-ghosts/edit-ghost.html', {
+    $ionicModal.fromTemplateUrl('js/tab-profile/past-ghosts/edit-ghost.html', {
         scope: $scope,
         animation: 'slide-in-down'
-    }).then(function(modal) {
+    })
+    .then(function (modal) {
         $scope.modal = modal;
     });
 
@@ -38,19 +41,20 @@ app.controller('PastGhostsCtrl', function ($scope, $ionicModal, ghosts, GhostFac
         $scope.modal.hide();
     };
 
-    $scope.updateGhost = function(edit){
+    $scope.updateGhost = function (edit) {
         GhostFactory.update($scope.selectGhost._id, edit)
-        UserFactory.fetchAllGhosts(Session.user._id).then(function(update){
+        UserFactory.fetchAllGhosts(Session.user._id)
+        .then(function(update){
            $scope.ghosts = update;
         })
         $scope.modal.hide();
     }
 
-    $scope.deleteGhost= function() {
+    $scope.deleteGhost= function () {
         var ghostToRemove = $scope.selectGhost._id;
-        UserFactory.deleteGhost(Session.user._id, {ghostId: $scope.selectGhost._id})
-        .then(function (updatedUser) {
-            Session.user.ghosts = Session.user.ghosts.filter(ghostId => ghostId !== ghostToRemove);
+
+        GhostFactory.delete($scope.selectGhost._id)
+        .then(function () {
             $scope.ghosts = $scope.ghosts.filter(ghost => ghost._id !== ghostToRemove);
         })
         $scope.modal.hide();

@@ -1,4 +1,4 @@
-app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, GhostFactory, RunFactory) {
+app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFactory, GhostFactory, RunFactory) {
 
 	function errorHandler (err) {
 		console.error(err);
@@ -41,6 +41,16 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 
 	var watchId = null;
 	var stopData;
+
+	// contains state for whether a run is a newly recorded ghost, or a challenge to an existing ghost
+	var isChallenge;
+
+	$rootScope.$on('start', function () {
+		isChallenge = false;
+	});
+	$rootScope.$on('startChallenge', function () {
+		isChallenge = true;
+	});
 
 	var factory = {
 
@@ -103,8 +113,6 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 
 				return GhostFactory.create(stopData)
 				.then(ghost => {
-					console.log(ghost)
-					console.log(stopData);
 					stopData.ghost = ghost._id;
 					return RunFactory.create(stopData)
 				.then(run => run)
@@ -113,7 +121,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 
 			// otherwise, save as a run
 			} else {
-				stopData.ghost = ghost._id;
+				stopData.ghost = stopData.ghost._id;
 				stopData.runner = userId;
 				return RunFactory.create(stopData)
 				.then(run => run);
@@ -160,6 +168,10 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 			var dist = Math.abs(calcGeoDistance(loc1, loc2));
 			// 300 meters?
 			return dist < 300;
+		},
+
+		getChallengeState: function () {
+			return isChallenge;
 		}
 	}
 

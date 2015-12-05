@@ -61,9 +61,14 @@ router.get('/:id/friends/recent', function (req, res, next) {
 
 // GET user runs
 router.get('/:id/runs', function (req, res, next) {
-	var ourRuns;
 	req.targetUser.getRuns()
-	.then(runs => res.status(200).json(runs))
+	.then(runs => {
+		return Ghost.populate(runs, {path: 'ghost'})
+	})
+	.then(runs => {
+		return User.populate(runs, {path: 'ghost.owner'})
+	})
+	.then(runs =>res.status(200).json(runs))
 	.then(null, next)
 });
 
