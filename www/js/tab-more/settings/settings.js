@@ -15,42 +15,45 @@ app.config(function($stateProvider){
 
 app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, UserFactory, Session, $ionicPopup) {
 
-    $scope.check = SettingFactory.getPrivacy()
-    $scope.changePrivacy = function(){
-        $scope.check = !$scope.check
-        SettingFactory.setPrivacy($scope.check)
-    };
+    $scope.user = Session.user;
+    $scope.user.privacy = $scope.user.privacy[0].toUpperCase() + $scope.user.privacy.substring(1);
 
-    $scope.useKm = function(){
-        SettingFactory.setUnit("km")
-    };
-    $scope.useMile = function(){
-        SettingFactory.setUnit("mi")
-    };
 
-    $scope.changeName = function(name) {
-
-        UserFactory.update(Session.user._id, {displayName: name})
-        .then(function () {
-            $ionicPopup.alert({
-                    title: 'Success!',
-                    template: "You changed your display name to " + name
-            });
-        });
+    $scope.displayDistanceUnit = function() {
+        return !$scope.user.isMetric ? "km" : "miles";
     }
 
-     $ionicModal.fromTemplateUrl('js/tab-more/settings/profile-pic.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.modal = modal;
-    });
-    $scope.openModal = function(){
-        $scope.modal.show();
-    };
-    $scope.closeModal = function(){
-        $scope.modal.hide();
-    };
+    $scope.saveUser = function() {
+        UserFactory.update($scope.user._id, $scope.user)
+        .then(
+            function() {
+                $ionicPopup.alert({
+                    title: "Success!",
+                    template: "Your profile has been successfully updated"
+                })
+            },
+            function() {
+                $ionicPopup.alert({
+                    title: "Failure!",
+                    template: "There was a problem updating your profile. Please try again"
+                })
+            }
+        )
+    }
+
+    // $ionicModal.fromTemplateUrl('js/tab-more/settings/profile-pic.html', {
+    //         scope: $scope,
+    //         animation: 'slide-in-up'
+    //     }).then(function(modal) {
+    //         $scope.modal = modal;
+    // });
+
+    // $scope.openModal = function(){
+    //     $scope.modal.show();
+    // };
+    // $scope.closeModal = function(){
+    //     $scope.modal.hide();
+    // };
 
 
 });
