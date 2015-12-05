@@ -52,5 +52,6 @@ app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, Lo
 
     $scope.removeGhost = function() {
         LocationFactory.setGhost(null);
+        $state.go('tab.challenge');
     }
 });

@@ -18,8 +18,6 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
 	$scope.isGhost = $stateParams.identity === 'ghosts';
     $scope.titleSavedMessage;
 
-    console.log($scope.runData.timestamp)
-
 	$scope.goHome = function () {
         if (!$scope.runData.title && $scope.isGhost) {
             var defaultTitle = 'Run on ' + TimeFactory.parseDisplayDate($scope.runData.timestamp)
