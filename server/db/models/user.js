@@ -31,7 +31,17 @@ var schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
         }
-    ]
+    ],
+    privacy: {
+        type: String,
+        enum: ['Private', 'Friends', 'Public'],
+        required: true,
+        default: 'Public'
+    },
+    isMetric: {
+        type: Boolean,
+        default: true
+    }
 });
 
 schema.methods.getGhosts = function () {
