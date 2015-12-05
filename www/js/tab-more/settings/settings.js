@@ -16,7 +16,6 @@ app.config(function($stateProvider){
 app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, UserFactory, Session, $ionicPopup) {
 
     $scope.user = Session.user;
-    $scope.user.privacy = $scope.user.privacy[0].toUpperCase() + $scope.user.privacy.substring(1);
 
 
     $scope.displayDistanceUnit = function() {
