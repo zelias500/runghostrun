@@ -3,7 +3,6 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	var ghostDistanceOrder; // for 'nearby' ghosts: preserve original order so we know which ghosts were closest
 
 	function toData (res) {
-		console.log('res', res)
 		return res.data;
 	}
 

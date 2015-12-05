@@ -4,13 +4,13 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 		console.error(err);
 	};
 
-	var earthRadius = 6371000 // in km
+	var earthRadius = 6371000; // in km
 
-	function toRad (degrees){
+	function toRad (degrees) {
 		return degrees * Math.PI/180;
 	};
 
-	function calcGeoDistance(loc1, loc2){
+	function calcGeoDistance (loc1, loc2) {
 		if (!loc1 || !loc2) return 0;
 		var latRads1 = toRad(loc1.lat);
 		var latRads2 = toRad(loc2.lat);
@@ -21,7 +21,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 		return Number((earthRadius * c).toFixed(1));
 	};
 
-	function calcPointTime(loc1, loc2){
+	function calcPointTime (loc1, loc2) {
 		return loc2.timestamp - loc1.timestamp;
 	};
 
@@ -37,11 +37,12 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 		speedPoints: []
 	};
 
+	// if challenging a ghost, contains the ghost
 	var currentGhost;
-
+	// contains the id for the watch on current geoposition
 	var watchId = null;
+	// contains data that will be turned into a run and/or a ghost at the end of a run
 	var stopData;
-
 	// contains state for whether a run is a newly recorded ghost, or a challenge to an existing ghost
 	var isChallenge;
 
@@ -104,7 +105,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 
 		saveRun: function (userId, stopData) {
 
-			// if saving a new ghost
+			// if this is a new ghost
 			if (!stopData.ghost) {
 
 				stopData.owner = userId;
@@ -119,7 +120,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 				})
 				.then(null, errorHandler)
 
-			// otherwise, save as a run
+			// otherwise, simply save the run
 			} else {
 				stopData.ghost = stopData.ghost._id;
 				stopData.runner = userId;
