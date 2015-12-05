@@ -78,8 +78,6 @@ router.get('/:id/runs', function (req, res, next) {
 
 // PUT ghost by id
 router.put('/:id', function (req, res, next) {
-	console.log(req.ghost)
-	console.log(req.body)
 	_.extend(req.ghost, req.body);
 	req.ghost.save()
 	.then(function (update) {
