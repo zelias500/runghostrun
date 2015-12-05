@@ -42,7 +42,8 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
 
     if (SettingFactory.getUnit() == 'km') $scope.useKm = true;
     if (SettingFactory.getUnit() =='mi') $scope.useMi = true;
-    $scope.runs = usersRuns.slice(-7)
+
+/*    $scope.runs = usersRuns.slice(-7)
 
     $scope.date = moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
 
@@ -90,4 +91,5 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
             values: distanceData
         }
     ]
+*/
 });
