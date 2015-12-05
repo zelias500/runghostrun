@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "ngmap": "~1.14.15",
-    "ngCordova": "~0.1.23-alpha"
+    "ngCordova": "~0.1.23-alpha",
+    "d3": "~3.5.10",
+    "nvd3": "~1.8.1",
+    "angularjs-nvd3-directives": "~0.0.7"
   }
 }

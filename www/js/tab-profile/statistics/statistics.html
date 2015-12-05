@@ -2,6 +2,9 @@
   <ion-content class="padding">
     <div class="list">
       <a class="item">
+        Your Last Run was on: {{ date }}
+      </a>
+      <a class="item">
         Total Runs Logged: {{ numRuns }}
       </a>
       <a class="item">
@@ -18,6 +21,10 @@
       </a>
       <a class="item" ng-show="useMi">
         Average Distance: {{ averageDistanceMi }} mi
+      </a>
+      <a class="item">
+        Recent Run Statistics:
+        <div class="data"><nvd3 options="options" data="data"></nvd3></div>
       </a>
     </div>
 
