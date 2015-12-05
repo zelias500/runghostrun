@@ -34,7 +34,7 @@ var schema = new mongoose.Schema({
     ],
     privacy: {
         type: String,
-        enum: ['private', 'friends', 'public'],
+        enum: ['Private', 'Friends', 'Public'],
         required: true,
         default: 'public'
     },
@@ -42,11 +42,6 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: true
     }
-});
-
-schema.pre('validate', function(next) {
-    this.privacy = this.privacy.toLowerCase();
-    next();
 });
 
 schema.methods.getGhosts = function () {
