@@ -24,7 +24,7 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
 	}
     $scope.saveTitle = function () {
         $scope.saveTitleDisabled = true;
-        GhostFactory.update($scope.runData._id, $scope.runData)
+        GhostFactory.update($scope.runData.ghost, {title: $scope.runData.title})
             .then(function (ghost) {
                 $scope.showTitleSavedAlert = true;
                 $scope.titleSavedMessage = "New Title Saved!";
@@ -32,7 +32,8 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
                     $scope.saveTitleDisabled = false;
                     $scope.showTitleSavedAlert = false;
                 }, 3000)
-            }).then(null, function () {
+            })
+            .then(null, function () {
                 $scope.showTitleSavedAlert = true;
                 $scope.titleSavedMessage = "Something went wrong! You can still modify the title in Settings.";
                 $timeout(function () {

@@ -1,4 +1,4 @@
-app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, GhostFactory) {
+app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFactory, GhostFactory, RunFactory) {
 
 	function errorHandler (err) {
 		console.error(err);
@@ -41,6 +41,16 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 
 	var watchId = null;
 	var stopData;
+
+	// contains state for whether a run is a newly recorded ghost, or a challenge to an existing ghost
+	var isChallenge;
+
+	$rootScope.$on('start', function () {
+		isChallenge = false;
+	});
+	$rootScope.$on('startChallenge', function () {
+		isChallenge = true;
+	});
 
 	var factory = {
 
@@ -93,14 +103,29 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 		},
 
 		saveRun: function (userId, stopData) {
+
+			// if saving a new ghost
 			if (!stopData.ghost) {
+
+				stopData.owner = userId;
 				stopData.runner = userId;
 				stopData.privacy = stopData.privacy.toLowerCase();
-				return UserFactory.createGhost(userId, stopData)
-				.then(function (ghost) {
-	        	        	return ghost;
-	        	        }, errorHandler);
-			} else return GhostFactory.addNewRun(stopData.ghost._id, stopData);
+
+				return GhostFactory.create(stopData)
+				.then(ghost => {
+					stopData.ghost = ghost._id;
+					return RunFactory.create(stopData)
+				.then(run => run)
+				})
+				.then(null, errorHandler)
+
+			// otherwise, save as a run
+			} else {
+				stopData.ghost = stopData.ghost._id;
+				stopData.runner = userId;
+				return RunFactory.create(stopData)
+				.then(run => run);
+			}
 		},
 
 		getCurrentRunData: function () {
@@ -122,20 +147,6 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 			return data;
 		},
 
-		// speed conversions - DO NOT USE
-/*		getAvgSpeed: function (inMiles) {
-			var toReturn = (data.distance/1000)/(data.time/3600); // convert to km/hr
-			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
- 			return Number(toReturn.toFixed(2));
-		},
-*/
-		// DO NOT USE
-/*		getGhostAvg: function (ghost) {
-			var toReturn = (ghost.distance / 1000)/(ghost.time / 3600); // convert to km/hr
-			if (inMiles) toReturn /= 1.6; // converts km/hr ==> mi/hr
- 			return Number(toReturn.toFixed(2));
-		},
-*/
 		// FOR TESTING PURPOSES ONLY
 		addLocationPoint: function (point) {
 			data.locations.push(point);
@@ -157,6 +168,10 @@ app.factory('LocationFactory', function ($cordovaGeolocation, UserFactory, Ghost
 			var dist = Math.abs(calcGeoDistance(loc1, loc2));
 			// 300 meters?
 			return dist < 300;
+		},
+
+		getChallengeState: function () {
+			return isChallenge;
 		}
 	}
 

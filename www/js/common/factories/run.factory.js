@@ -3,10 +3,17 @@ app.factory('RunFactory', function($http){
 		return res.data;
 	}
 
+	var factory = {};
+
 	factory.fetchAll = function () {
 		return $http.get('/api/runs')
 		.then(toData);
 	};
+
+	factory.create = function (data) {
+		return $http.post('/api/runs', data)
+		.then(toData);
+	}
 
 	factory.fetchById = function (id) {
 		return $http.get('/api/runs/' + id)
@@ -22,4 +29,6 @@ app.factory('RunFactory', function($http){
 		return $http.delete('/api/runs/' + id)
 		.then(toData);
 	};
+
+	return factory;
 })

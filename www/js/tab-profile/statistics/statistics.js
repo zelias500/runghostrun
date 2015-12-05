@@ -20,17 +20,20 @@ app.config(function($stateProvider){
             averageDistance: function (UserFactory, Session) {
                 return UserFactory.fetchAvgDistance(Session.user._id);
             },
-            userRuns: function(UserFactory, Session){
+            usersRuns: function (UserFactory, Session) {
                 return UserFactory.fetchAllRuns(Session.user._id);
+            },
+            usersGhosts: function (UserFactory, Session) {
+                return UserFactory.fetchAllGhosts(Session.user._id);
             }
         }
     });
 });
 
-app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, StatFactory, userRuns) {
+app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory) {
     $scope.user = user;
-    $scope.numRuns = user.runs.length;
-    $scope.numGhosts = user.ghosts.length;
+    $scope.numRuns = usersRuns.length;
+    $scope.numGhosts = usersGhosts.length;
 
     $scope.averagePaceKm = averagePace;
     $scope.averagePaceMi = StatFactory.convertPaceMetricToMiles($scope.averagePaceKm);

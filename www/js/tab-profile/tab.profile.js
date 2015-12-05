@@ -14,17 +14,23 @@ app.config(function ($stateProvider) {
         resolve: {
             user: function (UserFactory, $stateParams) {
                 return UserFactory.fetchById($stateParams.id);
+            },
+            usersGhosts: function (UserFactory, $stateParams) {
+                return UserFactory.fetchAllGhosts($stateParams.id);
+            },
+            usersRuns: function (UserFactory, $stateParams) {
+                return UserFactory.fetchAllRuns($stateParams.id);
             }
         }
     })
 });
 
-app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, UserFactory, Session) {
+app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGhosts, usersRuns, UserFactory, Session) {
     $scope.user = user;
     $scope.numFriends = user.friends.length;
     $scope.numFollowers = user.followers.length;
-    $scope.numGhosts = user.ghosts.length;
-    $scope.numRuns = user.runs.length;
+    $scope.numGhosts = usersGhosts.length;
+    $scope.numRuns = usersRuns.length;
 
     if (user.displayName && user.displayName.length) {
         $scope.name = user.displayName

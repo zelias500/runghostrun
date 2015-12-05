@@ -10,11 +10,13 @@ var schema = new mongoose.Schema({
         }
     ],
     time: Number, // in seconds
-	distance: Number, // in METERS
+	distance: Number, // in meters
+    pace: Number,   // in min/km
     runner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        index: true
     },
     privacy: {
     	type: String,
@@ -24,7 +26,8 @@ var schema = new mongoose.Schema({
     },
     ghost: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ghost'
+        ref: 'Ghost',
+        index: true
     },
     timestamp: {
         type: Date,
