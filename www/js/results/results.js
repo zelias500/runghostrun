@@ -61,11 +61,11 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     }
 
     $scope.executeSave = function() {
-         LocationFactory.saveRun($rootScope.userId, $scope.stopData)
-        .then(function (ghostData) {
+        LocationFactory.saveRun($rootScope.userId, $scope.stopData)
+        .then(function (data) {
             // if the run is being saved as a new ghost
-            if (ghostData.runs.length === 1) $state.go('landing', {identity: 'ghosts', data: ghostData})
-            else $state.go('landing', {identity: 'runs', data: ghostData.runs[ghostData.runs.length - 1]})
+            if (!data.ghost) $state.go('landing', {identity: 'ghosts', data: data})
+            else $state.go('landing', {identity: 'runs', data: data})
         });     
     }
 

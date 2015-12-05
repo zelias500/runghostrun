@@ -43,7 +43,6 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFact
     }
 
     $scope.userName = function (user) {
-
         return user.displayName || user.email;
     }
 

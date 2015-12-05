@@ -31,31 +31,27 @@ var schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
         }
-    ],
-    ghosts: [
-        {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Ghost'
-        }
-    ],
-    runs: [
-        {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Run'
-        }
     ]
 });
 
-schema.methods.addGhost = function(data){
-    var self = this;
-    return Ghost.create(data).then(function(ghost){
-        self.ghosts.push(ghost);
-        return self.save();
-    });
+schema.methods.getGhosts = function () {
+    return Ghost.find({owner: this._id}).exec();
 }
 
-schema.methods.recentFriendActivity = function () {
-    return Promise.all(this.friends.map(friend => Run.find({runner: friend}).populate("runner ghost")))
+schema.methods.getRuns = function () {
+    return Run.find({runner: this._id}).exec();
+}
+
+// schema.methods.addGhost = function(data) {
+//     var self = this;
+//     return Ghost.create(data).then(function(ghost) {
+//         self.ghosts.push(ghost);
+//         return self.save();
+//     });
+// }
+
+schema.methods.getRecentFriendActivity = function () {
+    return Promise.all(this.friends.map(friend => friend.getRuns()))
     .then(runArray => {
         return _.flatten(runArray).sort((a,b) => {
             return b.timestamp > a.timestamp;

@@ -16,6 +16,11 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 		.then(toData);
 	};
 
+	factory.create = function (data) {
+		return $http.post('/api/ghosts/', data)
+		.then(toData);
+	}
+
 	factory.addNewRun = function (id, data) {
 		data.runner = $rootScope.userId;
 		return $http.post('/api/ghosts/' + id, data)

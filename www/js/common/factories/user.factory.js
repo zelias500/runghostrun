@@ -43,24 +43,24 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 	// returns a user's overall average pace in min/km
 	factory.fetchAvgPace = function (id) {
 	    return this.fetchAllRuns(id)
-	     	.then(function (runs) {
-	     		// total distance in km
-				var totalDistance = runs.reduce(function (curr, next) {
-					return curr + (next.distance / 1000); // distance is originally in m, converting to km
-				}, 0);
+     	.then(function (runs) {
+     		// total distance in km
+			var totalDistance = runs.reduce(function (curr, next) {
+				return curr + (next.distance / 1000); // distance is originally in m, converting to km
+			}, 0);
 
-				// check to prevent dividing by zero
-   				if (totalDistance === 0) return 0;
+			// check to prevent dividing by zero
+				if (totalDistance === 0) return 0;
 
-				// total time in seconds
-				var totalTime = runs.reduce(function (curr, next) {
-					return curr + next.time;
-				}, 0);
+			// total time in seconds
+			var totalTime = runs.reduce(function (curr, next) {
+				return curr + next.time;
+			}, 0);
 
-   				var totalTimeinMin = (totalTime / 60);
-				var avgPace = (totalTimeinMin / totalDistance).toFixed(2);
-				return Number(avgPace);
-	     });
+				var totalTimeinMin = (totalTime / 60);
+			var avgPace = (totalTimeinMin / totalDistance).toFixed(2);
+			return Number(avgPace);
+    	});
 	};
 
 	// returns a user's overall average distance in km
@@ -94,10 +94,10 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 		.then(toData)
 	};
 
-	factory.createGhost = function (id, data) {
-		return $http.post('/api/users/' + id + '/ghosts', data)
-		.then(toData);
-	};
+	// factory.createGhost = function (id, data) {
+	// 	return $http.post('/api/users/' + id + '/ghosts', data)
+	// 	.then(toData);
+	// };
 
 	factory.update = function (id, data) {
 		return $http.put('/api/users/' + id, data)
@@ -110,10 +110,10 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 	};
 
 
-	factory.deleteGhost = function (userId, data) {
-	return $http.put('/api/users/'+ userId +'/removeghosts', data)
-	.then(toData);
-    };
+	// factory.deleteGhost = function (userId, data) {
+	// return $http.put('/api/users/'+ userId +'/removeghosts', data)
+	// .then(toData);
+ //    };
 
 	factory.syncContactList = function (user) {
 		return $cordovaContacts.find().then(contactArray => {

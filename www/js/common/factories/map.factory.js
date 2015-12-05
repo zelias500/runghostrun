@@ -155,8 +155,6 @@ app.factory('MapFactory', function ($ionicLoading) {
 		}
 
 		Map.prototype.tick = function (runData) {
-			console.log(runData.locations);
-			console.log(this.wayPoints);
 			if (runData.locations && (runData.locations.length > this.wayPoints.length)) {
                 var lastLocation = runData.locations[runData.locations.length - 1];
 	            this.addWayPoint({

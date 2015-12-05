@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var _ = require('lodash');
+var Run = mongoose.model('Run');
 
 var earthRadius = 6371000 // in km
 function toRad (degrees){
@@ -20,7 +21,8 @@ var schema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        index: true
     },
     title: {
         type: String
@@ -36,17 +38,13 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    runs: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Run'
-    }],
     locations: [
         {
             lat: String,
             lng: String
         }
     ],
-    distance: Number, // in METERS
+    distance: Number, // in meters
     privacy: {
     	type: String,
     	enum: ['private', 'friends', 'public'],
@@ -59,8 +57,12 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.methods.addNewRun = function(run){
-    if (!this.time || run.time < this.time){
+schema.methods.getRuns = function () {
+    return Run.find({ghost: this._id}).exec();
+}
+
+schema.methods.addNewRun = function(run) {
+    if (!this.time || run.time < this.time) {
         this.bestRun = run._id;
         this.time = run.time;
         this.bestRunner = run.runner;
@@ -70,7 +72,7 @@ schema.methods.addNewRun = function(run){
 }
 
 schema.statics.getGhostsNear = function (locationObject) {
-    return this.find().populate('owner runs bestRunner').then(allGhosts => {
+    return this.find().populate('owner bestRunner').then(allGhosts => {
         return allGhosts.filter(ghost => {
             if (ghost.locations.length){
                 return calcGeoDistance(ghost.locations[0], locationObject) < 5000            

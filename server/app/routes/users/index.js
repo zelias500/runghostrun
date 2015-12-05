@@ -7,95 +7,79 @@ var User = mongoose.model("User");
 var Ghost = mongoose.model("Ghost");
 var Run = mongoose.model("Run");
 
-
-
 // GET all users
-router.get('/', function(req,res,next){
-	User.find({}).then(function(users){
-		res.status(200).json(users)
-	}).then(null, next)
+router.get('/', function (req,res,next) {
+	User.find({})
+	.then(users => res.status(200).json(users))
+	.then(null, next)
 });
 
 // POST new user
-router.post('/', function(req, res, next){
-   var newUser = new User(req.body);
-      return newUser.save().then(function(newuser){
-      	res.status(201).json(newuser)
-      }).then(null, next);
+router.post('/', function (req, res, next) {
+	User.create(req.body)
+	.then(newUser => res.status(201).json(newUser))
+    .then(null, next);
 });
 
 // id parameter
-router.param('id', function(req, res, next, id){
-	 User.findById(id).then(function(user){
-	 	 req.targetUser = user;
-	 	 next();
-	 }).then(null, next);
+router.param('id', function (req, res, next, id) {
+	User.findById(id).exec()
+	.then(user => {
+	 	req.targetUser = user;
+	 	next();
+	}).then(null, next);
 });
 
 // GET single user by id
-router.get('/:id', function(req,res, next){
+router.get('/:id', function (req,res, next) {
      res.status(200).json(req.targetUser)
 });
 
 // GET user friends by id
-router.get('/:id/friends', function(req,res, next) {
+router.get('/:id/friends', function (req,res, next) {
 	req.targetUser.populate('friends').execPopulate()
-	.then(function (user) {
-    	res.status(200).json(user.friends)
-	}).then(null, next);
+	.then(user => res.status(200).json(user.friends))
+	.then(null, next);
 });
 
-router.get('/:id/followers', function(req,res, next){
+// GET a user's followers
+router.get('/:id/followers', function (req,res, next) {
 	req.targetUser.populate('followers').execPopulate()
-	.then(function (user) {
-    	res.status(200).json(user.followers)
-	}).then(null, next);
+	.then(user => res.status(200).json(user.followers))
+	.then(null, next);
 });
 
-router.get('/:id/friends/recent', function(req, res, next){
-	if (req.targetUser.friends.length){
-		req.targetUser.recentFriendActivity().then(recentActivity => {
+// GET recent friend activity
+router.get('/:id/friends/recent', function (req, res, next) {
+	if (req.targetUser.friends.length) {
+		req.targetUser.getRecentFriendActivity()
+		.then(recentActivity => {
 			res.status(200).json(recentActivity);
-		})
+		}).then(null, next);
 	} else res.status(200).end();
 })
 
 // GET user runs
-router.get('/:id/runs', function(req, res, next){
+router.get('/:id/runs', function (req, res, next) {
 	var ourRuns;
-	req.targetUser.populate('runs').execPopulate().then(function(user){
-		var runsToPopulate = user.runs.map(function(run){
-			return run.populate('ghost').execPopulate()
-		})
-		return Promise.all(runsToPopulate)
-	})
-	.then(function(runs){
-		ourRuns = runs;
-		var ghostsToPopulate = runs.map(function(run){
-			if(run.ghost){
-			return run.ghost.populate('owner').execPopulate()};
-		})
-		return Promise.all(ghostsToPopulate);
-	})
-	.then(function (){
-		res.status(200).json(ourRuns)
-	})
-	.then(null, next);
+	req.targetUser.getRuns()
+	.then(runs => res.status(200).json(runs))
+	.then(null, next)
 });
 
 // GET user ghosts
-router.get('/:id/ghosts', function(req, res, next){
-	req.targetUser.populate('ghosts').execPopulate().then(function(user){
-		res.status(200).json(user.ghosts);
-	}).then(null, next);
+router.get('/:id/ghosts', function (req, res, next) {
+	req.targetUser.getGhosts()
+	.then(ghosts => res.status(200).json(ghosts))
+	.then(null, next);
 });
 
 // PUT user settings update
 router.put('/:id', function (req, res, next){
 	_.extend(req.targetUser, req.body);
-	req.targetUser.save().then(function(update){
-		res.status(201).json(update);
-	}).then(null, next);
+	req.targetUser.save()
+	.then(update => res.status(201).json(update))
+	.then(null, next);
 
 });
 
@@ -156,64 +140,10 @@ router.put('/:id/friends/remove', function (req, res, next) {
 	}).then(null, next)
 });
 
-// POST new ghost (create a new ghost with rundata)
-router.post('/:id/ghosts', function (req, res, next){
-	var ourGhost;
-	var ourRun;
-	var ourGhost;
-	req.body.timestamp = Date.now();
-	Run.create(req.body)
-	.then(function (run){
-		ourRun = run;
-		req.targetUser.runs.push(run);
-		return req.targetUser.save();
-	})
-	.then(function () {
-		// create the ghost that matches this run
-		var title = req.targetUser.displayName || req.targetUser.email;
-		title+= "-" + req.targetUser.ghosts.length;
-		return Ghost.create({
-			owner: req.targetUser._id,
-			locations: ourRun.locations,
-			distance: ourRun.distance,
-			title: title
-		})
-	})
-	.then(function (ghost){
-		ourGhost = ghost;
-		return ghost.addNewRun(ourRun)
-	})
-	.then(function (ghost){
-		ourRun.ghost = ghost._id;
-		return ourRun.save();
-	})
-	.then(function(){
-		req.targetUser.ghosts.push(ourGhost);
-		return req.targetUser.save();
-	})
-	.then(function(){
-		res.status(201).json(ourGhost);
-	})
-	.then(null, next);
-});
-
-router.put('/:id/removeghosts', function (req, res, next) {
-	var ghostId = req.body.ghostId;
-	var ourUser;
-	req.targetUser.ghosts.pull(ghostId);
-	req.targetUser.save()
-	.then(function (user) {
-		ourUser = user;
-		return Ghost.remove({_id: ghostId}).exec()
-	})
-	.then(function () {
-		res.status(201).json(ourUser);
-	}).then(null, next);
-})
-
-
+// DELETE a single user by id
 router.delete('/:id', function(req, res, next){
     User.remove({_id :req.params.id}).then(function(){
       return res.status(200).json(req.targetUser);
-    });
+    })
+    .then(null, next)
 });
