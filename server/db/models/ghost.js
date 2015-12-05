@@ -61,16 +61,6 @@ schema.methods.getRuns = function () {
     return Run.find({ghost: this._id}).exec();
 }
 
-schema.methods.addNewRun = function(run) {
-    if (!this.time || run.time < this.time) {
-        this.bestRun = run._id;
-        this.time = run.time;
-        this.bestRunner = run.runner;
-    }
-	this.runs.push(run._id);
-	return this.save();
-}
-
 schema.statics.getGhostsNear = function (locationObject) {
     return this.find().populate('owner bestRunner').then(allGhosts => {
         return allGhosts.filter(ghost => {

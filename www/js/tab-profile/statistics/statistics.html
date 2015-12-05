@@ -10,11 +10,17 @@
       <a class="item">
         Ghost Data Saved: {{ numGhosts }}
       </a>
-      <a class="item">
-        Average Pace: {{ averagePaceMi }} min/mi | {{ averagePaceKm }} min/km
+      <a class="item" ng-show="useKm">
+        Average Pace: {{ averagePaceKm }} min/km
       </a>
-      <a class="item">
-        Average Distance: {{ averageDistanceMi }} mi | {{ averageDistanceKm }} km
+      <a class="item" ng-show="useMi">
+        Average Pace: {{ averagePaceMi }} min/mi
+      </a>
+      <a class="item" ng-show="useKm">
+        Average Distance: {{ averageDistanceKm }} km
+      </a>
+      <a class="item" ng-show="useMi">
+        Average Distance: {{ averageDistanceMi }} mi
       </a>
       <a class="item">
         Recent Run Statistics:

@@ -13,7 +13,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, UserFactory, Session) {
+app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, UserFactory, Session, $ionicPopup) {
 
     $scope.check = SettingFactory.getPrivacy()
     $scope.changePrivacy = function(){
@@ -28,10 +28,15 @@ app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, Us
         SettingFactory.setUnit("mi")
     };
 
-    $scope.changeName = function(name){
+    $scope.changeName = function(name) {
 
         UserFactory.update(Session.user._id, {displayName: name})
-
+        .then(function () {
+            $ionicPopup.alert({
+                    title: 'Success!',
+                    template: "You changed your display name to " + name
+            });
+        });
     }
 
      $ionicModal.fromTemplateUrl('js/tab-more/settings/profile-pic.html', {

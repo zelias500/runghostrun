@@ -13,33 +13,36 @@ app.config(function ($stateProvider) {
         resolve: {
             ghosts: function (GhostFactory, $ionicLoading) {
                 $ionicLoading.show();
-                return GhostFactory.getNearbyGhosts()
-                    .then(function (ghosts) {
-                        $ionicLoading.hide();
-                        return ghosts;
-                    });
+                return GhostFactory.getNearbyGhostsWithRuns()
+                .then(function (ghosts) {
+                    $ionicLoading.hide();
+                    return ghosts;
+                })
             }
         }
-	});
+    });
 });
 
 app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
+
+    $scope.ghosts = ghosts;
     $scope.predicate = 'nearest';
-    function byPopularity() {
-        $scope.ghosts.sort( (a,b) => {
+
+    function byPopularity () {
+        $scope.ghosts.sort( (a, b) => {
             return b.runs.length - a.runs.length
         })
     }
 
-    function byMostRecent() {
-        $scope.ghosts.sort( (a,b) => {
+    function byMostRecent () {
+        $scope.ghosts.sort( (a, b) => {
             return new Date(a.runs[a.runs.length-1].timestamp) - new Date(b.runs[b.runs.length-1].timestamp)
         })         
     }
 
-    function byLength() {
-        $scope.ghosts.sort( (a,b) => {
-            return b.distance - a.distance
+    function byLength () {
+        $scope.ghosts.sort( (a, b) => {
+            return b.distance - a.distance;
         })  
     }
 
@@ -58,8 +61,5 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
             $scope.ghosts = GhostFactory.getOrderCache();
         }
     }
-
-
-    $scope.ghosts = ghosts;
 
 });

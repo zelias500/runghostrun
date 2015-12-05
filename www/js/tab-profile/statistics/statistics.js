@@ -30,7 +30,7 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory) {
+app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory, SettingFactory) {
     $scope.user = user;
     $scope.numRuns = usersRuns.length;
     $scope.numGhosts = usersGhosts.length;
@@ -38,8 +38,11 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.averagePaceKm = averagePace;
     $scope.averagePaceMi = StatFactory.convertPaceMetricToMiles($scope.averagePaceKm);
     $scope.averageDistanceKm = averageDistance;
-    $scope.averageDistanceMi = StatFactory.km2mi($scope.averageDistanceKm);
-    $scope.runs = userRuns.slice(-7)
+    $scope.averageDistanceMi = StatFactory.convertDistanceMetricToMiles($scope.averageDistanceKm);
+
+    if (SettingFactory.getUnit() == 'km') $scope.useKm = true;
+    if (SettingFactory.getUnit() =='mi') $scope.useMi = true;
+    $scope.runs = usersRuns.slice(-7)
 
     $scope.date = moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
 

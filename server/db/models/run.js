@@ -36,4 +36,21 @@ var schema = new mongoose.Schema({
 
 });
 
+// validates bestRun, bestRunner and time on the run's ghost
+schema.pre('save', function (next) {
+    mongoose.model('Ghost').findById(this.ghost)
+    .then(ghost => {
+        if (!ghost.bestRun) {
+            ghost.bestRun = this._id;
+            ghost.bestRunner = this.runner;
+            ghost.save().then(next)
+        } else if (this.time < ghost.time) {
+            ghost.bestRun = this._id;
+            ghost.bestRunner = this.runner;
+            ghost.time = this.time;
+            ghost.save().then(next)
+        } else next();
+    }).then(null, next)
+});
+
 mongoose.model('Run', schema);
