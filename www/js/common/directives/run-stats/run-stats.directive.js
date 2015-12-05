@@ -24,12 +24,18 @@ app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
 	        		return scope.averagePaceMi;
         		}
         	}
-        	scope.calculateDistance = function () {
+        	scope.calculateDistanceKm = function () {
         		if (scope.data) {
-	        		scope.distance = scope.data.distance;
+	        		scope.distance = Number((scope.data.distance / 1000).toFixed(2));
 	        		return scope.distance;
         		}
         	}
+            scope.calculateDistanceMi = function () {
+                if (scope.data) {
+                    scope.distance = StatFactory.convertDistanceMetricToMiles(scope.data.distance / 1000);
+                    return scope.distance;
+                }
+            }
 
             if (SettingFactory.getUnit() == 'km') scope.useKm = true;
             if (SettingFactory.getUnit() =='mi') scope.useMi = true;

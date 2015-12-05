@@ -23,7 +23,8 @@ app.directive('ghostStats', function (TimeFactory, StatFactory, SettingFactory) 
 
         	scope.displayTime = TimeFactory.timeDisplay(run.time);
         	scope.displayDate = parseDisplayDate(run.timestamp);
-        	scope.distance = run.distance;
+        	scope.distanceKm = Number((run.distance / 1000).toFixed(2));
+        	scope.distanceMi = StatFactory.convertDistanceMetricToMiles(scope.distanceKm);
         	scope.averagePaceKm = StatFactory.calculatePaceKilometers(run);
         	scope.averagePaceMi = StatFactory.convertPaceMetricToMiles(scope.averagePaceKm);
 
