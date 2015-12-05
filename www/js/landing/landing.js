@@ -13,35 +13,31 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, $cordovaSocialSharing) {
+app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, $cordovaSocialSharing, $ionicPopup) {
 	$scope.runData = $stateParams.data;
 	$scope.isGhost = $stateParams.identity === 'ghosts';
-    $scope.showTitleSavedAlert = false;
-    $scope.saveTitleDisabled = false;
     $scope.titleSavedMessage;
+
 	$scope.goHome = function () {
 		$state.go('tab.home');
 	}
+    
     $scope.saveTitle = function () {
-        $scope.saveTitleDisabled = true;
         GhostFactory.update($scope.runData.ghost, {title: $scope.runData.title})
             .then(function (ghost) {
-                $scope.showTitleSavedAlert = true;
-                $scope.titleSavedMessage = "New Title Saved!";
-                $timeout(function () {
-                    $scope.saveTitleDisabled = false;
-                    $scope.showTitleSavedAlert = false;
-                }, 3000)
+                $ionicPopup.alert({
+                    title: 'New Title Saved!',
+                    template: 'You saved your ghost as: ' + $scope.runData.title
+                });
             })
             .then(null, function () {
-                $scope.showTitleSavedAlert = true;
-                $scope.titleSavedMessage = "Something went wrong! You can still modify the title in Settings.";
-                $timeout(function () {
-                    $scope.saveTitleDisabled = false;
-                    $scope.showTitleSavedAlert = false;
-                }, 3000)
-            })
+                $ionicPopup.alert({
+                    title: 'Something went wrong!',
+                    template: 'You can still modify the title in Settings.'
+                });
+            });
     }
+
     $scope.share = function() {
           window.plugins.socialsharing
             .shareViaFacebook(null, null, "murmuring-brook-3057.herokuapp.com")

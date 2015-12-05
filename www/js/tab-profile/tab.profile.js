@@ -25,7 +25,7 @@ app.config(function ($stateProvider) {
     })
 });
 
-app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGhosts, usersRuns, UserFactory, Session) {
+app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGhosts, usersRuns, UserFactory, Session, $ionicPopup) {
     $scope.user = user;
     $scope.numFriends = user.friends.length;
     $scope.numFollowers = user.followers.length;
@@ -47,21 +47,21 @@ app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGho
         return UserFactory.addFriend($scope.userId, $scope.user._id)
         .then(function () {
             Session.user.friends.push($scope.user._id);
-            $scope.successMessage = $scope.user.email + ' added to your friends list!';
-            $timeout(function () {
-                $scope.successMessage = false;
-            }, 3000);
+            $ionicPopup.alert({
+                    title: 'Success!',
+                    template: "You are now following " + $scope.user.displayName || $scope.user.email
+            });
         });
     }
     $scope.removeFriend = function () {
         return UserFactory.removeFriend($scope.userId, $scope.user._id)
         .then(function () {
             Session.user.friends = Session.user.friends.filter(friend => friend !== $scope.user._id);
-            $scope.successMessage = $scope.user.email + ' Removed from your friends list.';
-            $timeout(function () {
-                $scope.successMessage = false;
-            }, 3000);
-        });
+            $ionicPopup.alert({
+                    title: 'Success!',
+                    template: "You are no longer following " + $scope.user.displayName || $scope.user.email
+            });
+        })
     }
 
 });
