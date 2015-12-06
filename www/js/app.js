@@ -37,7 +37,6 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cor
                 return $cordovaGeolocation.getCurrentPosition();
             }, 0)
         }
-
         // NOTE: the 'accuracy' reading on a Position object is NOT a percentage
         // instead, it refers to the # of meters the reading is accurate to
         // e.g. an accuracy of 20 means the reading is accurate w/in 20 meters @ 95% confidence level
