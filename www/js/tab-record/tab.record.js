@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, LocationFactory, Session) {
+app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, LocationFactory, Session, ValidationFactory, $ionicPopup) {
     $scope.lastLocIndex;
     $scope.currentRun;
     $scope.challengedGhost = LocationFactory.getGhost();
@@ -21,14 +21,28 @@ app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, Lo
     var interv;
 
     $scope.start = function () {
+        if ($scope.challengedGhost) {
+            if (!ValidationFactory.validateChallengeStart($scope.challengedGhost)) {
+                var warning = $ionicPopup.confirm({
+                    title: 'Invalid Challenge Start',
+                    template: 'Invalid start location for this challenge. Continue as new ghost?'
+                })
+                warning.then(res => {
+                    if (res) {
+                        delete $scope.challengedGhost;
+                    }
+                    else return;
+                })
+            }
+            $rootScope.$emit('startChallenge')
+        }
+        else $rootScope.$emit('start');
+
 
         $scope.barColor = "bar-assertive"
         LocationFactory.startNewRun();
         $scope.currentRun = LocationFactory.getCurrentRunData();
         $scope.lastInd = LocationFactory.getLocIndex();
-
-        if ($scope.challengedGhost) $rootScope.$emit('startChallenge');
-        else $rootScope.$emit('start');
 
         interv = $interval(function () {
             $scope.currentRun.time++;

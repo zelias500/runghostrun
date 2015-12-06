@@ -1,5 +1,17 @@
-app.factory('ValidationFactory', function (LocationFactory) {
+app.factory('ValidationFactory', function (LocationFactory, $cordovaGeolocation) {
 	var factory = {};
+
+	// tell a user whether the run they are about to start will be valid
+	factory.validateChallengeStart = function (ghostStart) {
+		return $cordovaGeolocation.getCurrentPosition().then(pos => {
+			var validationObj = {
+				lat: pos.coords.latitude,
+				lng: pos.coords.longi
+			}
+			return LocationFactory.validateDistance(validationObj, ghostStart)
+		})
+	}
+
 	// takes stopData with a populated ghost field (aka it's a challenge)
 	factory.validateRun = function (runData) {
 	    // THREE FACTOR VALIDATION:
