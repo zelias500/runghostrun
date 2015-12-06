@@ -11,7 +11,7 @@
       	<p>{{ghost.title || "Untitled Ghost"}}</p>
       	<p>Owned by {{ghost.owner.displayName || ghost.owner.email}}</p>
         <run-map ghost='ghost' clickable="true"></run-map>
-        <ghost-stats data="ghost"></ghost-stats>
+        <run-stats data="ghost" list-format="false"></run-stats>
       </ion-item>
     </ion-list>
   </ion-content>
