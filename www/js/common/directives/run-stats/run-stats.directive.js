@@ -26,7 +26,7 @@ app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
         	}
         	scope.calculateDistanceKm = function () {
         		if (scope.data) {
-	        		scope.distance = Number((scope.data.distance / 1000).toFixed(2));
+	        		scope.distance = Number((scope.data.distance / 1000).toFixed(3));
 	        		return scope.distance;
         		}
         	}

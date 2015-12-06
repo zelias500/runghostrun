@@ -1,49 +1,41 @@
 <ion-view view-title="Settings">
-  <ion-content class="padding">
-     <div class="list">
-     	<div class="item item-divider">
-     	  Distance Unit
-     	</div>
-		  <label class="item item-radio ">
-		    <input type="radio" name="group" ng-click="useKm()">
-              <div class="radio-content">
-			      <div class="item-content" id="unit" >
-			        Kilometer
-			      </div>
-		      <i  class="radio-icon ion-checkmark"></i>
-		      </div>
-		  </label>
-		  <label class="item item-radio ">
-		    <input type="radio" name="group" ng-click="useMile()">
-              <div class="radio-content">
-			      <div class="item-content" id="unit" >
-			        Mile
-			      </div>
-		      <i class="radio-icon ion-checkmark"></i>
-		      </div>
-		  </label>
-		  <div class="item item-toggle">
-		    Privacy
-			<label class="toggle">
-				<input type="checkbox" ng-click="changePrivacy()">
-				<div class="track">
-				<div class="handle"></div>
-				</div>
-			</label>
-		  </div>
-		<div class="item item-divider">
-			Profile
-		</div>
-		  <div class="item item-input-inset" id="unit">
-		  <span>Display Name&nbsp;</span>
-		    <label class="item-input-wrapper">
-		      <input type="text" ng-model="name" placeholder="Your Name Here"/>
-		    </label>
-		    <button class="button button-calm button-small" ng-click="changeName(name)">Submit</button>
-		  </div>
-		<div class="item" id="unit">
-			 <a class="button icon icon-right ion-chevron-right" ng-click="openModal()">Profile Picture</a>
-		</div>
-     </div>
-  </ion-content>
+	<ion-content class="padding">
+    	<div class="list">
+
+ 	  		<li class="item item-toggle">
+	    		Distance in: <strong> {{displayDistanceUnit()}} </strong>
+		     		<label class="toggle toggle-energized">
+		       		<input name="distanceUnit"
+		       		  type="checkbox"
+		       		  ng-model="user.isMetric">
+		       		<div class="track">
+		         		<div class="handle"></div>
+		       		</div>
+	     		</label>
+	  		</li>
+
+	  		<label class="item item-input item-select">
+	   			<div class="input-label">
+	      			Privacy:
+	   			</div>
+		    	<select name="selected" ng-model="user.privacy" id="privacySelector">
+				    <option>Private</option>
+				    <option>Friends</option>
+				    <option>Public</option>
+		   		</select>
+	  		</label>
+
+			<div class="item item-input-inset">
+		  		<span>Display Name&nbsp;</span>
+		    	<label class="item-input-wrapper">
+		      		<input type="text" ng-model="user.displayName" placeholder="{{user.displayName}}"/>
+		    	</label>
+			</div>
+
+  		</div>
+	  	<button class="button button-block button-balanced" ng-click="saveUser()"> 
+	  		Save
+		</button>
+
+  	</ion-content>
 </ion-view>
