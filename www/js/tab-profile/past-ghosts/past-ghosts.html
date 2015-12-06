@@ -9,8 +9,12 @@
             <span>{{ghost.title}}</span>
              <button class="button button-small button-outline button-positive edit" ng-click="editGhost(ghost)">Edit</button>
            </div>
-        <div class="item item-text-wrap"><ghost-map ghost='ghost' anchors='false'></ghost-map></div>
-        <div class="item item-divider"><ghost-stats data='ghost'></ghost-stats></div>
+        <div class="item item-text-wrap">
+          <run-map ghost='ghost' clickable='false'></run-map>
+        </div>
+        <div class="item item-divider">
+          <ghost-stats data='ghost'></ghost-stats>
+        </div>
       </div>
     </div>
   </div>
