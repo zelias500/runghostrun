@@ -23,7 +23,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
+app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session) {
 
     $scope.ghosts = ghosts;
     $scope.predicate = 'nearest';
@@ -60,5 +60,9 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
         else {
             $scope.ghosts = GhostFactory.getOrderCache();
         }
+    }
+
+    $scope.newChallenge = function(ghostId) {
+        return Session.user.newChallenges.indexOf(ghostId) !== -1;
     }
 });

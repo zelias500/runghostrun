@@ -7,6 +7,15 @@ app.config(function ($stateProvider) {
     	data: {
     		authenticate: true
     	},
-    	templateUrl: 'js/tab/tab.html'
+    	templateUrl: 'js/tab/tab.html',
+    	controller: 'TabCtrl'
   	});
+});
+
+app.controller('TabCtrl', function ($scope, Session) {
+	$scope.user = Session.user;
+	$scope.newChallengesLength = function (){
+		if (Session.user.hasSeenChallenges) return 0;
+		return Session.user.newChallenges.length;
+	}
 });
