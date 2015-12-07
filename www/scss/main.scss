@@ -7,6 +7,7 @@ $font-blue: #387ef5;
 ion-content {
 	background-color: $background;
 	font-family: 'Open Sans', sans-serif;
+	color: $font-blue;
 }
 
 // override Ionic padding
@@ -80,6 +81,13 @@ ion-tabs.tabs-color-active-positive .tab-item {
 }
 .item.item-icon-left {
 	color: $font-blue;
+}
+
+#runTimer {
+	color: $font-blue;
+	font-size:50px;
+	font-family:'Orbitron', sans-serif;
+	padding-top:15px;
 }
 
 @import 'setting/main';

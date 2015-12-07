@@ -10,6 +10,8 @@ app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory, Se
 		templateUrl: '/js/common/directives/run-stats/run-stats.html',
 		link: function (scope) {
 
+            console.log(scope.data)
+
             if (scope.data) scope.displayDate = TimeFactory.parseDisplayDate(scope.data.timestamp);
             if (!scope.format) scope.format === 'col';
 			
