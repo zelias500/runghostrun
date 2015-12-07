@@ -12,10 +12,17 @@
     <run-map result="map"></run-map>
     <run-stats data="stopData" list-format="true"></run-stats>
 
-    <div class="button-bar">
-      <a ng-click="save()" class="button button-balanced">Save</a>
-      <a ng-click="discard()" class="button button-assertive">Discard</a>
-    </div>
+    <a style="text-decoration:none;color:#33CD5F">
+      <button class="button button-full button-outline button-balanced" ng-click="save()">
+        <span class="ion-checkmark"> Save</span>
+      </button>
+    </a>
+
+    <a style="text-decoration:none;color:#33CD5F">
+      <button class="button button-full button-outline button-assertive" ng-click="discard()">
+        <span class="ion-close"> Discard</span>
+      </button>
+    </a>
 
   </ion-content>
 </ion-view>

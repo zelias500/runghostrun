@@ -4,11 +4,20 @@
     <run-map run-data="currentRun" challenge="challengedGhost"></run-map>
     <run-stats data="currentRun" ng-show="currentRun" list-format="true"></run-stats>
 
-    <div class="button-bar" ng-class="barColor">
-      <a ng-show="!currentRun" ng-click="start()" class="button"><span class="ion-navigate"> Start</span></a>
-      <a ng-show="!currentRun && ghost()" ng-click="removeGhost()" class="button button-assertive">Cancel Challenge</a>
-      <a ng-show="currentRun" ng-click="stop()" class="button">Stop</a>
-	</div>
+    <a style="text-decoration:none;color:#33CD5F">
+      <button class="button button-full button-outline button-balanced" ng-click='start()' ng-show="!currentRun">
+        <span class="ion-navigate"> Start</span>
+      </button>
+      <button class="button button-full button-outline button-assertive" ng-click='stop()' ng-show="currentRun">
+        <span class="ion-ios-stopwatch"> Stop</span>
+      </button>
+    </a>
+
+    <a style="text-decoration:none;color:#33CD5F" ng-show="!currentRun && ghost()">
+      <button class="button button-full button-outline button-assertive" ng-click="removeGhost()">
+        <span class="ion-close"> Cancel</span>
+      </button>
+    </a>
 	
   </ion-content>
 </ion-view>
