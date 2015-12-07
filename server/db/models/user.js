@@ -54,10 +54,9 @@ schema.methods.getRuns = function () {
 
 schema.methods.getRecentFriendActivity = function () {
     return Promise.all(this.friends.map(friendId => {
-        return this.model('User').find({_id: friendId}).exec();
+        return this.model('User').findById(friendId).exec();
     }))
     .then(friends => {
-        friends = _.flatten(friends);
         return Promise.all(friends.map(friend => {
             return friend.getRuns();
         }));
