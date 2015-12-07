@@ -58,7 +58,6 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cor
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         if (toState.url === "/challenge") {
             if (Session.user) UserFactory.removeChallenges(Session.user._id);
-            console.log("I am in challenge");
         }
         
         if (!destinationStateRequiresAuth(toState)) {
