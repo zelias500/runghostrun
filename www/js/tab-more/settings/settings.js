@@ -17,7 +17,6 @@ app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, Us
 
     $scope.user = Session.user;
 
-
     $scope.displayDistanceUnit = function() {
         return !$scope.user.isMetric ? "km" : "miles";
     }
