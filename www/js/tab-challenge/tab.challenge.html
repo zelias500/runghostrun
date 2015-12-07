@@ -14,6 +14,8 @@
         <img ng-src="{{ghost.owner.picture}}">
         <h2>{{ghost.owner.displayName || ghost.owner.email}}</h2>
         <p>{{ghost.title || "Untitled Ghost"}}</p>
+        <span style="color:#FC4C02" ng-if="newChallenge(ghost._id)" class="ion-alert-circled"> New Challenge </span>
+
       </div>
 
       <div class="item item-body">
