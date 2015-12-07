@@ -25,9 +25,8 @@ app.controller('PastGhostsCtrl', function ($scope, $ionicModal, ghosts, GhostFac
     $scope.editGhost = function (ghost) {
         $scope.modal.show();
         $scope.selectGhost = ghost
+        console.log(ghost);
     }
-
-    $scope.edit = {privacy:'public'};
 
     $ionicModal.fromTemplateUrl('js/tab-profile/past-ghosts/edit-ghost.html', {
         scope: $scope,
@@ -42,7 +41,7 @@ app.controller('PastGhostsCtrl', function ($scope, $ionicModal, ghosts, GhostFac
     };
 
     $scope.updateGhost = function (edit) {
-        GhostFactory.update($scope.selectGhost._id, edit)
+        GhostFactory.update($scope.selectGhost._id, $scope.selectGhost)
         UserFactory.fetchAllGhosts(Session.user._id)
         .then(function(update){
            $scope.ghosts = update;

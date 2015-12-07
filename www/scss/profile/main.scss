@@ -21,12 +21,26 @@ p.profile-title {
 	float:right;
 }
 
+
 .input-label.ghost-edit{
-	color: #fff;
+	text-align: left;
+}
+
+.item-input {
+	input {
+		color: white;
+	}
 }
 
 .ion-close-circled.delete{
 	font-size: 150%;
+}
+
+.modal-header {
+	background:  #383838;
+	h1 {
+		color: white;
+	}
 }
 
 .dashed {

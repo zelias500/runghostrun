@@ -9162,6 +9162,9 @@ ion-tabs.tabs-color-active-positive .tab-item {
   color: white;
   font-size: 1em; }
 
+.item-input input {
+  text-align: right; }
+
 .profile_img {
   border-radius: 50%;
   height: 70px;
@@ -9182,10 +9185,18 @@ p.profile-title {
   float: right; }
 
 .input-label.ghost-edit {
-  color: #fff; }
+  text-align: left; }
+
+.item-input input {
+  color: white; }
 
 .ion-close-circled.delete {
   font-size: 150%; }
+
+.modal-header {
+  background: #383838; }
+  .modal-header h1 {
+    color: white; }
 
 .dashed {
   stroke-dasharray: 5,5; }

@@ -1,30 +1,33 @@
 <ion-modal-view class="product edit create">
   <form name="itemEdit" novalidate>
-       <ion-header-bar>
-      <h1 class="title">Edit Ghost</h1>
-    </ion-header-bar>
+      <ion-header-bar class="modal-header">
+        <h1 class="title">Edit Ghost</h1>
+      </ion-header-bar>
     <ion-content>
       <div class="list">
-        <label class="item item-input">
-          <span class="input-label ghost-edit">Title</span>
-          <input type="text" ng-model="edit.title" placeholder="{{selectGhost.title}}">
-        </label>
-        <label class="item item-input">
-          <span class="input-label ghost-edit">Privacy</span>
-			<select ng-model="edit.privacy">
-				<option>private</option>
-				<option>public</option>
-				<option>friends</option>
-			</select>
-        </label>
-        <label class="item item-input">
-          <span class="input-label ghost-edit">Delete ghost</span>
-            <button class="button button-clear button-small button-assertive" ng-click="deleteGhost()"><i class="ion-close-circled delete"></i></button>
-         </label>
-      </div>
-        <button class="button button-assertive" ng-click="closeModal()">Cancel</button>
-      <button class="button button-calm" ng-click="updateGhost(edit)">Update</button>
-    </ion-content>
 
+        <label class="item item-input">
+            <div class="input-label ghost-edit">Title:</div>
+            <input type="text" ng-model="selectGhost.title" placeholder="{{selectGhost.title}}">
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label ghost-edit">
+              Privacy:
+          </div>
+          <select name="selected" ng-model="selectGhost.privacy">
+            <option>private</option>
+            <option>friends</option>
+            <option>public</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="button-bar">
+        <a class="button button-energized" ng-click="closeModal()">Return</a>
+        <a class="button button-balanced" ng-click="updateGhost()">Update</a>  
+        <a class="button button-assertive" ng-click="deleteGhost()">Delete</a>
+      </div>
+    </ion-content>
   </form>
 </ion-modal-view>
