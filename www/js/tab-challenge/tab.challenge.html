@@ -6,13 +6,22 @@
     	<button class='button button-small button-outline ' ng-class='{active: predicate=="popular"}' ng-click='sortGhosts("popular")'>Popular</button>
     	<button class='button button-small button-outline ' ng-class='{active: predicate=="runLength"}' ng-click='sortGhosts("runLength")'>Distance</button>
     </div>
-    <ion-list>
-      <ion-item ng-repeat="ghost in ghosts">
-      	<p>{{ghost.title || "Untitled Ghost"}}</p>
-      	<p>Owned by {{ghost.owner.displayName || ghost.owner.email}}</p>
-        <run-map ghost='ghost' clickable="true"></run-map>
-        <run-stats data="ghost" list-format="false"></run-stats>
-      </ion-item>
-    </ion-list>
+
+    <br />
+
+    <div ng-repeat="ghost in ghosts">
+      <div class="item item-avatar">
+        <img ng-src="{{ghost.owner.picture}}">
+        <h2>{{ghost.owner.displayName || ghost.owner.email}}</h2>
+        <p>{{ghost.title || "Untitled Ghost"}}</p>
+      </div>
+
+      <div class="item item-body">
+        <run-map ghost='ghost' clickable='true'></run-map>
+        <run-stats data='ghost' list-format="true"></run-stats>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>
+

@@ -1,74 +1,84 @@
 <ion-view view-title="Welcome, {{ userName(user) }}!">
   <ion-content class="padding">
 
-    <div class="list card">
-      <div class="item item-divider">
-        <div id="recent-select" class="tmk-tab-select" ng-class="recentTab" ng-click="toggle(true)">Your Recent Ghosts</div>
-        <div id="friend-select" class="tmk-tab-select" ng-class="friendTab" ng-click="toggle(false)">Friend Activity</div>
-      </div>
 
-      <div class="item item-body" ng-if="!!recentTab">
-        <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
-        <ion-list>
-          <ion-item ng-repeat='run in recentRuns'>
-
-            <!-- If ghost has not been deleted -->
-            <div ng-if="run.ghost">
-              <div class="item-text-wrap" ng-if="run.ghost.owner._id==user._id">
-                You ran your own challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}
-              </div>
-              <div class="item-text-wrap" ng-if="run.ghost.owner._id!=user._id">
-                You ran {{userName(run.ghost.owner)}}'s challenge {{run.ghost.title}} on {{timeStampToReadable(run.timestamp)}}
-              </div>
-            </div>
-            <!-- If ghost has been deleted -->
-            <div class="item-text-wrap" ng-if="!run.ghost">
-              You ran against a ghost that has since been deleted.
-            </div>
-            <!-- Google map and run data -->
-            <run-map ghost='run' clickable='false'></run-map>
-            <run-stats data='run' list-format="true"></run-stats>
-
-          </ion-item>
-        </ion-list>
-      </div>
-
-      <div class="item item-body" ng-if="!!friendTab">
-        <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
-        <ion-list>
-          <ion-item ng-repeat='friendRun in friendRuns'>
-          
-            <!-- If ghost has not been deleted -->
-            <div ng-if="friendRun.ghost">
-              <div class="item-text-wrap" ng-if="friendRun.ghost.owner==friendRun.runner._id">
-                {{userName(friendRun.runner)}} ran their own challenge
-                {{friendRun.ghost.title}} on
-                {{timeStampToReadable(friendRun.timestamp)}}
-              </div>
-              <div class="item-text-wrap" ng-if="friendRun.ghost.owner==user._id">
-                {{userName(friendRun.runner)}} ran your challenge
-                {{friendRun.ghost.title}} on
-                {{timeStampToReadable(friendRun.timestamp)}}
-              </div>
-              <div class="item-text-wrap" ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id">
-                {{userName(friendRun.runner)}} ran
-                {{friendRun.ghost.owner}}'s challenge
-                {{friendRun.ghost.title}} on
-                {{timeStampToReadable(friendRun.timestamp)}}
-              </div>
-            </div>
-            <!-- If ghost has been deleted -->
-            <div class="item-text-wrap" ng-if="!friendRun.ghost">
-              You ran against a ghost that has since been deleted.
-            </div>
-            <!-- Google map and run data -->
-            <run-map ghost='friendRun' clickable='true'></run-map>
-            <run-stats data='friendRun' list-format="true"></run-stats>
-
-          </ion-item>
-        </ion-list>
-      </div>
-
+    <!-- Feed selector -->
+    <div class="item item-divider">
+      <div id="recent-select" class="tmk-tab-select" ng-class="recentTab" ng-click="next()">Recent Runs</div>
+      <div id="friend-select" class="tmk-tab-select" ng-class="friendTab" ng-click="previous()">Friend Activity</div>
     </div>
+
+    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+
+      <!-- Feed of your activity -->
+      <ion-slide>
+        <div class="list card">
+          <div class="item item-body">
+            <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
+            <ion-list>
+              <ion-item ng-repeat='run in recentRuns' style="padding:0">
+
+                <!-- If ghost has not been deleted -->
+                <div ng-if="run.ghost">
+                  <div class="item-text-wrap" ng-if="run.ghost.owner._id==user._id">
+                    <p style="margin:3px">You raced your own ghost: {{run.ghost.title}}</p>
+                    <p style="margin:3px">{{timeStampToReadable(run.timestamp)}}</p>
+                  </div>
+                  <div class="item-text-wrap" ng-if="run.ghost.owner._id!=user._id">
+                    <p style="margin:3px">You ran {{userName(run.ghost.owner)}}'s ghost: {{run.ghost.title}}</p>
+                    <p style="margin:3px">{{timeStampToReadable(run.timestamp)}}</p>
+                  </div>
+                </div>
+                <!-- If ghost has been deleted -->
+                <div class="item-text-wrap" ng-if="!run.ghost">
+                  <p style="margin:3px">You ran against a ghost that has since been deleted.</p>
+                </div>
+                <!-- Google map and run data -->
+                <div class="row">
+                  <div class="col-50">
+                    <run-map ghost='run' clickable='false' map-height="{height:'150px'}"></run-map>
+                  </div>
+                  <div class="col-50">
+                    <run-stats data='run' format="'list'"></run-stats>
+                  </div>
+                </div>
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+
+      </ion-slide>
+
+      <!-- Feed of friend activity -->
+      <ion-slide>
+        <div class="list card">
+
+          <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
+          <div ng-repeat="friendRun in friendRuns">
+            <div class="item item-avatar">
+              <img ng-src="{{friendRun.runner.picture}}">
+              <h2 style="color:#FC4C02">{{userName(friendRun.runner)}}</h2>
+              <div ng-if="friendRun.ghost">
+                <p ng-if="friendRun.ghost.owner==friendRun.runner._id">Raced Their Ghost: {{friendRun.ghost.title}}</p>
+                <p ng-if="friendRun.ghost.owner==user._id">Raced Your Ghost: {{friendRun.ghost.title}}</p>
+                <p ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id">
+                 Raced {{friendRun.ghost.owner}}'s ghost: {{friendRun.ghost.title}}</p>
+                <p>{{timeStampToReadable(friendRun.timestamp)}}</p>
+              </div>
+              <div class="item-text-wrap" ng-if="!friendRun.ghost">
+                  You ran against a ghost that has since been deleted.
+              </div>
+            </div>
+
+            <div class="item item-body">
+              <run-map ghost='friendRun' clickable='true' map-height:"{height:'200px'}"></run-map>
+              <run-stats data='friendRun' format="'col'"></run-stats>
+            </div>
+          </div>
+
+        </div>
+      </ion-slide>
+
+    </ion-slide-box>
   </ion-content>
 </ion-view>

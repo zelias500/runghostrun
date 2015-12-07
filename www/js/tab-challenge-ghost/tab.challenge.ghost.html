@@ -3,22 +3,23 @@
 		<run-map ghost='ghost' clickable="true"></run-map>
 
 		<div class="row">
-			<div class="item col">Ghost Best</div>
-			<div class="item col" ng-if="usersBest">Your Best</div>
 		</div>
 		<div class="row">
-			<div class="col" title="ghostBest">
-				<run-stats data="ghost" list-format="false"></run-stats>
+			<div class="col-50" title="ghostBest">
+				<div class="item" style="color:#FC4C02">Ghost Best</div>
+				<run-stats data="ghost" format="'list'"></run-stats>
 			</div>
-			<div ng-if="usersBest" class="col">
-				<run-stats data="usersBest" list-format="false"></run-stats>
+			<div ng-if="usersBest" class="col-50">
+				<div class="item" ng-if="usersBest" style="color:#387ef5">Your Best</div>
+				<run-stats data="usersBest" format="'list'"></run-stats>
 			</div>
 		</div>
-		<div class="button-bar bar-balanced" ng-click='setGhost()'>
-			<a href="#/tab/record" class="button">Challenge Ghost</a>
+
+		<div class="button button-full button-outline button-balanced" ng-click='setGhost()'>
+			<a href="#/tab/record" style="text-decoration:none;color:#33CD5F" >Challenge Ghost</a>
 		</div>
-		<div class="button-bar bar-assertive">
-			<a href="#/tab/challenge" class="button">Back</a>
+		<div class="button button-full button-outline button-assertive">
+			<a href="#/tab/challenge" style="text-decoration:none;color:#EF473A">Back</a>
 		</div>
 
 	</ion-content>

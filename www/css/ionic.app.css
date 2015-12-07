@@ -9090,7 +9090,8 @@ a.button {
   transition-duration: 0s; }
 
 ion-content {
-  background-color: #2B2B2B; }
+  background-color: #2B2B2B;
+  font-family: 'Open Sans', sans-serif; }
 
 .padding {
   padding: 0px; }
@@ -9105,6 +9106,9 @@ ion-header-bar.bar.bar-stable {
   background-color: #383838; }
   .list a {
     color: white; }
+
+.item-body {
+  padding: 0; }
 
 .item {
   color: white;
