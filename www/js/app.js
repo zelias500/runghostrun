@@ -56,12 +56,6 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cor
     // $stateChangeStart is an event fired
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
-        console.log(toState)
-
-
-        console.log(toState.url);
-        console.log(toState.url === "/challege");
         if (toState.url === "/challenge") {
             if (Session.user) UserFactory.removeChallenges(Session.user._id);
             console.log("I am in challenge");
