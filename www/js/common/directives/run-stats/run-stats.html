@@ -1,7 +1,18 @@
-<div class="list">
+<div class="list" ng-if="listFormat">
 	<a class="item">Time: {{ calculateTime() }}</a>
 	<a class="item" ng-show="useKm">Distance: {{ calculateDistanceKm() }} kilometers</a>
 	<a class="item" ng-show="useMi">Distance: {{ calculateDistanceMi() }} miles</a>
 	<a class="item" ng-show="useKm">Pace: {{ calculatePaceKm() }} min/km</a>
 	<a class="item" ng-show="useMi">Pace: {{ calculatePaceMi() }} min/mi</a>
 </div>
+
+<a class="item" ng-if="!listFormat">
+	<ul style="list-style-type:none">
+		<li>Run on: {{ displayDate }}</li>
+		<li ng-show="useKm">Distance: {{ calculateDistanceKm() }} kilometers</li>
+		<li ng-show="useMi">Distance: {{ calculateDistanceMi() }} miles</li>
+		<li>Time: {{ calculateTime() }}</li>
+		<li ng-show="useKm">Pace: {{ calculatePaceKm() }} min/km</li>
+		<li ng-show="useMi">Pace: {{ calculatePaceMi() }} min/mi</li>
+	</ul>
+</a>

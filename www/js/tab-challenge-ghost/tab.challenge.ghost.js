@@ -27,11 +27,8 @@ app.controller('GhostCtrl', function ($scope, $state, ghost, usersBest, Location
 	$scope.ghostBest = ghost.bestRun;
 	$scope.usersBest = usersBest;
 
-    $scope.$on('$ionicView.enter', function(scopes, states) {
-        if (states.direction === 'swap') $state.go('tab.challenge', {reload: true});
-    });
-
     $scope.setGhost = function (best) {
     	LocationFactory.setGhost($scope.ghost);
     };
+
 });

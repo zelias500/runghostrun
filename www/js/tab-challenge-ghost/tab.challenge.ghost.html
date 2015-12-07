@@ -1,6 +1,6 @@
 <ion-view view-title="{{ghost.title}}">
  	<ion-content>
-		<ghost-map ghost='ghost' anchors="true"></ghost-map>
+		<run-map ghost='ghost' clickable="true"></run-map>
 
 		<div class="row">
 			<div class="item col">Ghost Best</div>
@@ -8,14 +8,17 @@
 		</div>
 		<div class="row">
 			<div class="col" title="ghostBest">
-				<ghost-stats data="ghost"></ghost-stats>
+				<run-stats data="ghost" list-format="false"></run-stats>
 			</div>
 			<div ng-if="usersBest" class="col">
-				<ghost-stats data="usersBest"></ghost-stats>
+				<run-stats data="usersBest" list-format="false"></run-stats>
 			</div>
 		</div>
 		<div class="button-bar bar-balanced" ng-click='setGhost()'>
 			<a href="#/tab/record" class="button">Challenge Ghost</a>
+		</div>
+		<div class="button-bar bar-assertive">
+			<a href="#/tab/challenge" class="button">Back</a>
 		</div>
 
 	</ion-content>

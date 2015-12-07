@@ -3,11 +3,14 @@
 app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
 	return {
 		scope: {
-			data: '='
+			data: '=',
+            listFormat: '='
 		},
 		restrict: 'E',
 		templateUrl: '/js/common/directives/run-stats/run-stats.html',
 		link: function (scope) {
+
+            if (scope.data) scope.displayDate = TimeFactory.parseDisplayDate(scope.data.timestamp);
 			
         	scope.calculateTime = function () {
         		if (scope.data) return TimeFactory.timeDisplay(scope.data.time);
