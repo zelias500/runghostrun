@@ -41,7 +41,13 @@ var schema = new mongoose.Schema({
     isMetric: {
         type: Boolean,
         default: true
-    }
+    },
+    newChallenges: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Ghost'
+        }
+    ]
 });
 
 schema.methods.getGhosts = function () {
@@ -73,6 +79,21 @@ schema.methods.getRecentFriendActivity = function () {
             return b.timestamp > a.timestamp;
         }).slice(0, 3);
     }).then(null, error => {
+        console.error(error)
+    })
+}
+
+schema.methods.challengeFriends = function (ghostId) {
+    return Promise.all(this.followers.map(friendId => {
+        return this.model('User').findById(friendId).exec();
+    }))
+    .then(friends => {
+        return Promise.all(friends.map(friend => {
+            if (friend.newChallenges.indexOf(ghostId) === -1) friend.newChallenges.push(ghostId)
+            return friend.save();
+        }))
+    })
+    .then(null, error => {
         console.error(error)
     })
 }

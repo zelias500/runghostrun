@@ -61,5 +61,4 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
             $scope.ghosts = GhostFactory.getOrderCache();
         }
     }
-
 });
