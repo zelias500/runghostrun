@@ -6,6 +6,7 @@ $font-blue: #387ef5;
 // sets the general background color
 ion-content {
 	background-color: $background;
+	font-family: 'Open Sans', sans-serif;
 }
 
 // override Ionic padding
@@ -28,6 +29,10 @@ ion-header-bar.bar.bar-stable {
 	a {
 		color: white;
 	}
+}
+
+.item-body {
+	padding: 0;
 }
 .item {
 	color: white;

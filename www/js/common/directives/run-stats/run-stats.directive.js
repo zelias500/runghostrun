@@ -1,16 +1,17 @@
 'use strict';
 
-app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
+app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory, Session) {
 	return {
 		scope: {
 			data: '=',
-            listFormat: '='
+            format: '='
 		},
 		restrict: 'E',
 		templateUrl: '/js/common/directives/run-stats/run-stats.html',
 		link: function (scope) {
 
             if (scope.data) scope.displayDate = TimeFactory.parseDisplayDate(scope.data.timestamp);
+            if (!scope.format) scope.format === 'col';
 			
         	scope.calculateTime = function () {
         		if (scope.data) return TimeFactory.timeDisplay(scope.data.time);
@@ -40,8 +41,8 @@ app.directive('runStats', function (TimeFactory, StatFactory, SettingFactory) {
                 }
             }
 
-            if (SettingFactory.getUnit() == 'km') scope.useKm = true;
-            if (SettingFactory.getUnit() =='mi') scope.useMi = true;
+            if (Session.user.isMetric) scope.useKm = true;
+            else scope.useMi = true;
     	}
 	}
 });

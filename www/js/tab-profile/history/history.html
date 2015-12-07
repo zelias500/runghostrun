@@ -6,7 +6,7 @@
 	  	 		Runs This Week
 	  	 	</div>
 	  	 	<div ng-repeat="run in runsLastWeek">
-	  	 		<run-stats data="run" list-format="false"></run-stats>
+	  	 		<run-stats data="run" format="'listWithDate'"></run-stats>
 	  	 	</div>
 	  	 </div>
 	  	<div ng-show="runs.length > 0">
@@ -14,7 +14,7 @@
 	  	 		Previous Runs
 	  	 	</div>
 	  	 	<div ng-repeat="run in runs">
-	  	 		<run-stats data="run" list-format="false"></run-stats>
+	  	 		<run-stats data="run" format="'listWithDate'"></run-stats>
 	  	 	</div>
   		</div>
   	 </div>
