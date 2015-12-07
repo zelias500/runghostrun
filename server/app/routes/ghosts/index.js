@@ -40,7 +40,6 @@ router.get('/nearby/:lat?/:lng?', function (req, res, next) {
 router.param('id', function (req, res, next, id) {
 	 Ghost.findById(id).populate('owner bestRunner bestRun').exec()
 	 .then(function (ghost) {
-	 	console.log(ghost)
 	 	req.ghost = ghost;
 	 	next();
 	 }).then(null, next);
