@@ -2,30 +2,21 @@
   <ion-content>
   	<run-stats data="runData"></run-stats>
   	<div ng-if="isGhost">
-  		<div class="list">
-  			<label class="item item-input item-stacked-label">
-  				<span style="color:white" class="input-label">Give this Ghost a name!</span>
-  				<input type="text"
-                 style="color:black"
-  		       		 name="title"
-  		       		 ng-model="runData.title">
-  		    </label>
+        <label class="item item-input">
+              <span class="input-label ghost-edit">Name Your Ghost!:</span>
+              <input type="text" 
+                     name="title"
+                     ng-model="runData.title" 
+                     placeholder="I Rocked This Run">
+        </label>
         <button class="button button-full button-outline button-balanced icon-left ion-checkmark" ng-click="saveTitle()">
           Save
         </button>
-  		</div>
   	</div>
 
-<!-- 	<div class="list">
-		<button class="button button-block button-assertive icon-left ion-social-google" ng-click="share()">
-			Share on Google+
-		</button>
-		<button class="button button-block button-positive icon-left ion-social-facebook" ng-click="share()">
-			Share on Facebook
-		</button>
-	</div>
- -->
-    
+      <button class="button button-full button-outline button-assertive icon-left ion-person-stalker" ng-click="challenge()">
+        Challenge Your Followers
+      </button>
     <button class="button button-full button-outline button-clear icon-left ion-home" ng-click="goHome()">
       Return Home
     </button>

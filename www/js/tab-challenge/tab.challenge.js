@@ -36,7 +36,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
 
     function byMostRecent () {
         $scope.ghosts.sort( (a, b) => {
-            return new Date(a.runs[a.runs.length-1].timestamp) - new Date(b.runs[b.runs.length-1].timestamp)
+            return new Date(b.runs[b.runs.length-1].timestamp) - new Date(a.runs[a.runs.length-1].timestamp);
         })         
     }
 
@@ -61,5 +61,4 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
             $scope.ghosts = GhostFactory.getOrderCache();
         }
     }
-
 });

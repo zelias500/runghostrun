@@ -100,11 +100,6 @@ connectToDb.then(function () {
 
         return Run.create(runArray)
     })
-    .then(function (runs) {
-        return Promise.all(runs.map(function (run) {
-            return theGhost.addNewRun(run);
-        }))
-    })
     .then(function () {
             console.log(chalk.green('Seed successful!'));
             process.kill(0);
