@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, TimeFactory, $cordovaSocialSharing, $ionicPopup) {
+app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, GhostFactory, TimeFactory, $cordovaSocialSharing, $ionicPopup, UserFactory, Session) {
 	$scope.runData = $stateParams.data;
 	$scope.isGhost = $stateParams.identity === 'ghosts';
     $scope.titleSavedMessage;
@@ -42,14 +42,13 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
             });
     }
 
-    $scope.share = function() {
-          window.plugins.socialsharing
-            .shareViaFacebook(null, null, "murmuring-brook-3057.herokuapp.com")
-            .then(function(result) {
-                console.log("SUCCESS!")
-            }, function(err) {
-                console.log("FAILURE!", err);
-        });
+    $scope.challenge = function () {
+        UserFactory.challengeFriends(Session.user._id, $scope.runData.ghost)
+            .then(function(){
+                $ionicPopup.alert({
+                    title: 'Challenge Sent!',
+                    template: 'You have succesfully challenged your followers.'
+                });            
+            })
     }
-
 });
