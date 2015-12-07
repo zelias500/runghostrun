@@ -9230,3 +9230,6 @@ p.profile-title {
 .map-directive .google-map-container {
   width: 100%;
   height: 100%; }
+
+.tick line {
+  display: none; }
