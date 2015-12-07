@@ -35,7 +35,8 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 				});
 			}
 
-			if (scope.clickable) scope.address = "#/tab/ghost/" + scope.ghost._id
+			if (scope.clickable && scope.ghost.ghost) scope.address = "#/tab/ghost/" + scope.ghost.ghost._id; // in case we pass in a run
+			else if (scope.clickable) scope.address = "#/tab/ghost/" + scope.ghost._id;
 			else scope.address = false;
 
 			// process default google map
