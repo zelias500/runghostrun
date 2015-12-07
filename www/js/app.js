@@ -14,7 +14,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ion
 
 });
 
-app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
+app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cordovaGeolocation, $q) {
 
     $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -29,6 +29,22 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session) {
           // org.apache.cordova.statusbar required
           StatusBar.styleDefault();
         }
+
+        // warm up the gps using $cordovaGeolocation, 
+        // which already wraps geolocation.getCurrentPosition() in a promise for us
+        function warmUp () {
+            return setTimeout(function(){
+                return $cordovaGeolocation.getCurrentPosition();
+            }, 0)
+        }
+        // NOTE: the 'accuracy' reading on a Position object is NOT a percentage
+        // instead, it refers to the # of meters the reading is accurate to
+        // e.g. an accuracy of 20 means the reading is accurate w/in 20 meters @ 95% confidence level
+        $q.all(warmUp(), warmUp(), warmUp()).then(() => {
+            // accuracy has now drastically improved!
+            return $cordovaGeolocation.getCurrentPosition();
+        })
+        .catch(console.error);
 
     });
 
