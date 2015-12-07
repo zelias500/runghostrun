@@ -10,10 +10,13 @@
   		       		 name="title"
   		       		 ng-model="runData.title">
   		    </label>
-  			<button class="button button-block button-balanced" ng-click="saveTitle()">Save Title</button>
+        <button class="button button-full button-outline button-balanced icon-left ion-checkmark" ng-click="saveTitle()">
+          Save
+        </button>
   		</div>
   	</div>
-	<div class="list">
+
+<!-- 	<div class="list">
 		<button class="button button-block button-assertive icon-left ion-social-google" ng-click="share()">
 			Share on Google+
 		</button>
@@ -21,10 +24,11 @@
 			Share on Facebook
 		</button>
 	</div>
-	<div class="footer">
-		<button class="button button-block icon-left ion-home" ng-click="goHome()">
-				Return Home
-		</button>
-	</div>
+ -->
+    
+    <button class="button button-full button-outline button-clear icon-left ion-home" ng-click="goHome()">
+      Return Home
+    </button>
+    
   </ion-content>
 </ion-view>

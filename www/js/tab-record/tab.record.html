@@ -5,23 +5,24 @@
     <run-stats data="currentRun" ng-if="currentRun" list-format="true"></run-stats>
 
     <a style="text-decoration:none;color:#33CD5F">
-      <button class="button button-full button-outline button-balanced" 
+      <button class="button button-full button-outline button-balanced icon-left ion-navigate" 
               ng-click='start()' 
               ng-if="!currentRun">
-        <span class="ion-navigate">  Start</span>
+        Start
       </button>
-      <button class="button button-full button-outline" 
+
+      <button class="button button-full button-outline icon-left ion-ios-stopwatch" 
               ng-click='stop()' 
               ng-if="currentRun" 
               style="border-color:#FC4C02;color:#FC4C02">
-        <span class="ion-ios-stopwatch">  Stop</span>
+        Stop
       </button>
     </a>
 
     <a style="text-decoration:none;color:#33CD5F" ng-show="!currentRun && ghost()">
-      <button class="button button-full button-outline button-assertive" 
+      <button class="button button-full button-outline button-assertive icon-left ion-close" 
               ng-click="removeGhost()">
-        <span class="ion-close">  Cancel</span>
+        Cancel
       </button>
     </a>
 	
