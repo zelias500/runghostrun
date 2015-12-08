@@ -50,7 +50,7 @@ router.get("/:id/users/:userId", function (req, res, next) {
 	req.ghost.getRuns()
 	.then(runs => {
 		var userBest = runs.reduce((best, run) => {
-			if (run.runner != req.params.userId) return best;
+			if (run.runner._id != req.params.userId) return best;
 			else {
 				if (!best) return run;
 				else {
