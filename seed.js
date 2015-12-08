@@ -62,7 +62,7 @@ connectToDb.then(function () {
             ],
             distance: 2336,
             time: 60,
-            privacy: 'friends'
+            privacy: 'Public'
         })
     })
     .then(function (ghost) {
