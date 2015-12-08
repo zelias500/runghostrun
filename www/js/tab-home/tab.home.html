@@ -14,24 +14,24 @@
       <ion-slide>
         <div class="list card">
           <div class="item item-body">
-            <p ng-show="{{recentRuns.length === 0}}">You have no recent run data. Let's go for a run!</p>
+            <p ng-show="{{recentRuns.length === 0}}" style="color:lightgray">You have no recent run data. Let's go for a run!</p>
             <ion-list>
               <ion-item ng-repeat='run in recentRuns' style="padding:0">
 
                 <!-- If ghost has not been deleted -->
                 <div ng-if="run.ghost">
                   <div class="item-text-wrap" ng-if="run.ghost.owner._id==user._id">
-                    <p style="margin:3px">You raced your own ghost: {{run.ghost.title}}</p>
-                    <p style="margin:3px">{{timeStampToReadable(run.timestamp)}}</p>
+                    <p style="margin:3px;color:lightgray">You raced your own ghost: {{run.ghost.title}}</p>
+                    <p style="margin:3px;color:lightgray">{{timeStampToReadable(run.timestamp)}}</p>
                   </div>
                   <div class="item-text-wrap" ng-if="run.ghost.owner._id!=user._id">
-                    <p style="margin:3px">You ran {{userName(run.ghost.owner)}}'s ghost: {{run.ghost.title}}</p>
-                    <p style="margin:3px">{{timeStampToReadable(run.timestamp)}}</p>
+                    <p style="margin:3px;color:lightgray">You ran {{userName(run.ghost.owner)}}'s ghost: {{run.ghost.title}}</p>
+                    <p style="margin:3px;color:lightgray">{{timeStampToReadable(run.timestamp)}}</p>
                   </div>
                 </div>
                 <!-- If ghost has been deleted -->
                 <div class="item-text-wrap" ng-if="!run.ghost">
-                  <p style="margin:3px">You ran against a ghost that has since been deleted.</p>
+                  <p style="margin:3px;color:lightgray">You ran against a ghost that has since been deleted</p>
                 </div>
                 <!-- Google map and run data -->
                 <div class="row">
@@ -66,7 +66,7 @@
                 <p>{{timeStampToReadable(friendRun.timestamp)}}</p>
               </div>
               <div class="item-text-wrap" ng-if="!friendRun.ghost">
-                  You ran against a ghost that has since been deleted.
+                  Raced a ghost that has since been deleted
               </div>
             </div>
 
