@@ -1,18 +1,22 @@
-<ion-view view-title="Your Ghost Data">
+<ion-view view-title="Ghost Data">
   <ion-content class="padding">
 
   <div class="list card">
     <div class="item item-body">
-      <div ng-show="ghosts.length === 0">You haven't saved any recent ghost data. Let's go running!</div>
+      <div ng-show="ghosts.length === 0" ng-if="!notMe()">You haven't saved any recent ghost data. Let's go running!</div>
+      <div ng-show="ghosts.length === 0" ng-if="notMe()">{{name}} has not saved any ghost data!</div>
       <div ng-repeat="ghost in ghosts">
           <div class="item item-divider">
             <span>{{ghost.title}}</span>
-              <a href="#/tab/edit/{{ghost._id}}">
+              <a href="#/tab/edit/{{ghost._id}}" ng-if="!notMe()">
                 <button class="button button-small button-outline button-positive edit">Edit</button>
               </a>
           </div>
-        <div class="item item-text-wrap">
+        <div class="item" ng-if="!notMe()">
           <run-map ghost='ghost' clickable='false'></run-map>
+        </div>
+        <div class="item" ng-if="notMe()">
+          <run-map ghost='ghost' clickable='true'></run-map>
         </div>
         <div class="item item-divider">
           <run-stats data='ghost' format="'colWithDate'"></run-stats>

@@ -33,8 +33,8 @@ app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGho
     $scope.numRuns = usersRuns.length;
 
     if (user.displayName && user.displayName.length) {
-        $scope.name = user.displayName
-    } else $scope.name = user.email
+        $scope.name = user.displayName;
+    } else $scope.name = user.email;
 
     $scope.notMe = function () {
         return !(user._id === $scope.userId);

@@ -27,7 +27,7 @@
         <i class="icon ion-ios-analytics"></i>
           Statistics
       </a>
-      <a class="item item-icon-left" href="#/tab/pastghosts">
+      <a class="item item-icon-left" href="#/tab/pastghosts/{{user._id}}">
         <i class="icon ion-clipboard"></i>
           Your Ghosts
         <span class="badge badge-theme-orange">{{ numGhosts }}</span>
@@ -50,6 +50,11 @@
           Remove Friend
       </a>
     </div>
+    <a class="item item-icon-left" href="#/tab/pastghosts/{{user._id}}" ng-if='notMe()'>
+        <i class="icon ion-clipboard"></i>
+          {{name}}'s Ghosts
+        <span class="badge badge-theme-orange">{{ numGhosts }}</span>
+    </a>
 
   </ion-content>
 </ion-view>
