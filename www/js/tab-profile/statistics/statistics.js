@@ -44,8 +44,8 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     if (SettingFactory.getUnit() == 'km') $scope.useKm = true;
     if (SettingFactory.getUnit() =='mi') $scope.useMi = true;
 
-    $scope.runs = usersRuns.slice(-7)
-    $scope.statSelector = 'Recent Run Times'
+    $scope.runs = usersRuns.slice(-5)
+    $scope.statSelector = 'Recent Distance'
     console.log('test', $scope.runs)
 
     $scope.changeStat = function(statSelector) {

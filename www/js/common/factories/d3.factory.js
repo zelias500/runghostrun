@@ -1,6 +1,6 @@
 app.factory('d3Factory', function(){
 	var d3Stuff = {
-		'Recent Run Times': {
+		'Recent Distance': {
             options: {
                     chart: {
                     type: 'discreteBarChart',
@@ -17,17 +17,22 @@ app.factory('d3Factory', function(){
                     valueFormat: function(d){
                         return d3.format(',.2f')(d);
                     },
-                    duration: 10,
+                    duration: 0,
                     xAxis: {
-                        axisLabel: 'Last 5 Runs'
+                        axisLabel: 'Last 5 Runs',
+                        tickFormat: function(d){
+                        	return d3.time.format('%m-%d')(new Date(d));
+                        }
+                        
                     },
                     yAxis: {
-                        axisLabel: 'Distance'
+                        axisLabel: 'Distance',
+                        axisLabelDistance: 0
                     }
                 },
                 title: {
                     enable: true,
-                    text: 'Recent Run Distance',
+                    text: 'Recent Distance',
                     css: {
     					'color':'#fff'
     				}
@@ -36,11 +41,10 @@ app.factory('d3Factory', function(){
             transformer: function (someData) {
             	var count = 1;
             	return [{
-							key: 'KEY GOES HERE',
+							key: 'Recent Runs',
 							values: someData.map(data => {
-								// console.log('data from map', data)
 								return {
-									'label': count++,
+									'label': moment.utc(data.timestamp).valueOf(),
 									'value': data.distance
 								}
 							}),
@@ -66,16 +70,20 @@ app.factory('d3Factory', function(){
     				valueFormat: function(d){
     					return d3.format(',.2f')(d);
     				},
-    				duration: 10,
+    				duration: 0,
     				xAxis: {
-    					axisLabel: 'Last 5 Runs'
+    					axisLabel: 'Last 5 Runs',
+    					tickFormat: function(d){
+    						return d;
+                        }
     				},
     				yAxis: {
     					axisLabel: 'Pace',
     					tickFormat: function(d){
     						return d3.format('.02f')(d);
     					}
-    				}
+    				},
+    				yDomain: [0,3]
     			},
     			title: {
     				enable: true,
@@ -86,14 +94,10 @@ app.factory('d3Factory', function(){
     			}
     		},
     		transformer: function (someData) {
-    			// distance? over time
-    			// how far you ran on a given day
-    			// d/t over time
     			var count = 1;
             	return [{
 							key: 'Avg Pace/Run',
 							values: someData.map(data => {
-								// console.log('data from map', data)
 								return {
 									'label': count++,
 									'value': data.distance/data.time
@@ -112,12 +116,5 @@ app.factory('d3Factory', function(){
 			return toReturn;
 		}
 	}
-
-
-
-
-
-
-
 
 })
