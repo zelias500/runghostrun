@@ -35,7 +35,7 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.user = user;
     $scope.numRuns = usersRuns.length;
     $scope.numGhosts = usersGhosts.length;
-
+    $scope.date = "";
 
     $scope.averagePaceKm = averagePace;
     $scope.averagePaceMi = StatFactory.convertPaceMetricToMiles($scope.averagePaceKm);
@@ -49,11 +49,14 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.statSelector = 'Recent Distance'
 
     $scope.changeStat = function(statSelector) {
-        $scope.d3Selected = d3Factory.getStatsAbout(statSelector, $scope.runs)        
+        $scope.d3Selected = d3Factory.getStatsAbout(statSelector, $scope.runs)
     }
     $scope.changeStat($scope.statSelector);
 
-    $scope.date = moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
+    if($scope.runs && $scope.runs.length){
+       $scope.date =  moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
+    }
+
 
 
 
