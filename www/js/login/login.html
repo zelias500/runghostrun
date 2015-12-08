@@ -1,15 +1,34 @@
 <style>
+
+	@keyframes toshadow {
+    	from {
+    		text-shadow: 0;
+    	}
+    	to {
+    		text-shadow: 2px 2px 5px #FC4C02;
+    	}
+	}
+
 	img {
 		-webkit-filter: blur(3px) grayscale(100%);
-		filter:blur(1px) grayscale(100%);
+		filter: blur(3px) grayscale(100%);
 	}
+
+	#appName {
+		animation-name: toshadow;
+		animation-duration: 4s;
+		animation-fill-mode: forwards;
+		color: silver;
+		font-size: 9vw;
+	}
+
+
 </style>
 
 <ion-view view-title="Login">
   	<ion-content>
 		<div style="position:fixed;z-index:1;">
-			<h1 style="color:silver;font-size:35px">G H O S T R U N N E R</h1>
-			<!-- <h1 style="color:#FC4C02;">R U N N E R</h1> -->
+			<h1 id="appName">G H O S T R U N N E R</h1>
 		</div>
 		<img style="position:relative;width:100%;"
 		     src="http://images.freeimages.com/images/previews/659/running-track-2-1528273.jpg">
