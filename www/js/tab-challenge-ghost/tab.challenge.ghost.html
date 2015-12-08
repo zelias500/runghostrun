@@ -5,7 +5,13 @@
 		<div class="row">
 		</div>
 		<div class="row">
-			<div class="col-50" title="ghostBest">
+			<!-- One column view -->
+			<div class="col" title="ghostBest" ng-if="!usersBest">
+				<div class="item" style="color:#FC4C02">Ghost Best</div>
+				<run-stats data="ghost" format="'list'"></run-stats>
+			</div>
+			<!-- Two column view -->
+			<div class="col-50" title="ghostBest" ng-if="usersBest">
 				<div class="item" style="color:#FC4C02">Ghost Best</div>
 				<run-stats data="ghost" format="'list'"></run-stats>
 			</div>

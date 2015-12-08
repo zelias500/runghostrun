@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
 	$stateProvider.state('tab.pastghosts', {
-        url: '/pastghosts',
+        url: '/pastghosts/:id',
         data:{
             authenticate: true
         },
@@ -11,51 +11,34 @@ app.config(function ($stateProvider) {
             }
         },
         resolve: {
-            ghosts: function (UserFactory, Session) {
-                return UserFactory.fetchAllGhosts(Session.user._id);
+            user: function (UserFactory, $stateParams) {
+                return UserFactory.fetchById($stateParams.id);
+            },
+            ghosts: function (UserFactory, $stateParams) {
+                return UserFactory.fetchAllGhosts($stateParams.id);
             }
         }
     });
 });
 
-app.controller('PastGhostsCtrl', function ($scope, $ionicModal, ghosts, GhostFactory, UserFactory, Session) {
+app.controller('PastGhostsCtrl', function ($scope, user, ghosts, GhostFactory, UserFactory, Session, $stateParams) {
 
+    $scope.user = user;
     $scope.ghosts = ghosts;
 
-    $scope.editGhost = function (ghost) {
-        $scope.modal.show();
-        $scope.selectGhost = ghost
-        console.log(ghost);
+    if (user.displayName && user.displayName.length) {
+        $scope.name = user.displayName;
+    } else $scope.name = user.email;
+
+    $scope.notMe = function () {
+        return !($stateParams.id === $scope.userId);
     }
 
-    $ionicModal.fromTemplateUrl('js/tab-profile/past-ghosts/edit-ghost.html', {
-        scope: $scope,
-        animation: 'slide-in-down'
-    })
-    .then(function (modal) {
-        $scope.modal = modal;
-    });
-
-    $scope.closeModal = function(){
-        $scope.modal.hide();
-    };
-
-    $scope.updateGhost = function (edit) {
-        GhostFactory.update($scope.selectGhost._id, $scope.selectGhost)
-        UserFactory.fetchAllGhosts(Session.user._id)
-        .then(function(update){
-           $scope.ghosts = update;
-        })
-        $scope.modal.hide();
+    $scope.sessionUserIsAuthorized = function (ghost) {
+        if (ghost.privacy === "Private") return false;
+        if (ghost.privacy === "Friends" && user.friends.indexOf(Session.user._id) !== -1) return true;
+        if (ghost.privacy === "Friends" && user.friends.indexOf(Session.user._id) === -1) return false;
+        return true;
     }
 
-    $scope.deleteGhost= function () {
-        var ghostToRemove = $scope.selectGhost._id;
-
-        GhostFactory.delete($scope.selectGhost._id)
-        .then(function () {
-            $scope.ghosts = $scope.ghosts.filter(ghost => ghost._id !== ghostToRemove);
-        })
-        $scope.modal.hide();
-    }
 });

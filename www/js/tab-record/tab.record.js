@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, LocationFactory, Session, ValidationFactory, $ionicPopup) {
+app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, LocationFactory, Session, ValidationFactory, $ionicPopup, SpeechFactory) {
     $scope.lastLocIndex;
     $scope.currentRun;
     $scope.challengedGhost = LocationFactory.getGhost();
@@ -47,6 +47,7 @@ app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, Lo
         interv = $interval(function () {
             $scope.currentRun.time++;
             $scope.currentRun = LocationFactory.getCurrentRunData();
+            if (('speechSynthesis' in window) && $scope.challengedGhost && Session.user.speechEnabled) SpeechFactory.checkProgress($scope.currentRun, $scope.challengedGhost);
             $rootScope.$emit('tick');
         }, 1000);
     }

@@ -22,6 +22,7 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFactory, $ionicSlideBoxDelegate) {
+
     $scope.user = Session.user;
 
     $scope.recentRuns = runs.sort((a,b) => {
