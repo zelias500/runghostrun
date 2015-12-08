@@ -3,7 +3,7 @@ app.factory('SpeechFactory', function (Session, StatFactory, $timeout) {
 	var ghostPace;
 	var overtaking = false;
 	var lockout = false;
-	var winningUtterance = new SpeechSynthesisUtterance('You are currently overtaking the ghost. Keep it up!');
+	var winningUtterance = new SpeechSynthesisUtterance('You overtook the ghost. Keep it up!');
 	var losingUtterance = new SpeechSynthesisUtterance('The ghost is ahead of you. Keep it together!');
 	var factory = {};
 
@@ -11,7 +11,6 @@ app.factory('SpeechFactory', function (Session, StatFactory, $timeout) {
 
 		
 		var yourPace;
-		window.speechSynthesis.speak(winningUtterance);
 		
 		// wait ten seconds after speaking to avoid spamming the user
 		if (lockout) return;
