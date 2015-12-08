@@ -57,8 +57,8 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cor
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         if (toState.url === "/challenge") {
-            Session.user.hasSeenChallenges = true;
             if (Session.user) {
+                Session.user.hasSeenChallenges = true;
                 if (!Session.user.newChallenges.length !== 0) UserFactory.removeChallenges(Session.user._id)
             };
         }

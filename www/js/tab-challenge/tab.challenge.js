@@ -23,7 +23,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session) {
+app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session, $ionicPopup) {
 
     $scope.ghosts = ghosts;
     $scope.predicate = 'nearest';
@@ -63,18 +63,22 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session)
     }
 
     $scope.newChallenge = function(ghostId) {
+        if (!Session.user) return false;
         return Session.user.newChallenges.indexOf(ghostId) !== -1;
     }
 
     $scope.refreshChallenges = function(){
         GhostFactory.getNearbyGhostsWithRuns()
-        .success(function (newGhosts){
-            console.log("I updated ghosts")
+        .then(function (newGhosts){
             $scope.ghosts = newGhosts;
+            $scope.$broadcast('scroll.refreshComplete');
         })
-        .finally(function (){
-            console.log("I am disabling refresh symbol")
-            $scope.broadcast('scroll.refreshComplete');
+        .then(null, function(){
+            $ionicPopup.alert({
+                title: 'Error Refreshing!',
+                template: 'Sorry, there was a problem refreshing, please try again'
+            });
+            $scope.$broadcast('scroll.refreshComplete');
         })
     }
 });

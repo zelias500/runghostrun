@@ -1,6 +1,6 @@
 <ion-view view-title="Ghosts">
   <ion-content>
-    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="refreshChallenges()">
     </ion-refresher>
     <div class='button-bar'>
     	<button class='button button-small button-outline ' ng-class='{active: predicate=="nearest"}' ng-click='sortGhosts("nearest")'>Nearest</button>
