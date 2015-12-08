@@ -26,22 +26,32 @@
     </div>
 
     <br />
+    <div class="list card">
+      <div ng-repeat="ghost in ghosts">
+        
+        <div class="item item-avatar">
+          <img ng-src="{{ghost.owner.picture}}">
+          <h2 style="color:#FC4C02">{{ghost.owner.displayName || ghost.owner.email}}</h2>
+          <p style="color:lightgray">{{ghost.title || "Untitled Ghost"}}</p>
+          <span style="color:#FC4C02" ng-if="newChallenge(ghost._id)" class="ion-alert-circled"> New Challenge </span>
+        </div>
 
-    <div ng-repeat="ghost in ghosts">
-      
-      <div class="item item-avatar">
-        <img ng-src="{{ghost.owner.picture}}">
-        <h2 style="color:#FC4C02">{{ghost.owner.displayName || ghost.owner.email}}</h2>
-        <p style="color:lightgray">{{ghost.title || "Untitled Ghost"}}</p>
-        <span style="color:#FC4C02" ng-if="newChallenge(ghost._id)" class="ion-alert-circled"> New Challenge </span>
+        <div class="row">
+          <div class="col-50">
+            <run-map ghost='ghost' clickable='true' map-height="{height:'158px'}"></run-map>
+          </div>
+          <div class="col-50">
+            <run-stats data='ghost' format="'list'"></run-stats>
+          </div>
+        </div>
       </div>
 
-      <div class="item item-body">
+<!--       <div class="item item-body">
         <run-map ghost='ghost' clickable='true'></run-map>
         <run-stats data='ghost' list-format="true"></run-stats>
       </div>
     </div>
-
+ -->
   </ion-content>
 </ion-view>
 
