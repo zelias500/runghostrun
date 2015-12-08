@@ -30,6 +30,8 @@ app.controller('GhostCtrl', function ($scope, $state, ghost, usersBest, Location
 	$scope.ghostBest = ghost.bestRun;
 	$scope.usersBest = usersBest;
 
+	console.log(usersBest);
+
     $scope.setGhost = function (best) {
     	LocationFactory.setGhost($scope.ghost);
     };
