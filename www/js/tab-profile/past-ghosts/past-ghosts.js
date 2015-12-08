@@ -26,12 +26,21 @@ app.controller('PastGhostsCtrl', function ($scope, user, ghosts, GhostFactory, U
     $scope.user = user;
     $scope.ghosts = ghosts;
 
+    console.log(user.friends)
+
     if (user.displayName && user.displayName.length) {
         $scope.name = user.displayName;
     } else $scope.name = user.email;
-    
+
     $scope.notMe = function () {
         return !($stateParams.id === $scope.userId);
+    }
+
+    $scope.sessionUserIsAuthorized = function (ghost) {
+        if (ghost.privacy === "private") return false;
+        if (ghost.privacy === "friends" && user.friends.indexOf(Session.user._id) !== -1) return true;
+        if (ghost.privacy === "friends" && user.friends.indexOf(Session.user._id) === -1) return false;
+        return true;
     }
 
 
