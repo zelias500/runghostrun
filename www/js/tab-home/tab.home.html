@@ -59,13 +59,13 @@
               <img ng-src="{{friendRun.runner.picture}}">
               <h2 style="color:#FC4C02">{{userName(friendRun.runner)}}</h2>
               <div ng-if="friendRun.ghost">
-                <p ng-if="friendRun.ghost.owner==friendRun.runner._id">Raced Their Ghost: {{friendRun.ghost.title}}</p>
-                <p ng-if="friendRun.ghost.owner==user._id">Raced Your Ghost: {{friendRun.ghost.title}}</p>
-                <p ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id">
+                <p ng-if="friendRun.ghost.owner==friendRun.runner._id" style="color:lightgray">Raced Their Ghost: {{friendRun.ghost.title}}</p>
+                <p ng-if="friendRun.ghost.owner==user._id" style="color:lightgray">Raced Your Ghost: {{friendRun.ghost.title}}</p>
+                <p ng-if="friendRun.ghost.owner!=friendRun.runner._id && friendRun.ghost.owner!=user._id" style="color:lightgray">
                  Raced {{friendRun.ghost.owner}}'s ghost: {{friendRun.ghost.title}}</p>
-                <p>{{timeStampToReadable(friendRun.timestamp)}}</p>
+                <p style="color:lightgray">{{timeStampToReadable(friendRun.timestamp)}}</p>
               </div>
-              <div class="item-text-wrap" ng-if="!friendRun.ghost">
+              <div class="item-text-wrap" ng-if="!friendRun.ghost" style="color:lightgray">
                   Raced a ghost that has since been deleted
               </div>
             </div>
