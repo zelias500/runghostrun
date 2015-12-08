@@ -5,10 +5,12 @@
     <div class="item item-body">
       <div ng-show="ghosts.length === 0">You haven't saved any recent ghost data. Let's go running!</div>
       <div ng-repeat="ghost in ghosts">
-           <div class="item item-divider">
+          <div class="item item-divider">
             <span>{{ghost.title}}</span>
-             <button class="button button-small button-outline button-positive edit" ng-click="editGhost(ghost)">Edit</button>
-           </div>
+              <a href="#/tab/edit/{{ghost._id}}">
+                <button class="button button-small button-outline button-positive edit">Edit</button>
+              </a>
+          </div>
         <div class="item item-text-wrap">
           <run-map ghost='ghost' clickable='false'></run-map>
         </div>

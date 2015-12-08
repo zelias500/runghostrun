@@ -21,10 +21,14 @@ app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, Us
         return !$scope.user.isMetric ? "km" : "miles";
     }
 
+    $scope.coachEnabled = function() {
+        return !$scope.user.speechEnabled ? "disabled" : "enabled";
+    }
+
     $scope.saveUser = function() {
         UserFactory.update($scope.user._id, $scope.user)
         .then(
-            function() {
+            function(user) {
                 $ionicPopup.alert({
                     title: "Success!",
                     template: "Your profile has been successfully updated"

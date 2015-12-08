@@ -8,26 +8,29 @@
 
         <label class="item item-input">
             <div class="input-label ghost-edit">Title:</div>
-            <input type="text" ng-model="selectGhost.title" placeholder="{{selectGhost.title}}">
+            <input type="text" ng-model="ghost.title" placeholder="{{ghost.title}}">
         </label>
 
         <label class="item item-input item-select">
           <div class="input-label ghost-edit">
               Privacy:
           </div>
-          <select name="selected" ng-model="selectGhost.privacy">
-            <option>private</option>
-            <option>friends</option>
-            <option>public</option>
+          <select name="selected" ng-model="ghost.privacy">
+            <option value="private">Private</option>
+            <option value="friends">Friends</option>
+            <option value="public">Public</option>
           </select>
         </label>
       </div>
 
-      <div class="button-bar">
-        <a class="button button-energized" ng-click="closeModal()">Return</a>
-        <a class="button button-balanced" ng-click="updateGhost()">Update</a>  
-        <a class="button button-assertive" ng-click="deleteGhost()">Delete</a>
-      </div>
+      
+      <button class="button button-full button-outline button-balanced icon-left ion-back" ng-click="updateGhost()">
+        Update
+      </button>
+      <button class="button button-full button-outline button-assertive icon-left ion-back" ng-click="deleteGhost()">
+        Delete
+      </button>
+            
     </ion-content>
   </form>
 </ion-modal-view>

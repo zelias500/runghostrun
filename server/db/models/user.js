@@ -42,6 +42,10 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    speechEnabled: {
+        type: Boolean,
+        default: true
+    },
     newChallenges: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -1,5 +1,19 @@
+<style>
+	img {
+		-webkit-filter: blur(3px) grayscale(100%);
+		filter:blur(1px) grayscale(100%);
+	}
+</style>
+
 <ion-view view-title="Login">
   	<ion-content>
+		<div style="position:fixed;z-index:1;">
+			<h1 style="color:silver;font-size:35px">G H O S T R U N N E R</h1>
+			<!-- <h1 style="color:#FC4C02;">R U N N E R</h1> -->
+		</div>
+		<img style="position:relative;width:100%;"
+		     src="http://images.freeimages.com/images/previews/659/running-track-2-1528273.jpg">
+
 		<oauth-button provider-name="google"></oauth-button>
 		<oauth-button provider-name="facebook"></oauth-button>
 		<a class="button button-full icon-left" href="/auth/google">
@@ -10,5 +24,8 @@
 			<i class="fa"></i>
 			<span> Developer Button Facebook </span>
 		</a>
+
+
 	</ion-content>
 </ion-view>
+

@@ -9100,6 +9100,9 @@ ion-content {
 div.title.title-center.header-item {
   color: white; }
 
+div.title.title-left.header-item {
+  color: white; }
+
 ion-header-bar.bar.bar-stable {
   background-color: #383838; }
 
