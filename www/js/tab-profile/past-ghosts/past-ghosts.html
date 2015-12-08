@@ -28,12 +28,20 @@
           <div class="item item-divider">
             <span>{{ghost.title}}</span>
           </div>
-        <div class="item" >
+          <div class="row">
+            <div class="col-50">
+              <run-map ghost='ghost' clickable='true' map-height="{height:'158px'}"></run-map>
+            </div>
+            <div class="col-50">
+              <run-stats data='ghost' format="'list'"></run-stats>
+            </div>
+          </div>
+        <!-- <div class="item" >
           <run-map ghost='ghost' clickable='true'></run-map>
         </div>
         <div class="item item-divider">
           <run-stats data='ghost' format="'colWithDate'"></run-stats>
-        </div>
+        </div> -->
       </div>
 
       </div>
