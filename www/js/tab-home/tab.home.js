@@ -21,7 +21,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFactory) {
+app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFactory, $ionicSlideBoxDelegate) {
     $scope.user = Session.user;
 
     $scope.recentRuns = runs.sort((a,b) => {
@@ -48,5 +48,20 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFact
 
     $scope.timeStampToReadable = function(timestamp){
         return TimeFactory.parseDisplayDate(timestamp);
+    }
+
+    $scope.slideHasChanged = function (idx) {
+        if (idx === 0) $scope.toggle(true);
+        else if (idx === 1) $scope.toggle(false);
+    }
+
+    $scope.next = function () {
+        $ionicSlideBoxDelegate.previous();
+        $scope.toggle(true);    
+    }
+
+    $scope.previous = function () {
+        $ionicSlideBoxDelegate.next();
+        $scope.toggle(false);
     }
 });

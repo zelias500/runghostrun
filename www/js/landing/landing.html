@@ -1,29 +1,26 @@
 <ion-view view-title="Nice One!">
   <ion-content>
-  	<run-stats data="runData"></run-stats>
+  	<run-stats data="runData" format="'colWithDate'"></run-stats>
   	<div ng-if="isGhost">
-  		<div class="list">
-  			<label class="item item-input item-stacked-label">
-  				<span style="color:white" class="input-label">Give this Ghost a name!</span>
-  				<input type="text"
-  		       		   name="title"
-  		       		   ng-model="runData.title" />
-  		    </label>
-  			<button class="button button-block button-balanced" ng-click="saveTitle()">Save Title</button>
-  		</div>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Name Your Ghost!</span>
+          <input type="text" 
+                 name="title"
+                 ng-model="runData.title" 
+                 placeholder="Name Your Ghost!" />
+      </label>
+      <button class="button button-full button-outline button-balanced icon-left ion-checkmark" ng-click="saveTitle()">
+        Save
+      </button>
   	</div>
-	<div class="list">
-		<button class="button button-block button-assertive icon-left ion-social-google" ng-click="share()">
-			Share on Google+
-		</button>
-		<button class="button button-block button-positive icon-left ion-social-facebook" ng-click="share()">
-			Share on Facebook
-		</button>
-	</div>
-	<div class="footer">
-		<button class="button button-block icon-left ion-home" ng-click="goHome()">
-				Return Home
-		</button>
-	</div>
+
+    <button class="button button-full button-outline button-assertive icon-left ion-person-stalker" ng-click="challenge()">
+      Challenge Your Followers
+    </button>
+
+    <button class="button button-full button-outline button-clear icon-left ion-home" ng-click="goHome()">
+      Return Home
+    </button>
+    
   </ion-content>
 </ion-view>

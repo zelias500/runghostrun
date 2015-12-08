@@ -1,21 +1,34 @@
 <ion-view view-title="Results">
   <ion-content class="padding">
 
-    <div class="item range">
-      <input type="range" min="0" max="2" value="0" name="privacyRange" ng-model="privacyRange" ng-change="checkTick(privacyRange)">
-    </div>
-
-    <div class="button-bar">
-      <div id="privacySetting" class="button button-positive"> {{privacySetting}} </div>
-    </div>
-
     <run-map result="map"></run-map>
-    <run-stats data="stopData" list-format="true"></run-stats>
+    <run-stats data="stopData" format="'col'"></run-stats>
 
-    <div class="button-bar">
-      <a ng-click="save()" class="button button-balanced">Save</a>
-      <a ng-click="discard()" class="button button-assertive">Discard</a>
-    </div>
+    <form name="privacyForm">
+      <label class="item item-input item-select">
+            <div class="input-label">
+                Share this ghost:
+            </div>
+            <select name="privacySelect" 
+                    ng-model="stopData.privacy">
+              <option value="private">Private</option>
+              <option value="friends">Friends</option>
+              <option value="public">Public</option>
+            </select>
+      </label>
+    </form>
+
+    <a style="text-decoration:none;color:#33CD5F">
+      <button class="button button-full button-outline button-balanced icon-left ion-checkmark" ng-click="save()">
+        Save
+      </button>
+    </a>
+
+    <a style="text-decoration:none;color:#33CD5F">
+      <button class="button button-full button-outline button-assertive icon-left ion-close" ng-click="discard()">
+        Discard
+      </button>
+    </a>
 
   </ion-content>
 </ion-view>

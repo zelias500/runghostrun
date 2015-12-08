@@ -104,10 +104,12 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 		.then(toData);
 	};
 
-	factory.syncContactList = function (user) {
-		return $cordovaContacts.find().then(contactArray => {
-			return $http.post('/api/users/'+user._id+'/friends/sync', {contacts: contactArray})
-		}).then(toData) // get back modified user
+	factory.challengeFriends = function (userId, ghostId) {
+		return $http.put('/api/users/' + userId + "/friends/challenge", {ghostId: ghostId})
+	}
+
+	factory.removeChallenges = function (id) {
+		return $http.put('/api/users/' + id + "/emptychallenges")
 	}
 
 

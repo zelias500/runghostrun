@@ -1,4 +1,4 @@
-'use strict';
+git 'use strict';
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var Run = mongoose.model('Run');
@@ -65,7 +65,7 @@ schema.statics.getGhostsNear = function (locationObject) {
     return this.find().populate('owner bestRunner').then(allGhosts => {
         return allGhosts.filter(ghost => {
             if (ghost.locations.length){
-                return calcGeoDistance(ghost.locations[0], locationObject) < 5000            
+                return calcGeoDistance(ghost.locations[0], locationObject) < 5000
             } else return false;
         })
         .sort( (a,b) => { // closest ghosts appear first

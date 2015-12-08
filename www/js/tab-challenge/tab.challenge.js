@@ -23,7 +23,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
+app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session) {
 
     $scope.ghosts = ghosts;
     $scope.predicate = 'nearest';
@@ -36,7 +36,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
 
     function byMostRecent () {
         $scope.ghosts.sort( (a, b) => {
-            return new Date(a.runs[a.runs.length-1].timestamp) - new Date(b.runs[b.runs.length-1].timestamp)
+            return new Date(b.runs[b.runs.length-1].timestamp) - new Date(a.runs[a.runs.length-1].timestamp);
         })         
     }
 
@@ -62,4 +62,7 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory) {
         }
     }
 
+    $scope.newChallenge = function(ghostId) {
+        return Session.user.newChallenges.indexOf(ghostId) !== -1;
+    }
 });
