@@ -47,7 +47,7 @@ app.controller('RecordCtrl', function ($scope, $state, $rootScope, $interval, Lo
         interv = $interval(function () {
             $scope.currentRun.time++;
             $scope.currentRun = LocationFactory.getCurrentRunData();
-            if (('speechSynthesis' in window) && $scope.challengedGhost) SpeechFactory.checkProgress($scope.currentRun, $scope.challengedGhost);
+            if (('speechSynthesis' in window) && $scope.challengedGhost && Session.user.speechEnabled) SpeechFactory.checkProgress($scope.currentRun, $scope.challengedGhost);
             $rootScope.$emit('tick');
         }, 1000);
     }

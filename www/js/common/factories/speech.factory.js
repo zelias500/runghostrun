@@ -8,8 +8,10 @@ app.factory('SpeechFactory', function (Session, StatFactory, $timeout) {
 	var factory = {};
 
 	factory.checkProgress = function (currentRun, ghost) {
+
 		
 		var yourPace;
+		window.speechSynthesis.speak(winningUtterance);
 		
 		// wait ten seconds after speaking to avoid spamming the user
 		if (lockout) return;

@@ -14,6 +14,18 @@
 	     		</label>
 	  		</li>
 
+	  		<li class="item item-toggle">
+	    		Enable voice coach: <strong> {{coachEnabled()}} </strong>
+		     		<label class="toggle toggle-calm">
+		       		<input name="coach"
+		       		  type="checkbox"
+		       		  ng-model="user.speechEnabled">
+		       		<div class="track">
+		         		<div class="handle"></div>
+		       		</div>
+	     		</label>
+	  		</li>
+
 			<label class="item item-input">
 	            Your display name:
 	            <input type="text" ng-model="user.displayName" placeholder="{{user.displayName}}">
