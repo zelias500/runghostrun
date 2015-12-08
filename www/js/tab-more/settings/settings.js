@@ -18,11 +18,11 @@ app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, Us
     $scope.user = Session.user;
 
     $scope.displayDistanceUnit = function() {
-        return !$scope.user.isMetric ? "km" : "miles";
+        return $scope.user.isMetric ? "km" : "miles";
     }
 
     $scope.coachEnabled = function() {
-        return !$scope.user.speechEnabled ? "disabled" : "enabled";
+        return $scope.user.speechEnabled ? "enabled" : "disabled";
     }
 
     $scope.saveUser = function() {
