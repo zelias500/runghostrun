@@ -65,4 +65,16 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session)
     $scope.newChallenge = function(ghostId) {
         return Session.user.newChallenges.indexOf(ghostId) !== -1;
     }
+
+    $scope.refreshChallenges = function(){
+        GhostFactory.getNearbyGhostsWithRuns()
+        .success(function (newGhosts){
+            console.log("I updated ghosts")
+            $scope.ghosts = newGhosts;
+        })
+        .finally(function (){
+            console.log("I am disabling refresh symbol")
+            $scope.broadcast('scroll.refreshComplete');
+        })
+    }
 });
