@@ -1,4 +1,4 @@
-window.app = angular.module('runghost', ['ionic', 'ngCordova', 'fsaPreBuilt'])
+window.app = angular.module('runghost', ['ionic', 'ngCordova', 'fsaPreBuilt','nvd3'])
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ionicConfigProvider) {
 
@@ -30,7 +30,7 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cor
           StatusBar.styleDefault();
         }
 
-        // warm up the gps using $cordovaGeolocation, 
+        // warm up the gps using $cordovaGeolocation,
         // which already wraps geolocation.getCurrentPosition() in a promise for us
         function warmUp () {
             return setTimeout(function(){
