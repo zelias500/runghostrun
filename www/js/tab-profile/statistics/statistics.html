@@ -22,16 +22,16 @@
       <a class="item" ng-show="useMi">
         Average Distance: {{ averageDistanceMi }} mi
       </a>
-      <label class='item item-input item-select'>
-        <div class='input-label'>See stats!</div>
-        <select ng-model='statSelector' ng-change='changeStat(statSelector)'>
-          <option>Recent Distance</option>
-          <option>Pace over Time</option>
-        </select>
-      </label>
-      <a class="item">
-        <div class="data"><nvd3 options="d3Selected.options" data="d3Selected.data"></nvd3></div>
-      </a>
+        <label class='item item-input item-select'>
+          <div class='input-label'>See stats!</div>
+          <select ng-model='statSelector' ng-change='changeStat(statSelector)'>
+            <option>Recent Distance</option>
+            <option>Pace over Time</option>
+          </select>
+        </label>
+        <a class="item">
+          <div class="data"><nvd3 options="d3Selected.options" data="d3Selected.data"></nvd3></div>
+        </a>
     </div>
 
   </ion-content>
