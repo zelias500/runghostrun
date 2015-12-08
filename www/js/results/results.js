@@ -15,7 +15,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     $scope.stopData = LocationFactory.getStopData(); // data from the run
     $scope.map = MapFactory.getMap(); // map data from the run
 
-    $scope.stopData.privacy = "friends";
+    $scope.stopData.privacy = "Friends";
 
     $scope.save = function() {
 
