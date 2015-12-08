@@ -24,7 +24,7 @@ app.controller('SettingsCtrl', function ($scope, $ionicModal, SettingFactory, Us
     $scope.saveUser = function() {
         UserFactory.update($scope.user._id, $scope.user)
         .then(
-            function() {
+            function(user) {
                 $ionicPopup.alert({
                     title: "Success!",
                     template: "Your profile has been successfully updated"

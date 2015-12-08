@@ -3,7 +3,7 @@
     	<div class="list">
 
  	  		<li class="item item-toggle">
-	    		Distance in: <strong> {{displayDistanceUnit()}} </strong>
+	    		Display distance in: <strong> {{displayDistanceUnit()}} </strong>
 		     		<label class="toggle toggle-energized">
 		       		<input name="distanceUnit"
 		       		  type="checkbox"
@@ -15,17 +15,17 @@
 	  		</li>
 
 			<label class="item item-input">
-	            <span class="input-label ghost-edit">Display Name:</span>
+	            Your display name:
 	            <input type="text" ng-model="user.displayName" placeholder="{{user.displayName}}">
    			</label>
 	  		<label class="item item-input item-select">
 	   			<div class="input-label">
-	      			Privacy:
+	      			Who can follow you:
 	   			</div>
 		    	<select name="selected" ng-model="user.privacy" id="privacySelector">
-				    <option>Private</option>
-				    <option>Friends</option>
-				    <option>Public</option>
+				    <option value="Private">No One</option>
+				    <option value="Friends">People I Follow</option>
+				    <option value="Public">Anyone</option>
 		   		</select>
 	  		</label>
 
