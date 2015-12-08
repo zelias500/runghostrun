@@ -26,8 +26,6 @@ app.controller('PastGhostsCtrl', function ($scope, user, ghosts, GhostFactory, U
     $scope.user = user;
     $scope.ghosts = ghosts;
 
-    console.log(user.friends)
-
     if (user.displayName && user.displayName.length) {
         $scope.name = user.displayName;
     } else $scope.name = user.email;
@@ -42,6 +40,5 @@ app.controller('PastGhostsCtrl', function ($scope, user, ghosts, GhostFactory, U
         if (ghost.privacy === "Friends" && user.friends.indexOf(Session.user._id) === -1) return false;
         return true;
     }
-
 
 });
