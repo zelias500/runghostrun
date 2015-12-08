@@ -2,13 +2,29 @@
   <ion-content class="padding">
 
     <run-map run-data="currentRun" challenge="challengedGhost"></run-map>
-    <run-stats data="currentRun" ng-show="currentRun" list-format="true"></run-stats>
+    <run-stats data="currentRun" ng-if="currentRun" format="'running'"></run-stats>
 
-    <div class="button-bar" ng-class="barColor">
-      <a ng-show="!currentRun" ng-click="start()" class="button">Start</a>
-      <a ng-show="!currentRun && ghost()" ng-click="removeGhost()" class="button button-assertive">Cancel Challenge</a>
-      <a ng-show="currentRun" ng-click="stop()" class="button">Stop</a>
-	</div>
+    <a style="text-decoration:none;color:#33CD5F">
+      <button class="button button-full button-outline button-balanced icon-left ion-navigate" 
+              ng-click='start()' 
+              ng-if="!currentRun">
+        Start
+      </button>
+
+      <button class="button button-full button-outline icon-left ion-ios-stopwatch" 
+              ng-click='stop()' 
+              ng-if="currentRun" 
+              style="border-color:#FC4C02;color:#FC4C02">
+        Stop
+      </button>
+    </a>
+
+    <a style="text-decoration:none;color:#33CD5F" ng-show="!currentRun && ghost()">
+      <button class="button button-full button-outline button-assertive icon-left ion-close" 
+              ng-click="removeGhost()">
+        Cancel
+      </button>
+    </a>
 	
   </ion-content>
 </ion-view>

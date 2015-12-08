@@ -5,11 +5,14 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 			result: '=',	// accepts map data from the map factory post-run
 			challenge: '=',	// accepts a possible challenge ghost
 			ghost: '=',		// accepts a ghost or run data for a completed ghost
+			mapHeight: '=',
 			clickable: '='	// accepts a boolean for whether to link to the challenge page
 		},
 		templateUrl: '/js/common/directives/run-map/run-map.html',
 		restrict: 'E',
 		link: function (scope, el) {
+
+			if (!scope.mapHeight) scope.mapHeight = {height:'300px'};
 
 			scope.runUniqueId = _.random(0, 1000000, false);
 

@@ -49,7 +49,7 @@ app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGho
             Session.user.friends.push($scope.user._id);
             $ionicPopup.alert({
                     title: 'Success!',
-                    template: "You are now following " + $scope.user.displayName || $scope.user.email
+                    template: "You are now following " + $scope.name
             });
         });
     }
@@ -59,7 +59,7 @@ app.controller('ProfileCtrl', function ($scope, $state, $timeout, user, usersGho
             Session.user.friends = Session.user.friends.filter(friend => friend !== $scope.user._id);
             $ionicPopup.alert({
                     title: 'Success!',
-                    template: "You are no longer following " + $scope.user.displayName || $scope.user.email
+                    template: "You are no longer following " + $scope.name
             });
         })
     }

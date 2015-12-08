@@ -149,6 +149,22 @@ router.put('/:id/friends/remove', function (req, res, next) {
 router.delete('/:id', function(req, res, next){
     User.remove({_id :req.params.id}).then(function(){
       return res.status(200).json(req.targetUser);
-    })
-    .then(null, next)
+    }).then(null, next)
+});
+
+// PUT to challenge friends
+router.put('/:id/friends/challenge', function (req, res, next) {
+	req.targetUser.challengeFriends(req.body.ghostId)
+	.then(function (friends){
+		return res.status(201).json("Success");
+	}).then(null, next)
+});
+
+// PUT to remove newChallenges
+router.put('/:id/emptychallenges', function (req, res, next) {
+	req.targetUser.newChallenges = [];
+	req.targetUser.save()
+	.then(function (user){
+		return res.status(201).json(user);
+	})
 });

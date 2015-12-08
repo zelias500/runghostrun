@@ -30,7 +30,8 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory, SettingFactory, d3Factory) {
+
+app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory, SettingFactory, d3Factory, Session) {
     $scope.user = user;
     $scope.numRuns = usersRuns.length;
     $scope.numGhosts = usersGhosts.length;
@@ -41,8 +42,8 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.averageDistanceKm = averageDistance;
     $scope.averageDistanceMi = StatFactory.convertDistanceMetricToMiles($scope.averageDistanceKm);
 
-    if (SettingFactory.getUnit() == 'km') $scope.useKm = true;
-    if (SettingFactory.getUnit() =='mi') $scope.useMi = true;
+    if (Session.user.isMetric) $scope.useKm = true;
+    else $scope.useMi = true;
 
     $scope.runs = usersRuns.slice(-5)
     $scope.statSelector = 'Recent Distance'

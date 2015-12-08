@@ -14,7 +14,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ion
 
 });
 
-app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cordovaGeolocation, $q) {
+app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cordovaGeolocation, $q, UserFactory) {
 
     $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -56,7 +56,13 @@ app.run(function ($ionicPlatform, $rootScope, AuthService, $state, Session, $cor
     // $stateChangeStart is an event fired
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
+        if (toState.url === "/challenge") {
+            Session.user.hasSeenChallenges = true;
+            if (Session.user) {
+                if (!Session.user.newChallenges.length !== 0) UserFactory.removeChallenges(Session.user._id)
+            };
+        }
+        
         if (!destinationStateRequiresAuth(toState)) {
             // The destination state does not require authentication
             // Short circuit with return.

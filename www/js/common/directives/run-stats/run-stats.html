@@ -1,18 +1,66 @@
-<div class="list" ng-if="listFormat">
-	<a class="item">Time: {{ calculateTime() }}</a>
-	<a class="item" ng-show="useKm">Distance: {{ calculateDistanceKm() }} kilometers</a>
-	<a class="item" ng-show="useMi">Distance: {{ calculateDistanceMi() }} miles</a>
-	<a class="item" ng-show="useKm">Pace: {{ calculatePaceKm() }} min/km</a>
-	<a class="item" ng-show="useMi">Pace: {{ calculatePaceMi() }} min/mi</a>
+<div class="list" ng-if="format==='col'">
+	<div class="row">
+		<div class="col-33">
+			<span class="ion-ios-stopwatch"> {{ calculateTime() }}</span>
+		</div>
+		<div class="col-33">
+			<span ng-show="useKm" class="ion-flag"> {{ calculateDistanceKm() }} km</span>
+			<span ng-show="useMi" class="ion-flag"> {{ calculateDistanceMi() }} mi</span>
+		</div>
+		<div class="col-33">
+			<span ng-show="useKm" class="ion-ios-speedometer"> {{ calculatePaceKm() }} min/km</span>
+			<span ng-show="useMi" class="ion-ios-speedometer"> {{ calculatePaceMi() }} min/mi</span>
+		</div>
+	</div>
 </div>
 
-<a class="item" ng-if="!listFormat">
+<div class="list" ng-if="format==='list'">
+	<a class="item"><span class="ion-ios-stopwatch"> {{ calculateTime() }}</span></a>
+	<a class="item" ng-show="useKm"><span ng-show="useKm" class="ion-flag"> {{ calculateDistanceKm() }} km</span></a>
+	<a class="item" ng-show="useMi"><span ng-show="useMi" class="ion-flag"> {{ calculateDistanceMi() }} mi</span></a>
+	<a class="item" ng-show="useKm"><span ng-show="useKm" class="ion-ios-speedometer"> {{ calculatePaceKm() }} min/km</span></a>
+	<a class="item" ng-show="useMi"><span ng-show="useMi" class="ion-ios-speedometer"> {{ calculatePaceMi() }} min/mi</span></a>
+</div>
+
+
+<a class="item" ng-if="format==='colWithDate'">
+	<div class="row"><span class="ion-ios-calendar-outline"> {{ displayDate }}</span></div>
+	<div class="row">
+		<div class="col-33 icon-left ion-ios-stopwatch">
+			<span> {{ calculateTime() }}</span>
+		</div>
+		<div class="col-33 icon-left ion-flag">
+			<span ng-show="useKm"> {{ calculateDistanceKm() }} km</span>
+			<span ng-show="useMi"> {{ calculateDistanceMi() }} mi</span>
+		</div>
+		<div class="col-33 icon-left ion-ios-speedometer">
+			<span ng-show="useKm"> {{ calculatePaceKm() }} min/km</span>
+			<span ng-show="useMi"> {{ calculatePaceMi() }} min/mi</span>
+		</div>
+	</div>
+</a>
+
+<a class="item" ng-if="format==='listWithDate'">
 	<ul style="list-style-type:none">
-		<li>Run on: {{ displayDate }}</li>
-		<li ng-show="useKm">Distance: {{ calculateDistanceKm() }} kilometers</li>
-		<li ng-show="useMi">Distance: {{ calculateDistanceMi() }} miles</li>
-		<li>Time: {{ calculateTime() }}</li>
-		<li ng-show="useKm">Pace: {{ calculatePaceKm() }} min/km</li>
-		<li ng-show="useMi">Pace: {{ calculatePaceMi() }} min/mi</li>
+		<li><span class="ion-ios-calendar-outline"> {{ displayDate }}</span></li>
+		<li><span class="ion-ios-stopwatch"> {{ calculateTime() }}</span></li>
+		<li ng-show="useKm"><span class="ion-flag"> {{ calculateDistanceKm() }} km</span></li>
+		<li ng-show="useMi"><span class="ion-flag"> {{ calculateDistanceMi() }} mi</span></li>
+		<li ng-show="useKm"><span class="ion-ios-speedometer"> {{ calculatePaceKm() }} min/km</span></li>
+		<li ng-show="useMi"><span class="ion-ios-speedometer"> {{ calculatePaceMi() }} min/mi</span></li>
 	</ul>
 </a>
+
+<div class="row" ng-if="format==='running'">
+	<div class="col-66">
+		<p id="runTimer"> {{ calculateTime() }}</p>
+	</div>
+	<div class="col-33">
+		<ul style="list-style-type:none">
+			<li ng-show="useKm"><span class="ion-flag"> {{ calculateDistanceKm() }} km</span></li>
+			<li ng-show="useMi"><span class="ion-flag"> {{ calculateDistanceMi() }} mi</span></li>
+			<li ng-show="useKm"><span class="ion-ios-speedometer"> {{ calculatePaceKm() }} min/km</span></li>
+			<li ng-show="useMi"><span class="ion-ios-speedometer"> {{ calculatePaceMi() }} min/mi</span></li>
+		</ul>
+	</div>
+</div>

@@ -15,26 +15,9 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     $scope.stopData = LocationFactory.getStopData(); // data from the run
     $scope.map = MapFactory.getMap(); // map data from the run
 
-    // privacy controls
-    $scope.privacySetting = "Friends";
-    var privacySettingDiv = document.getElementById("privacySetting");
-    $scope.checkTick = function (privacyRange) {
-        if (privacyRange == 0) {
-            $scope.privacySetting = "Public";
-            privacySettingDiv.className = "button button-balanced  ng-binding";
-        }
-        if (privacyRange == 1) {
-            $scope.privacySetting = "Friends";
-            privacySettingDiv.className = "button button-positive ng-binding";
-        }
-        if (privacyRange == 2) {
-            $scope.privacySetting = "Private";
-            privacySettingDiv.className = "button button-energized ng-binding";
-        }
-    };
+    $scope.stopData.privacy = "friends";
 
     $scope.save = function() {
-        $scope.stopData.privacy = $scope.privacySetting.toLowerCase();
 
         if (!$scope.stopData.ghost || ValidationFactory.validateRun($scope.stopData)){
             $scope.executeSave();
