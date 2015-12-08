@@ -109,7 +109,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 			if (!stopData.ghost) {
 				stopData.owner = userId;
 				stopData.runner = userId;
-				stopData.privacy = stopData.privacy.toLowerCase();
+				stopData.privacy = stopData.privacy;
 
 				return GhostFactory.create(stopData)
 				.then(ghost => {

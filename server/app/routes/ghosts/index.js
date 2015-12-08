@@ -29,8 +29,8 @@ router.get('/nearby/:lat?/:lng?', function (req, res, next) {
 	})
 	.then(function(nearbyGhosts) {
 		var privacyCheck = nearbyGhosts.filter(ghost => {
-			if (ghost.privacy == 'friends' && req.user) return req.user.friends.indexOf(ghost.owner._id) !== -1;
-			else return ghost.privacy == 'public'
+			if (ghost.privacy == 'Friends' && req.user) return req.user.friends.indexOf(ghost.owner._id) !== -1;
+			else return ghost.privacy == 'Public'
 		})
 		res.status(200).json(privacyCheck);
 	}).then(null, next);

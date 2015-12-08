@@ -20,9 +20,9 @@ var schema = new mongoose.Schema({
     },
     privacy: {
     	type: String,
-    	enum: ['private', 'friends', 'public'],
+    	enum: ['Private', 'Friends', 'Public'],
     	required: true,
-    	default: 'public'
+    	default: 'Public'
     },
     ghost: {
         type: mongoose.Schema.Types.ObjectId,

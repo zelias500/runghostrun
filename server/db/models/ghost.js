@@ -47,9 +47,9 @@ var schema = new mongoose.Schema({
     distance: Number, // in meters
     privacy: {
     	type: String,
-    	enum: ['private', 'friends', 'public'],
+    	enum: ['Private', 'Friends', 'Public'],
     	required: true,
-    	default: 'public'
+    	default: 'Public'
     },
     timestamp: {
         type: Date,
