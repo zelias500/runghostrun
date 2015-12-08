@@ -16,12 +16,15 @@ app.config(function ($stateProvider) {
 			},
 			usersBest: function (GhostFactory, $stateParams, $rootScope) {
 				return GhostFactory.getUsersBest($stateParams.gid, $rootScope.userId);
+			},
+			ghostRuns: function(GhostFactory, $stateParams) {
+				return GhostFactory.fetchRuns($stateParams.gid);
 			}
 		}
 	});
 });
 
-app.controller('GhostCtrl', function ($scope, $state, ghost, usersBest, LocationFactory) {
+app.controller('GhostCtrl', function ($scope, $state, ghost, usersBest, LocationFactory, d3Factory, ghostRuns) {
 
 	$scope.ghost = ghost;
 	$scope.ghostBest = ghost.bestRun;
@@ -31,4 +34,9 @@ app.controller('GhostCtrl', function ($scope, $state, ghost, usersBest, Location
     	LocationFactory.setGhost($scope.ghost);
     };
 
+    var best5Runs = ghostRuns.sort((a,b) => {
+    	return b.time < a.time;
+    }).slice(0,5);
+
+    $scope.chart = d3Factory.getStatsAbout('ghost', best5Runs)
 });

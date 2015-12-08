@@ -1,4 +1,4 @@
-app.factory('d3Factory', function(){
+app.factory('d3Factory', function(TimeFactory){
 	var d3Stuff = {
 		'Recent Distance': {
             options: {
@@ -106,8 +106,57 @@ app.factory('d3Factory', function(){
 							color: '#ff7f0e'
 						}]
     		}
-    	}
+    	},
+        'ghost': {
+            options: {
+                chart: {
+                    type: 'multiBarHorizontalChart',
+                    height: 300,
+                    margin : {
+                        top: 20,
+                        right: 30,
+                        bottom: 50,
+                        left: 80
+                    },
+                    x: function(d){return d.label; },
+                    y: function(d){return d.value; },
+                    showValues: true,
+                    valueFormat: function(d){
+                        return TimeFactory.timeDisplay(d);
+                    },
+                    duration: 0,
+                    xAxis: {
+                        tickFormat: function(d){
+                            return d;
+                        }
+                    },
+                    key:false
+                },
+                title: {
+                    enable: true,
+                    text: 'Leaderboard',
+                    css: {
+                        'color':'#fff'
+                    }
+                },
+                showLegend: false
+            },
+            transformer: function (someData) {
+                var count = 1;
+                return [{
+                            values: someData.map(data => {
+                                return {
+                                    'label': (data.runner.displayName || data.runner.email) + "-"+(count++),
+                                    'value': data.time // in seconds
+                                }
+                            }),
+                            color: '#ff7f0e'
+                        }]
+            }
+        }
+
 	}
+   
 
 	return {
 		getStatsAbout: function (string, newData) {
