@@ -57,12 +57,12 @@ app.controller('HomeCtrl', function ($scope, runs, Session, friendRuns, TimeFact
     }
 
     $scope.next = function () {
-        $ionicSlideBoxDelegate.previous();
         $scope.toggle(true);    
+        $ionicSlideBoxDelegate.previous();
     }
 
     $scope.previous = function () {
-        $ionicSlideBoxDelegate.next();
         $scope.toggle(false);
+        $ionicSlideBoxDelegate.next();
     }
 });
