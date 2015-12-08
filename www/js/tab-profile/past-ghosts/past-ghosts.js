@@ -37,9 +37,9 @@ app.controller('PastGhostsCtrl', function ($scope, user, ghosts, GhostFactory, U
     }
 
     $scope.sessionUserIsAuthorized = function (ghost) {
-        if (ghost.privacy === "private") return false;
-        if (ghost.privacy === "friends" && user.friends.indexOf(Session.user._id) !== -1) return true;
-        if (ghost.privacy === "friends" && user.friends.indexOf(Session.user._id) === -1) return false;
+        if (ghost.privacy === "Private") return false;
+        if (ghost.privacy === "Friends" && user.friends.indexOf(Session.user._id) !== -1) return true;
+        if (ghost.privacy === "Friends" && user.friends.indexOf(Session.user._id) === -1) return false;
         return true;
     }
 
