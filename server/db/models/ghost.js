@@ -58,7 +58,7 @@ var schema = new mongoose.Schema({
 });
 
 schema.methods.getRuns = function () {
-    return Run.find({ghost: this._id}).exec();
+    return Run.find({ghost: this._id}).populate('runner').exec();
 }
 
 schema.statics.getGhostsNear = function (locationObject) {

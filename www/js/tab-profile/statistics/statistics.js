@@ -30,10 +30,12 @@ app.config(function($stateProvider){
     });
 });
 
-app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory, SettingFactory, Session) {
+
+app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDistance, usersRuns, usersGhosts, StatFactory, SettingFactory, d3Factory, Session) {
     $scope.user = user;
     $scope.numRuns = usersRuns.length;
     $scope.numGhosts = usersGhosts.length;
+
 
     $scope.averagePaceKm = averagePace;
     $scope.averagePaceMi = StatFactory.convertPaceMetricToMiles($scope.averagePaceKm);
@@ -43,53 +45,16 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     if (Session.user.isMetric) $scope.useKm = true;
     else $scope.useMi = true;
 
-/*    $scope.runs = usersRuns.slice(-7)
+    $scope.runs = usersRuns.slice(-5)
+    $scope.statSelector = 'Recent Distance'
+
+    $scope.changeStat = function(statSelector) {
+        $scope.d3Selected = d3Factory.getStatsAbout(statSelector, $scope.runs)        
+    }
+    $scope.changeStat($scope.statSelector);
 
     $scope.date = moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
 
-    $scope.options = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 300,
-                margin : {
-                    top: 20,
-                    right: 30,
-                    bottom: 50,
-                    left: 55
-                },
-                x: function(d){return d.label; },
-                y: function(d){return d.value; },
-                showValues: true,
-                valueFormat: function(d){
-                    return d3.format(',.2f')(d);
-                },
-                duration: 10,
-                xAxis: {
-                    axisLabel: 'Run'
-                },
-                yAxis: {
-                    axisLabel: 'Distance'
-                }
-            },
-            title: {
-                enable: true,
-                text: 'Recent Run Distance'
-            }
-        };
-    var count = 1;
-    var distanceData = $scope.runs.map(function(run){
 
-      var obj = {
-         "label": count++,
-         "value": run.distance || 0
-        }
-       return obj;
-      })
-    $scope.data = [
-        {
-            key: "You Run Distance",
-            values: distanceData
-        }
-    ]
-*/
+
 });
