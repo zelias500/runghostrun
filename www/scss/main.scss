@@ -52,6 +52,11 @@ ion-header-bar.bar.bar-stable {
 	}
 }
 
+.item.item-icon-left{
+	font-size: large;
+	font-weight: 700;
+}
+
 // sets tab bar to background color
 div.tab-nav.tabs {
 	background-color: $background;
@@ -59,12 +64,13 @@ div.tab-nav.tabs {
 
 // sets tab icon default color to orange
 ion-tabs.tabs-color-active-positive .tab-item {
-	color: $font-orange;
+	color: white;
 }
 
 // override back button color
 .bar-stable .button.button-clear {
 	color: $font-orange;
+	font-size:8px;
 }
 
 // tab selection on the Home tab
@@ -88,7 +94,7 @@ ion-tabs.tabs-color-active-positive .tab-item {
 	background-color: $font-orange;
 }
 .item.item-icon-left {
-	color: $font-blue;
+	color: white;
 }
 
 #runTimer {
@@ -99,8 +105,8 @@ ion-tabs.tabs-color-active-positive .tab-item {
 }
 
 span {
-	font-size: 120%;
-	font-weight: 500;
+	font-size: 140%;
+	font-weight: 400;
 }
 .button-large{
 	font-size: 17px;
@@ -108,12 +114,18 @@ span {
 }
 
 .tab-item.icon{
-	font-size: 38px;
+	font-size: 39px;
+	color: white;
 }
 
 .button.button-balanced.button-outline{
-  border-width:3px;
+  border-width:3px 0 3px 0;
 }
+
+.button.button-full{
+	border-width:3px 0 3px 0;
+}
+
 
 @import 'setting/main';
 @import 'profile/main';

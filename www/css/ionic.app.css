@@ -9124,14 +9124,19 @@ ion-header-bar.bar.bar-stable {
   .item p {
     font-size: 15px; }
 
+.item.item-icon-left {
+  font-size: large;
+  font-weight: 700; }
+
 div.tab-nav.tabs {
   background-color: #2B2B2B; }
 
 ion-tabs.tabs-color-active-positive .tab-item {
-  color: #FC4C02; }
+  color: white; }
 
 .bar-stable .button.button-clear {
-  color: #FC4C02; }
+  color: #FC4C02;
+  font-size: 8px; }
 
 .tmk-tab-select {
   padding: 10px;
@@ -9151,7 +9156,7 @@ ion-tabs.tabs-color-active-positive .tab-item {
   background-color: #FC4C02; }
 
 .item.item-icon-left {
-  color: #387ef5; }
+  color: white; }
 
 #runTimer {
   color: #387ef5;
@@ -9160,18 +9165,22 @@ ion-tabs.tabs-color-active-positive .tab-item {
   padding-top: 15px; }
 
 span {
-  font-size: 120%;
-  font-weight: 500; }
+  font-size: 140%;
+  font-weight: 400; }
 
 .button-large {
   font-size: 17px;
   font-weight: 500; }
 
 .tab-item.icon {
-  font-size: 38px; }
+  font-size: 39px;
+  color: white; }
 
 .button.button-balanced.button-outline {
-  border-width: 3px; }
+  border-width: 3px 0 3px 0; }
+
+.button.button-full {
+  border-width: 3px 0 3px 0; }
 
 #unit {
   background-color: #2B2B2B; }
