@@ -6,14 +6,17 @@
 
     <form name="privacyForm">
       <label class="item item-input item-select">
-            <div class="input-label">
-                Share this ghost:
+            <div ng-if="stopData.ghost" class="input-label">
+                Share this run with:
+            </div>
+            <div ng-if="!stopData.ghost" class="input-label">
+                Share this ghost with:
             </div>
             <select name="privacySelect"
                     ng-model="stopData.privacy">
-              <option value="Private">Private</option>
+              <option value="Private">Nobody</option>
               <option value="Friends">Friends</option>
-              <option value="Public">Public</option>
+              <option value="Public">Everyone</option>
             </select>
       </label>
     </form>

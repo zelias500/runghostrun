@@ -18,7 +18,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     $scope.stopData.privacy = "Friends";
 
     $scope.save = function() {
-
         if (!$scope.stopData.ghost || ValidationFactory.validateRun($scope.stopData)){
             $scope.executeSave();
         }
