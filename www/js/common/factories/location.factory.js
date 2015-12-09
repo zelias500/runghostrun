@@ -58,7 +58,16 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 		// clears location data array and attaches a position watcher
 		startNewRun: function () {
 
+			var _throttle = 0;
+
 			var watchCb = function (pos) {
+
+				// throttle the first several attempts to allow geolocator to warm up
+				while (_throttle < 5) {
+					_throttle++;
+					return null;
+				}
+
 				pos = {
 					lat: pos.coords.latitude,
 					lng: pos.coords.longitude,
