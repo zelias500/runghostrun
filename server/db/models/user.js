@@ -7,7 +7,8 @@ var _ = require('lodash');
 
 var schema = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        index: true
     },
     picture: {
         type: String,
