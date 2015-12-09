@@ -43,7 +43,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, $state, LocationFact
     }
 
     $scope.executeSave = function () {
-        console.log($scope.stopData);
         LocationFactory.saveRun($rootScope.userId, $scope.stopData)
         .then(function (data) {
             $state.go('landing', {run: data});
