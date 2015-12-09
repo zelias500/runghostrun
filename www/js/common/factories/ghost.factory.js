@@ -1,7 +1,7 @@
 app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation, Session) {
 	var factory = {};
 	var ghostDistanceOrder; // for 'nearby' ghosts: preserve original order so we know which ghosts were closest
-	var currentPosition = {}; // caches current position from app.run to avoid unecessary geolocation calls
+	var currentPosition = false; // caches current position from app.run to avoid unecessary geolocation calls
 
 	function toData (res) {
 		return res.data;
@@ -49,13 +49,30 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation, Se
 	};
 
 	factory.getNearbyGhostsWithRuns = function () {
-		return $http.get('/api/ghosts/nearby/', {
-			params: {
-				lat: currentPosition.lat,
-				lng: currentPosition.lng
-			}
+
+		// if currentPosition isn't cached, fetch it now
+		return new Promise((resolve, reject) => {
+			if (!currentPosition) {
+				return $cordovaGeolocation.getCurrentPosition()
+				.then(position => {
+					factory.setCurrentPosition({lat: position.coords.latitude,lng: position.coords.longitude});
+					resolve(currentPosition)
+				});
+			} else resolve(currentPosition);
+		})
+
+		// get nearby ghosts using our currentPosition
+		.then(position => {
+			return $http.get('/api/ghosts/nearby/', {
+				params: {
+					lat: currentPosition.lat,
+					lng: currentPosition.lng
+				}
+			})
 		})
 		.then(toData)
+
+		// get the runs for each ghost, and attach them to the ghost document
 		.then(ghosts => {
 			var promises = [];
             ghosts.forEach(ghost => {
