@@ -1,6 +1,7 @@
-app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
+app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation, Session) {
 	var factory = {};
 	var ghostDistanceOrder; // for 'nearby' ghosts: preserve original order so we know which ghosts were closest
+	var currentPosition = {}; // caches current position from app.run to avoid unecessary geolocation calls
 
 	function toData (res) {
 		return res.data;
@@ -48,13 +49,12 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	};
 
 	factory.getNearbyGhostsWithRuns = function () {
-		return $cordovaGeolocation.getCurrentPosition()
-		.then(position => $http.get('/api/ghosts/nearby/', {
+		return $http.get('/api/ghosts/nearby/', {
 			params: {
-				lat: position.coords.latitude,
-				lng: position.coords.longitude
+				lat: currentPosition.lat,
+				lng: currentPosition.lng
 			}
-		}))
+		})
 		.then(toData)
 		.then(ghosts => {
 			var promises = [];
@@ -78,6 +78,14 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	factory.getOrderCache = function () {
 		return angular.copy(ghostDistanceOrder);
 	};
+
+	factory.setCurrentPosition = function (location) {
+		currentPosition = location;
+	};
+
+	factory.getCurrentPosition = function () {
+		return currentPosition;
+	}
 
 	return factory;
 });
