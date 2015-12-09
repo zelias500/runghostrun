@@ -1,4 +1,4 @@
-app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation, Session) {
+app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	var factory = {};
 	var ghostDistanceOrder; // for 'nearby' ghosts: preserve original order so we know which ghosts were closest
 	var currentPosition = false; // caches current position from app.run to avoid unecessary geolocation calls
