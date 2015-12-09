@@ -14,7 +14,7 @@
       <ion-slide>
         <div class="list card">
           <div class="item item-body">
-            <p ng-show="{{recentRuns.length === 0}}" style="color:lightgray">You have no recent run data. Let's go for a run!</p>
+            <p ng-show="{{recentRuns.length === 0}}" style="color:#387ef5">You have no recent run data. Let's go for a run!</p>
             <ion-list>
               <ion-item ng-repeat='run in recentRuns' style="padding:0">
 
@@ -52,8 +52,8 @@
       <!-- Feed of friend activity -->
       <ion-slide>
         <div class="list card">
-
-          <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
+         <div class="item item-body">
+          <p ng-show="{{friendRuns.length === 0}}" style="color:#387ef5">No recent friend activity. Go make friends!</p>
           <div ng-repeat="friendRun in friendRuns">
             <div class="item item-avatar">
               <img ng-src="{{friendRun.runner.picture}}">
@@ -85,7 +85,7 @@
               <run-stats data='friendRun' format="'col'"></run-stats>
             </div> -->
           </div>
-
+           </div>
         </div>
       </ion-slide>
 

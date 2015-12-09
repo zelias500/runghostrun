@@ -9098,7 +9098,8 @@ ion-content {
   padding: 0px; }
 
 div.title.title-center.header-item {
-  color: white; }
+  color: white;
+  font-size: 19px; }
 
 div.title.title-left.header-item {
   color: white; }
@@ -9120,6 +9121,8 @@ ion-header-bar.bar.bar-stable {
   border-color: #2B2B2B; }
   .item ul li {
     color: white; }
+  .item p {
+    font-size: 15px; }
 
 div.tab-nav.tabs {
   background-color: #2B2B2B; }
@@ -9133,7 +9136,8 @@ ion-tabs.tabs-color-active-positive .tab-item {
 .tmk-tab-select {
   padding: 10px;
   float: left;
-  width: 50%; }
+  width: 50%;
+  font-size: 19px; }
 
 .tmk-tab-select.tmk-active {
   border-bottom: 3px solid #387ef5;
@@ -9154,6 +9158,20 @@ ion-tabs.tabs-color-active-positive .tab-item {
   font-size: 50px;
   font-family: 'Orbitron', sans-serif;
   padding-top: 15px; }
+
+span {
+  font-size: 120%;
+  font-weight: 500; }
+
+.button-large {
+  font-size: 17px;
+  font-weight: 500; }
+
+.tab-item.icon {
+  font-size: 38px; }
+
+.button.button-balanced.button-outline {
+  border-width: 3px; }
 
 #unit {
   background-color: #2B2B2B; }

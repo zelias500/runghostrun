@@ -18,6 +18,7 @@ ion-content {
 // sets the general header colors
 div.title.title-center.header-item {
 	color: white;
+	font-size: 19px;
 }
 div.title.title-left.header-item {
 	color: white;
@@ -46,6 +47,9 @@ ion-header-bar.bar.bar-stable {
 	ul li {
 		color: white;
 	}
+	p{
+	  font-size:15px;
+	}
 }
 
 // sets tab bar to background color
@@ -68,6 +72,7 @@ ion-tabs.tabs-color-active-positive .tab-item {
 	padding: 10px;
 	float: left;
 	width: 50%;
+	font-size:19px;
 }
 .tmk-tab-select.tmk-active {
 	border-bottom: 3px solid $font-blue;
@@ -91,6 +96,23 @@ ion-tabs.tabs-color-active-positive .tab-item {
 	font-size:50px;
 	font-family:'Orbitron', sans-serif;
 	padding-top:15px;
+}
+
+span {
+	font-size: 120%;
+	font-weight: 500;
+}
+.button-large{
+	font-size: 17px;
+	font-weight: 500;
+}
+
+.tab-item.icon{
+	font-size: 38px;
+}
+
+.button.button-balanced.button-outline{
+  border-width:3px;
 }
 
 @import 'setting/main';
