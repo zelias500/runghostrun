@@ -27,77 +27,81 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Ghost = Promise.promisifyAll(mongoose.model('Ghost'));
 var Run = Promise.promisifyAll(mongoose.model('Run'));
 
-var seedUsers = function () {
-
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
-
-    return User.createAsync(users);
-
-};
+var RunLocations = [
+    {
+        lat: "40.692390",
+        lng: "-73.977133"
+    },    
+    {
+        lat: "40.692967",
+        lng: "-73.976415"
+    },
+    {
+        lat: "40.692789",
+        lng: "-73.976092"
+    },
+    {
+        lat: "40.692261",
+        lng: "-73.976760"
+    },
+    {
+        lat: "40.692275",
+        lng: "-73.977078"
+    }]
 
 connectToDb.then(function () {
-    var userId, theGhost;
-    User.create({email: 'zack@123.com', displayName: 'Zack'}).then(function (user) {
-        userId = user._id;
+    var zackId, tomId, theGhost;
+    User.create({
+        email: 'zack@gmail.com', 
+        displayName: 'Zack'
+    }).then(function (user) {
+        zackId = user._id;
+        return User.create({
+            email: 'tom@gmail.com', 
+            displayName: 'Tom'
+        })
+    })
+    .then(function (user) {
+        tomId = user._id;
         return Ghost.create({
-            owner: user._id,
-            title: 'Seed run',
-            locations: [{
-                    lat: '40.7048981',
-                    lng: '-74.012385'
-                },
-                {
-                  lat: '40.7069985',
-                  lng: '-74.012384'  
-                }
-            ],
-            distance: 2336,
-            time: 60,
+            owner: zackId,
+            title: 'Quick Sprint',
+            locations: RunLocations,
+            distance: 240,
+            time: 110,
             privacy: 'Public'
         })
     })
     .then(function (ghost) {
         theGhost = ghost;
         var runArray = [{
-          locations: [{
-                lat: '40.7048981',
-                lng: '-74.012385'
-                },
-                {
-                  lat: '40.7069985',
-                  lng: '-74.012384'  
-                }
-            ],
-            distance: 2336,
-            time: 60,
+          locations: RunLocations,
+            distance: 240,
+            time: 100,
             ghost: ghost._id,
-            runner: userId
+            runner: zackId
         },
         {
-          locations: [{
-                lat: '40.7048981',
-                lng: '-74.012385'
-                },
-                {
-                  lat: '40.7069985',
-                  lng: '-74.012384'  
-                }
-            ],
-            distance: 2336,
-            time: 71,
+          locations: RunLocations,
+            distance: 240,
+            time: 95,
             ghost: ghost._id,
-            runner: userId
+            runner: zackId
+        },
+        {
+          locations: RunLocations,
+            distance: 240,
+            time: 90,
+            ghost: ghost._id,
+            runner: zackId
+        },
+        {
+          locations: RunLocations,
+            distance: 240,
+            time: 89,
+            ghost: ghost._id,
+            runner: tomId
         }]
-
         return Run.create(runArray)
     })
     .then(function () {

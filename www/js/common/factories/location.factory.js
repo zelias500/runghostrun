@@ -56,6 +56,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 	var factory = {
 
 		// clears location data array and attaches a position watcher
+
 		startNewRun: function () {
 
 			var _warmUp = 0;

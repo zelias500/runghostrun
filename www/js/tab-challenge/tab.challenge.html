@@ -3,32 +3,32 @@
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="refreshChallenges()">
     </ion-refresher>
     <div class='button-bar'>
-    	<button class='button button-small button-outline ' 
-              ng-class='{active: predicate=="nearest"}' 
+    	<button class='button button-large button-outline '
+              ng-class='{active: predicate=="nearest"}'
               ng-click='sortGhosts("nearest")'>
-              Nearest
+              <p>Nearest</p>
             </button>
-    	<button class='button button-small button-outline ' 
-              ng-class='{active: predicate=="recent"}' 
+    	<button class='button button-large button-outline '
+              ng-class='{active: predicate=="recent"}'
               ng-click='sortGhosts("recent")'>
-              Recent
+              <p>Recent</p>
             </button>
-    	<button class='button button-small button-outline ' 
-              ng-class='{active: predicate=="popular"}' 
+    	<button class='button button-large button-outline '
+              ng-class='{active: predicate=="popular"}'
               ng-click='sortGhosts("popular")'>
-              Popular
+              <p>Popular</p>
             </button>
-    	<button class='button button-small button-outline ' 
-              ng-class='{active: predicate=="runLength"}' 
+    	<button class='button button-large button-outline '
+              ng-class='{active: predicate=="runLength"}'
               ng-click='sortGhosts("runLength")'>
-              Distance
+              <p>Distance</p>
             </button>
     </div>
 
     <br />
     <div class="list card">
       <div ng-repeat="ghost in ghosts">
-        
+
         <div class="item item-avatar">
           <img ng-src="{{ghost.owner.picture}}">
           <h2 style="color:#FC4C02">{{ghost.owner.displayName || ghost.owner.email}}</h2>
