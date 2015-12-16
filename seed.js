@@ -65,7 +65,7 @@ connectToDb.then(function () {
         tomId = user._id;
         return Ghost.create({
             owner: zackId,
-            title: 'Seed run',
+            title: 'Quick Sprint',
             locations: RunLocations,
             distance: 240,
             time: 110,
