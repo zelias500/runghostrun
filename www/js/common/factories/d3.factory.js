@@ -78,7 +78,7 @@ app.factory('d3Factory', function(TimeFactory){
                         }
     				},
     				yAxis: {
-    					axisLabel: 'Pace',
+    					axisLabel: 'mins/km',
     					tickFormat: function(d){
     						return d3.format('.02f')(d);
     					}
@@ -160,12 +160,12 @@ app.factory('d3Factory', function(TimeFactory){
 
 	return {
 		getStatsAbout: function (string, newData) {
-            
+
             var toReturn = d3Stuff[string];
             if (string === "Pace over Time"){
                 var bounds = [1000, 0];
                 newData.forEach( data => {
-                    data.pace = (data.distance/1000)/(data.time/60);
+                    data.pace = (data.time/60)/(data.distance/1000);
                     bounds[0] = Math.min(bounds[0], data.pace);
                     bounds[1] = Math.max(bounds[1], data.pace);
                 })
