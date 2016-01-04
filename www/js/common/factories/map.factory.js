@@ -1,5 +1,5 @@
 app.factory('MapFactory', function ($ionicLoading) {
-	var factory = {};
+	const factory = {};
 	const startIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/green.png";
 	const finishIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png";
 	const currentIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/red.png";
@@ -21,7 +21,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 	}
 
 	factory.configureGoogleMap = function (elementId, options) {
-		var initialLocation;
+		let initialLocation;
 		$ionicLoading.show();
 		
 		function getGeoPosition () {
@@ -29,7 +29,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function (position) {
 						if (position) {
-							var coordinates = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+							let coordinates = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 							cachedMap.bounds.extend(coordinates);
 							resolve(coordinates);
 							
@@ -41,12 +41,12 @@ app.factory('MapFactory', function ($ionicLoading) {
 		
 		function createMap () {
 			cachedMap.gmap = new google.maps.Map(document.getElementById(elementId), {
-		            zoom: 15,
-		            mapTypeId: google.maps.MapTypeId.TERRAIN,
-		            disableDefaultUI: true,
-		            draggable: false,
-		            styles: mapStyle,
-		            center: initialLocation
+		        	zoom: 15,
+		        	mapTypeId: google.maps.MapTypeId.TERRAIN,
+		        	disableDefaultUI: true,
+		        	draggable: false,
+		        	styles: mapStyle,
+		        	center: initialLocation
 	        	});
 
 			if (options.showPosition) {
