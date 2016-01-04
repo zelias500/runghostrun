@@ -96,11 +96,11 @@ app.factory('d3Factory', function(TimeFactory){
     		transformer: function (someData) {
     			var count = 1;
             	return [{
-							key: 'Avg Pace/Run',
+							key: 'Pace',
 							values: someData.map(data => {
 								return {
 									'label': count++,
-									'value': data.distance/data.time
+									'value': data.pace
 								}
 							}),
 							color: '#ff7f0e'
@@ -160,7 +160,27 @@ app.factory('d3Factory', function(TimeFactory){
 
 	return {
 		getStatsAbout: function (string, newData) {
-			var toReturn = d3Stuff[string];
+            var toReturn = d3Stuff[string];
+            if (string === "Pace over Time"){
+                var bounds = [1000, 0];
+                newData.forEach( data => {
+                    data.pace = (data.distance/1000)/(data.time/60);
+                    bounds[0] = Math.min(bounds[0], data.pace);
+                    bounds[1] = Math.max(bounds[1], data.pace);
+                })
+                bounds[0] = Math.max(bounds[0] - .10, 0);
+                bounds[1] = bounds[1] + .10;
+            }
+
+            someData.map(data => {
+                                return {
+                                    'label': count++,
+                                    'value': data.pace
+                                }
+                            }),
+            
+            // can change parameters yDomain of Pace over Time here to get correct Y axis
+            // need to resolve why we are getting the wrong paces.
 			toReturn.data = toReturn.transformer(newData);
 			return toReturn;
 		}
