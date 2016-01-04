@@ -1,11 +1,10 @@
 'use strict';
-var crypto = require('crypto');
-var mongoose = require('mongoose');
-var Ghost = mongoose.model('Ghost');
-var Run = mongoose.model('Run');
-var _ = require('lodash');
+const mongoose = require('mongoose');
+const Ghost = mongoose.model('Ghost');
+const Run = mongoose.model('Run');
+const _ = require('lodash');
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     email: {
         type: String,
         index: true

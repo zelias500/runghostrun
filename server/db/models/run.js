@@ -1,8 +1,7 @@
 'use strict';
-var mongoose = require('mongoose');
-var _ = require('lodash');
+const mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
 	locations: [
         {
             lat: String,

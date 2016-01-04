@@ -1,11 +1,9 @@
 'use strict';
-var router = require('express').Router();
+const router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose');
-var _ = require('lodash');
-var User = mongoose.model("User");
-var Ghost = mongoose.model("Ghost");
-var Run = mongoose.model("Run");
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const Ghost = mongoose.model("Ghost");
 
 // GET all ghosts
 router.get('/', function (req,res,next) {
@@ -28,9 +26,9 @@ router.get('/nearby/:lat?/:lng?', function (req, res, next) {
 		lng: Number(req.query.lng)
 	})
 	.then(function(nearbyGhosts) {
-		var privacyCheck = nearbyGhosts.filter(ghost => {
-			if (ghost.privacy == 'Friends' && req.user) return req.user.friends.indexOf(ghost.owner._id) !== -1;
-			else return ghost.privacy == 'Public'
+		let privacyCheck = nearbyGhosts.filter(ghost => {
+			if (ghost.privacy === 'Friends' && req.user) return req.user.friends.indexOf(ghost.owner._id) !== -1;
+			else return ghost.privacy === 'Public'
 		})
 		res.status(200).json(privacyCheck);
 	}).then(null, next);
@@ -49,8 +47,8 @@ router.param('id', function (req, res, next, id) {
 router.get("/:id/users/:userId", function (req, res, next) {
 	req.ghost.getRuns()
 	.then(runs => {
-		var userBest = runs.reduce((best, run) => {
-			if (run.runner._id != req.params.userId) return best;
+		let userBest = runs.reduce((best, run) => {
+			if (run.runner._id !== req.params.userId) return best;
 			else {
 				if (!best) return run;
 				else {
@@ -65,7 +63,7 @@ router.get("/:id/users/:userId", function (req, res, next) {
 });
 
 // GET single ghost by id
-router.get('/:id', function (req, res, next) {
+router.get('/:id', function (req, res) {
      res.status(200).json(req.ghost);
 });
 

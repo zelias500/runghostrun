@@ -1,6 +1,6 @@
 'use strict';
-var socketio = require('socket.io');
-var io = null;
+const socketio = require('socket.io');
+const io = null;
 
 module.exports = function (server) {
 
