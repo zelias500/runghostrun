@@ -28,7 +28,7 @@ app.factory('ValidationFactory', function (LocationFactory, $cordovaGeolocation)
 			return LocationFactory.validateDistance(runData.locations[runData.locations.length-1], runData.ghost.locations[runData.ghost.locations.length-1])
 		}
 		
-	    return validateDistance() && validateStart() && validateEnd();
+		return validateDistance() && validateStart() && validateEnd();
 	};
 
 	return factory;

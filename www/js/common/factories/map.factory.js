@@ -8,6 +8,29 @@ app.factory('MapFactory', function ($ionicLoading) {
 
 	var cachedMap = undefined;
 
+	function drawMarker (coords, ourIcon) {
+		let marker;
+		if (typeof coords.lat === "function") {
+			marker = new google.maps.Marker({
+				position: coords,
+				map: cachedMap.gmap,
+				icon: ourIcon
+			})		
+		}
+		else {
+			marker = new google.maps.Marker({
+				position: {
+					lat: Number(coords.lat),
+					lng: Number(coords.lng)
+				},
+				map: cachedMap.gmap,
+				icon: ourIcon
+			})
+		}
+		marker.setMap(cachedMap.gmap);
+		return marker;
+	}
+
 	factory.getMap = function () {
 		return cachedMap;
 	}
@@ -35,7 +58,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 							
 						} else reject(new Error('Could not get current position'));
 					});
-				} else reject (new Error('Navigator is not available'));
+				} else reject(new Error('Navigator is not available'));
 			});
 		}
 		
@@ -66,7 +89,7 @@ app.factory('MapFactory', function ($ionicLoading) {
 			return cachedMap;
 		};
 
-		return new Promise(function (resolve, reject) {
+		return new Promise(function (resolve) {
 			if (options.centerOnInitialPosition) {
 				getGeoPosition().then(function(coords) {
 					initialLocation = coords;
@@ -83,23 +106,24 @@ app.factory('MapFactory', function ($ionicLoading) {
 	factory.newMap = function (ghost, elementId, options) {
 
 		// helper function to coerce lat and lng to Numbers from strings
-		function makeWayPoints (ghost) {
-			return ghost.locations.map(loc => {
+		function makeWayPoints (_ghost) {
+			return _ghost.locations.map(loc => {
 				return {
-		                lat: Number(loc.lat),
-		                lng: Number(loc.lng)
+		            	lat: Number(loc.lat),
+		            	lng: Number(loc.lng)
             		}
             });
 		}
 
-		// Map constructor function - if no ghost, returns empty map
-		function Map (ghost) {
-			if (ghost) {
-				// for our own benefit - may remove eventually
-				this.id = ghost._id;
-				this.ghost = ghost;
 
-				this.wayPoints = makeWayPoints(ghost);
+		// Map constructor function - if no ghost, returns empty map
+		function Map (_ghost) {
+			if (_ghost) {
+				// for our own benefit - may remove eventually
+				this.id = _ghost._id;
+				this.ghost = _ghost;
+
+				this.wayPoints = makeWayPoints(_ghost);
 			} else this.wayPoints = [];
 
 			this.bounds = new google.maps.LatLngBounds();
@@ -122,19 +146,19 @@ app.factory('MapFactory', function ($ionicLoading) {
 				path: this.wayPoints,
 				geodesic: true,
 				strokeColor: '#FC4C02',
-			    strokeOpacity: 0.5,
-			    strokeWeight: 2
+				strokeOpacity: 0.5,
+				strokeWeight: 2
 			});
 		}
 
-		Map.prototype.makeOtherPolyline = function (ghost) {
-			var otherWayPoints = makeWayPoints(ghost);
+		Map.prototype.makeOtherPolyline = function (_ghost) {
+			var otherWayPoints = makeWayPoints(_ghost);
 			this.existingPath = new google.maps.Polyline({
 				path: otherWayPoints,
 				geodesic: true,
 				strokeColor: '#387ef5',
-			    strokeOpacity: 0.5,
-			    strokeWeight: 2
+				strokeOpacity: 0.5,
+				strokeWeight: 2
 			});
 			otherWayPoints.forEach(loc => {
 				loc = new google.maps.LatLng(loc.lat, loc.lng)
@@ -148,11 +172,11 @@ app.factory('MapFactory', function ($ionicLoading) {
 			this.gmap.fitBounds(this.bounds);
 		}
 
-		Map.prototype.setOpponentPolyline = function (ghost) {
+		Map.prototype.setOpponentPolyline = function (_ghost) {
 			this.wayPoints = [];
-		    this.makeOtherPolyline(ghost);
-		    this.existingPath.setMap(this.gmap);
-		    this.gmap.fitBounds(this.bounds);
+			this.makeOtherPolyline(_ghost);
+			this.existingPath.setMap(this.gmap);
+			this.gmap.fitBounds(this.bounds);
 		}
 
 		Map.prototype.tick = function (runData) {
@@ -162,10 +186,10 @@ app.factory('MapFactory', function ($ionicLoading) {
                     lat: Number(lastLocation.lat),
                     lng: Number(lastLocation.lng)
                 }
-	            this.addWayPoint(LatLng);
-	            if (cachedMap.frontMarker) cachedMap.frontMarker.setMap(null);
-	            cachedMap.frontMarker = drawMarker(lastLocation, currentIcon)
-	        }
+	        	this.addWayPoint(LatLng);
+	        	if (cachedMap.frontMarker) cachedMap.frontMarker.setMap(null);
+	        	cachedMap.frontMarker = drawMarker(lastLocation, currentIcon)
+	    	}
 	       	this.drawAndSetPolyline();
 		}	
 
@@ -179,28 +203,6 @@ app.factory('MapFactory', function ($ionicLoading) {
 
 	}
 
-	function drawMarker (coords, ourIcon) {
-		var marker;
-		if (typeof coords.lat == "function") {
-			marker = new google.maps.Marker({
-				position: coords,
-				map: cachedMap.gmap,
-				icon: ourIcon
-			})		
-		}
-		else {
-			marker = new google.maps.Marker({
-				position: {
-					lat: Number(coords.lat),
-					lng: Number(coords.lng)
-				},
-				map: cachedMap.gmap,
-				icon: ourIcon
-			})
-		}
-		marker.setMap(cachedMap.gmap);
-		return marker;
-	}
-
 	return factory;
+
 });

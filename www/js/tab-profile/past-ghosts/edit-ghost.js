@@ -24,8 +24,8 @@ app.controller('EditGhostCtrl', function ($scope, $state, ghost, GhostFactory) {
 
     $scope.updateGhost = function () {
         GhostFactory.update($scope.ghost._id, $scope.ghost)
-        .then(ghost => {
-            $scope.ghost = ghost;
+        .then(_ghost => {
+            $scope.ghost = _ghost;
         })
     }
 

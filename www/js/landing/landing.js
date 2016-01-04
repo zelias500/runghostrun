@@ -35,7 +35,7 @@ app.controller('LandingCtrl', function ($scope, $state, $stateParams, $timeout, 
     $scope.saveTitle = function () {
         haveWeSaved = true;
         GhostFactory.update($scope.runData.ghost, {title: $scope.runData.title})
-            .then(function (ghost) {
+            .then(function () {
                 $ionicPopup.alert({
                     title: 'New Title Saved!',
                     template: 'You saved your ghost as: ' + $scope.runData.title

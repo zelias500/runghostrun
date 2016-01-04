@@ -35,12 +35,16 @@
   "globals": {
     "angular" : 1,
     "app": 1,
+    "cordova": 1,
+    "d3": 1,
+    "expect": 1,
+    "google": 1,
     "io": 1,
     "_": 1,
     "inject": 1,
-    "expect": 1,
+    "moment": 1,
     "sinon": 1,
-    "google": 1
+    "StatusBar": 1
   },
 
   "rules": {

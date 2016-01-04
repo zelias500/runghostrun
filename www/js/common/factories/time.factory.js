@@ -2,7 +2,7 @@ app.factory('TimeFactory', function () {
 	var factory = {};
 
 	factory.timeDisplay = function (timeInSeconds) {
-	    var seconds = timeInSeconds %60
+		var seconds = timeInSeconds %60
 		timeInSeconds -= seconds;
 		var minutes = timeInSeconds / 60;
 		var hours = Math.floor(minutes/60);

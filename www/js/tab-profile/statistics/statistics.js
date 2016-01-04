@@ -54,10 +54,6 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.changeStat($scope.statSelector);
 
     if($scope.runs && $scope.runs.length){
-       $scope.date =  moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
+       $scope.date = moment($scope.runs[$scope.runs.length-1].timestamp).format('L');
     }
-
-
-
-
 });

@@ -1,4 +1,4 @@
-app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFactory, $ionicLoading) {
+app.directive('runMap', function (MapFactory, $rootScope, $timeout) {
 	return {
 		scope: {
 			runData: '=',	// accepts run data from the location factory during an active run
@@ -10,7 +10,7 @@ app.directive('runMap', function (MapFactory, $rootScope, $timeout, LocationFact
 		},
 		templateUrl: '/js/common/directives/run-map/run-map.html',
 		restrict: 'E',
-		link: function (scope, el) {
+		link: function (scope) {
 
 			if (!scope.mapHeight) scope.mapHeight = {height:'300px'};
 
