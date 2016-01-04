@@ -176,7 +176,7 @@ app.factory('d3Factory', function(TimeFactory){
                 toReturn.options.chart.yDomain = bounds;
             }
             else {
-                if (!isMetric) toReturn.options.yAxis.axisLabel = "Distance in miles";
+                if (!isMetric) toReturn.options.chart.yAxis.axisLabel = "Distance in miles";
             }
 
 			toReturn.data = toReturn.transformer(newData, isMetric);
