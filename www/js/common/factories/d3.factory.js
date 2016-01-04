@@ -26,7 +26,7 @@ app.factory('d3Factory', function(TimeFactory){
                         
                     },
                     yAxis: {
-                        axisLabel: 'Distance',
+                        axisLabel: 'Distance in km',
                         axisLabelDistance: 0
                     }
                 },
@@ -174,6 +174,9 @@ app.factory('d3Factory', function(TimeFactory){
                 bounds[1] = bounds[1] + .10;
                 if (!isMetric) toReturn.options.chart.yAxis.axisLabel = 'mins/mile';
                 toReturn.options.chart.yDomain = bounds;
+            }
+            else {
+                if (!isMetric) toReturn.options.yAxis.axisLabel = "Distance in miles";
             }
 
 			toReturn.data = toReturn.transformer(newData, isMetric);
