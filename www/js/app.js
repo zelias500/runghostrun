@@ -5,7 +5,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $ion
     $urlRouterProvider.when('/auth/:provider', function () {
         window.location.reload();
     });
-    $urlRouterProvider.otherwise(function ($injector, $location) {
+    $urlRouterProvider.otherwise(function ($injector) {
         var $state = $injector.get('$state');
         $state.go('tab.home');
     });

@@ -44,14 +44,14 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 	};
 
 	factory.getUsersBest = function (ghostId, userId) {
-		return $http.get("/api/ghosts/" + ghostId + "/users/" +  userId)
+		return $http.get("/api/ghosts/" + ghostId + "/users/" + userId)
 		.then(toData);
 	};
 
 	factory.getNearbyGhostsWithRuns = function () {
 
 		// if currentPosition isn't cached, fetch it now
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			if (!currentPosition) {
 				return $cordovaGeolocation.getCurrentPosition()
 				.then(position => {
@@ -62,7 +62,7 @@ app.factory('GhostFactory', function ($http, $rootScope, $cordovaGeolocation) {
 		})
 
 		// get nearby ghosts using our currentPosition
-		.then(position => {
+		.then(() => {
 			return $http.get('/api/ghosts/nearby/', {
 				params: {
 					lat: currentPosition.lat,

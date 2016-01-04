@@ -48,13 +48,13 @@ app.controller('ChallengeCtrl', function ($scope, ghosts, GhostFactory, Session,
 
     $scope.sortGhosts = function (sortMethod) {
         $scope.predicate = sortMethod;
-        if (sortMethod == 'popular'){
+        if (sortMethod === 'popular'){
             byPopularity();
         }
-        else if (sortMethod == 'recent') {
+        else if (sortMethod === 'recent') {
             byMostRecent();
         }
-        else if (sortMethod == 'runLength') {
+        else if (sortMethod === 'runLength') {
             byLength();
         }
         else {

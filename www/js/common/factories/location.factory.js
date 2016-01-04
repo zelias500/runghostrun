@@ -99,7 +99,7 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 			return data.locations.length-1;
 		},
 
-		stopRun: function (userId) {
+		stopRun: function () {
 			navigator.geolocation.clearWatch(watchId);
 			stopData = data;
 			currentGhost = null;
@@ -120,28 +120,28 @@ app.factory('LocationFactory', function ($cordovaGeolocation, $rootScope, UserFa
 			return currentGhost;
 		},
 
-		saveRun: function (userId, stopData) {
+		saveRun: function (userId, _stopData) {
 
 			// if this is a new ghost
-			if (!stopData.ghost) {
-				stopData.owner = userId;
-				stopData.runner = userId;
-				stopData.privacy = stopData.privacy;
+			if (!_stopData.ghost) {
+				_stopData.owner = userId;
+				_stopData.runner = userId;
+				_stopData.privacy = stopData.privacy;
 
-				return GhostFactory.create(stopData)
+				return GhostFactory.create(_stopData)
 				.then(ghost => {
-					stopData.ghost = ghost._id;
-					return RunFactory.create(stopData)
+					_stopData.ghost = ghost._id;
+					return RunFactory.create(_stopData)
 				.then(run => run)
 				})
 				.then(null, errorHandler)
 
 			// otherwise, simply save the run
 			} else {
-				stopData.ghost = stopData.ghost._id;
-				stopData.runner = userId;
+				_stopData.ghost = _stopData.ghost._id;
+				_stopData.runner = userId;
 				
-				return RunFactory.create(stopData)
+				return RunFactory.create(_stopData)
 				.then(run => run);
 			}
 		},

@@ -14,8 +14,8 @@ app.factory('StatFactory', function () {
 	};
 
 	// converts pace in min/km to min/mile
-	factory.convertPaceMetricToMiles = function (pace) {
-        var pace = (pace * paceConverter).toFixed(2);
+	factory.convertPaceMetricToMiles = function (metricPace) {
+        var pace = (metricPace * paceConverter).toFixed(2);
         return Number(pace);
 	};
 
@@ -23,7 +23,7 @@ app.factory('StatFactory', function () {
 	factory.convertDistanceMetricToMiles = function (km) {
         var pace = (km * distanceConverter).toFixed(2);
         return Number(pace);
-	}
+	};
 
 	return factory;
 });

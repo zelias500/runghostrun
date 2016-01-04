@@ -39,7 +39,6 @@ app.factory('d3Factory', function(TimeFactory){
                 }
             },
             transformer: function (viewData, isMetric) {
-            	var count = 1;
             	return [{
 							key: 'Recent Runs',
 							values: viewData.map(data => {

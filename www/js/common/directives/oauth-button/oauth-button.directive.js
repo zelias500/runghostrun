@@ -4,7 +4,7 @@ var options = {
 	location: 'no'	
 }
 
-app.directive('oauthButton', function ($http, $cordovaInAppBrowser, $state) {
+app.directive('oauthButton', function () {
 	return {
 		scope: {
 			providerName: '@'
@@ -13,7 +13,7 @@ app.directive('oauthButton', function ($http, $cordovaInAppBrowser, $state) {
 		templateUrl: '/js/common/directives/oauth-button/oauth-button.html',
 		link: function (scope) {
 			scope.authStuff = function(providerName){
-				var loginWindow = $cordovaInAppBrowser.open('http://murmuring-brook-3057.herokuapp.com/auth/'+providerName,'_blank', options)
+				window.open('http://murmuring-brook-3057.herokuapp.com/auth/'+providerName,'_blank', options)
 			}
 			if (scope.providerName === 'google') {
 				scope.buttonColor = 'button-assertive';

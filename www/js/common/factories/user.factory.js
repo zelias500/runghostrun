@@ -1,4 +1,4 @@
-app.factory('UserFactory', function ($http, $cordovaContacts) {
+app.factory('UserFactory', function ($http) {
 	var factory = {};
 
 	function toData (res) {
@@ -42,7 +42,7 @@ app.factory('UserFactory', function ($http, $cordovaContacts) {
 
 	// returns a user's overall average pace in min/km
 	factory.fetchAvgPace = function (id) {
-	    return this.fetchAllRuns(id)
+		return this.fetchAllRuns(id)
      	.then(function (runs) {
      		// total distance in km
 			var totalDistance = runs.reduce(function (curr, next) {

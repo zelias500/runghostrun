@@ -48,7 +48,7 @@
         ]);
     });
 
-    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q, $state) {
+    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q) {
 
         function onSuccessfulLogin(response) {
             var data = response.data;
@@ -103,7 +103,7 @@
 
     });
 
-    app.service('Session', function ($rootScope, AUTH_EVENTS, UserFactory, $ionicPopup) {
+    app.service('Session', function ($rootScope, AUTH_EVENTS) {
 
         var self = this;
         
