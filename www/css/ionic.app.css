@@ -9098,8 +9098,7 @@ ion-content {
   padding: 0px; }
 
 div.title.title-center.header-item {
-  color: white;
-  font-size: 19px; }
+  color: white; }
 
 div.title.title-left.header-item {
   color: white; }
@@ -9121,28 +9120,20 @@ ion-header-bar.bar.bar-stable {
   border-color: #2B2B2B; }
   .item ul li {
     color: white; }
-  .item p {
-    font-size: 15px; }
-
-.item.item-icon-left {
-  font-size: large;
-  font-weight: 700; }
 
 div.tab-nav.tabs {
   background-color: #2B2B2B; }
 
 ion-tabs.tabs-color-active-positive .tab-item {
-  color: white; }
+  color: #FC4C02; }
 
 .bar-stable .button.button-clear {
-  color: #FC4C02;
-  font-size: 8px; }
+  color: #FC4C02; }
 
 .tmk-tab-select {
   padding: 10px;
   float: left;
-  width: 50%;
-  font-size: 19px; }
+  width: 50%; }
 
 .tmk-tab-select.tmk-active {
   border-bottom: 3px solid #387ef5;
@@ -9156,31 +9147,13 @@ ion-tabs.tabs-color-active-positive .tab-item {
   background-color: #FC4C02; }
 
 .item.item-icon-left {
-  color: white; }
+  color: #387ef5; }
 
 #runTimer {
   color: #387ef5;
   font-size: 50px;
   font-family: 'Orbitron', sans-serif;
   padding-top: 15px; }
-
-span {
-  font-size: 140%;
-  font-weight: 400; }
-
-.button-large {
-  font-size: 17px;
-  font-weight: 500; }
-
-.tab-item.icon {
-  font-size: 39px;
-  color: white; }
-
-.button.button-balanced.button-outline {
-  border-width: 3px 0 3px 0; }
-
-.button.button-full {
-  border-width: 3px 0 3px 0; }
 
 #unit {
   background-color: #2B2B2B; }

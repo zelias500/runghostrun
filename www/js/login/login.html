@@ -21,21 +21,33 @@
 		color: silver;
 		font-size: 9vw;
 		font-weight: 200;
+		position: absolute;
+		margin: 0 auto;
+		left: 4%;
 	}
-	/*span{*/
-	/*	font-size: 120%;*/
-	/*}*/
 
 
 </style>
 
 <ion-view view-title="Login">
   	<ion-content>
-		<div style="position:fixed;z-index:1;">
+		<div>
 			<h1 id="appName">G H O S T R U N N E R</h1>
 		</div>
+
+		<!-- old logo
 		<img style="position:relative;width:100%;"
-		     src="http://images.freeimages.com/images/previews/659/running-track-2-1528273.jpg">
+		     src="http://images.freeimages.com/images/previews/659/running-track-2-1528273.jpg"> 
+		 -->
+
+		<!-- new logo -->
+		<svg width="100%" height="280" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<g>
+				<title>Layer 1</title>
+				<image xlink:href="https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/512/running_man.png" id="svg_1" height="240" width="218" y="28" x="5"/>
+				<image xlink:href="http://icons.iconarchive.com/icons/icons8/ios7/256/Sports-Running-icon.png" id="svg_2" height="225" width="256" y="35" x="48"/>
+			</g>
+		</svg>
 
 		<oauth-button provider-name="google"></oauth-button>
 		<oauth-button provider-name="facebook"></oauth-button>
