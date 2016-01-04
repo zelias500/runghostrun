@@ -1,21 +1,21 @@
 'use strict';
 
-var passport = require('passport');
-var TwitterStrategy = require('passport-twitter').Strategy;
-var mongoose = require('mongoose');
-var UserModel = mongoose.model('User');
+const passport = require('passport');
+const TwitterStrategy = require('passport-twitter').Strategy;
+const mongoose = require('mongoose');
+const UserModel = mongoose.model('User');
 
 module.exports = function (app) {
 
-    var twitterConfig = app.getValue('env').TWITTER;
+    const twitterConfig = app.getValue('env').TWITTER;
 
-    var twitterCredentials = {
+    const twitterCredentials = {
         consumerKey: twitterConfig.consumerKey,
         consumerSecret: twitterConfig.consumerSecret,
         callbackUrl: twitterConfig.callbackUrl
     };
 
-    var createNewUser = function (token, tokenSecret, profile) {
+    const createNewUser = function (token, tokenSecret, profile) {
         return UserModel.create({
             twitter: {
                 id: profile.id,
@@ -26,7 +26,7 @@ module.exports = function (app) {
         });
     };
 
-    var updateUserCredentials = function (user, token, tokenSecret, profile) {
+    const updateUserCredentials = function (user, token, tokenSecret, profile) {
 
         user.twitter.token = token;
         user.twitter.tokenSecret = tokenSecret;
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
     };
 
-    var verifyCallback = function (token, tokenSecret, profile, done) {
+    const verifyCallback = function (token, tokenSecret, profile, done) {
 
         UserModel.findOne({'twitter.id': profile.id}).exec()
             .then(function (user) {

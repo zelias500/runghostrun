@@ -1,23 +1,23 @@
 'use strict';
-var mongoose = require('mongoose');
-var _ = require('lodash');
-var Run = mongoose.model('Run');
+const mongoose = require('mongoose');
+const Run = mongoose.model('Run');
 
-var earthRadius = 6371000 // in km
+const earthRadius = 6371000 // in km
+
 function toRad (degrees){
     return degrees * Math.PI/180;
 };
 function calcGeoDistance(loc1, loc2){
-    var latRads1 = toRad(loc1.lat);
-    var latRads2 = toRad(loc2.lat);
-    var latDeltaRads = toRad(loc2.lat-loc1.lat);
-    var longDeltaRads = toRad(loc2.lng-loc1.lng);
-    var a = Math.sin(latDeltaRads/2) * Math.sin(latDeltaRads/2) + Math.cos(latRads1) * Math.cos(latRads2) * Math.sin(longDeltaRads/2) * Math.sin(longDeltaRads/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const latRads1 = toRad(loc1.lat);
+    const latRads2 = toRad(loc2.lat);
+    const latDeltaRads = toRad(loc2.lat-loc1.lat);
+    const longDeltaRads = toRad(loc2.lng-loc1.lng);
+    const a = Math.sin(latDeltaRads/2) * Math.sin(latDeltaRads/2) + Math.cos(latRads1) * Math.cos(latRads2) * Math.sin(longDeltaRads/2) * Math.sin(longDeltaRads/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     return Number((earthRadius * c).toFixed(1));
 };
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

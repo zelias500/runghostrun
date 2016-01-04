@@ -1,20 +1,20 @@
 'use strict';
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var mongoose = require('mongoose');
-var UserModel = mongoose.model('User');
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const mongoose = require('mongoose');
+const UserModel = mongoose.model('User');
 
 module.exports = function (app) {
 
-    var facebookConfig = app.getValue('env').FACEBOOK;
+    const facebookConfig = app.getValue('env').FACEBOOK;
 
-    var facebookCredentials = {
+    const facebookCredentials = {
         clientID: facebookConfig.clientID,
         clientSecret: facebookConfig.clientSecret,
         callbackURL: facebookConfig.callbackURL
     };
 
-    var verifyCallback = function (accessToken, refreshToken, profile, done) {
+    const verifyCallback = function (accessToken, refreshToken, profile, done) {
 
         UserModel.findOne({ 'facebook.id': profile.id }).exec()
             .then(function (user) {

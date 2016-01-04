@@ -1,21 +1,21 @@
 'use strict';
 
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var mongoose = require('mongoose');
-var UserModel = mongoose.model('User');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const mongoose = require('mongoose');
+const UserModel = mongoose.model('User');
 
 module.exports = function (app) {
 
-    var googleConfig = app.getValue('env').GOOGLE;
+    const googleConfig = app.getValue('env').GOOGLE;
 
-    var googleCredentials = {
+    const googleCredentials = {
         clientID: googleConfig.clientID,
         clientSecret: googleConfig.clientSecret,
         callbackURL: googleConfig.callbackURL
     };
 
-    var verifyCallback = function (accessToken, refreshToken, profile, done) {
+    const verifyCallback = function (accessToken, refreshToken, profile, done) {
 
         UserModel.findOne({ 'google.id': profile.id }).exec()
             .then(function (user) {
@@ -23,7 +23,7 @@ module.exports = function (app) {
                 if (user) {
                     return user;
                 } else {
-                    var email = profile.emails[0].value;
+                    let email = profile.emails[0].value;
                     return UserModel.create({
                         email: email,
                         picture: profile._json.picture,

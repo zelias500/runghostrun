@@ -1,11 +1,9 @@
 'use strict';
-var router = require('express').Router();
+const router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose');
-var _ = require('lodash');
-var User = mongoose.model("User");
-var Ghost = mongoose.model("Ghost");
-var Run = mongoose.model("Run");
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const Run = mongoose.model("Run");
 
 
 // GET all runs
@@ -20,7 +18,7 @@ router.post('/', function (req, res, next) {
 	Run.create(req.body)
 	.then(run => res.status(201).json (run))
 	.then(null, next);
-})
+});
 
 // id parameter
 router.param('id', function (req, res, next, id) {
@@ -31,7 +29,7 @@ router.param('id', function (req, res, next, id) {
 });
 
 // GET single run by id
-router.get('/:id', function (req, res, next){
+router.get('/:id', function (req, res) {
      res.status(200).json(req.run);
 });
 
@@ -47,5 +45,6 @@ router.put('/:id', function (req, res, next) {
 router.delete('/:id', function (req, res, next) {
     Run.remove({_id :req.params.id}).then(function () {
       return res.status(200).json(req.run);
-    });
+    })
+    .then(null, next);
 });

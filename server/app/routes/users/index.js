@@ -1,17 +1,16 @@
 'use strict';
-var router = require('express').Router();
+const router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose');
-var _ = require('lodash');
-var User = mongoose.model("User");
-var Ghost = mongoose.model("Ghost");
-var Run = mongoose.model("Run");
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const User = mongoose.model("User");
+const Ghost = mongoose.model("Ghost");
 
 // GET all users
 router.get('/', function (req,res,next) {
 	User.find({})
 	.then(users => res.status(200).json(users))
-	.then(null, next)
+	.then(null, next);
 });
 
 // POST new user
@@ -31,8 +30,8 @@ router.param('id', function (req, res, next, id) {
 });
 
 // GET single user by id
-router.get('/:id', function (req,res, next) {
-     res.status(200).json(req.targetUser)
+router.get('/:id', function (req,res) {
+     res.status(200).json(req.targetUser);
 });
 
 // GET user friends by id
@@ -69,7 +68,7 @@ router.get('/:id/runs', function (req, res, next) {
 		return User.populate(runs, {path: 'ghost.owner'})
 	})
 	.then(runs =>res.status(200).json(runs))
-	.then(null, next)
+	.then(null, next);
 });
 
 // GET user ghosts
@@ -85,13 +84,12 @@ router.put('/:id', function (req, res, next){
 	req.targetUser.save()
 	.then(update => res.status(201).json(update))
 	.then(null, next);
-
 });
 
 // POST a new friend
 router.post('/:id/friends', function (req, res, next) {
-	var friendId = req.body.friendId;
-	var userToReturn;
+	let friendId = req.body.friendId;
+	let userToReturn;
 
 	req.targetUser.friends.addToSet(friendId);
 	req.targetUser.save()
@@ -103,18 +101,18 @@ router.post('/:id/friends', function (req, res, next) {
 		friend.followers.addToSet(userToReturn._id);
 		return friend.save();
 	})
-	.then(function (friend) {
+	.then(function () {
 		res.status(201).json(userToReturn);
-	}).then(null, next)
+	}).then(null, next);
 });
 
 // contact sync route
-router.post('/:id/friends/sync', function (req, res, next){
+router.post('/:id/friends/sync', function (req, res, next) {
 	User.find().then(allUsers => {
-		var validContacts = allUsers.filter(user => {
+		let validContacts = allUsers.filter(user => {
 			return _.find(req.body.contacts, function(i){
 				return req.body.contacts[i].emails.some(email => {
-					return email.value == user.email;
+					return email.value === user.email;
 				})
 			})
 		})
@@ -122,13 +120,14 @@ router.post('/:id/friends/sync', function (req, res, next){
 		req.user.save().then(user => {
 			res.status(200).json(user);
 		})
-	})
-})
+		.then(null, next);
+	});
+});
 
 // PUT to remove a friend
 router.put('/:id/friends/remove', function (req, res, next) {
-	var friendId = req.body.friendId;
-	var userToReturn;
+	let friendId = req.body.friendId;
+	let userToReturn;
 
 	req.targetUser.friends.pull(friendId);
 	req.targetUser.save()
@@ -140,24 +139,24 @@ router.put('/:id/friends/remove', function (req, res, next) {
 		friend.followers.pull(userToReturn._id);
 		return friend.save();
 	})
-	.then(function (friend) {
+	.then(function () {
 		res.status(201).json(userToReturn);
-	}).then(null, next)
+	}).then(null, next);
 });
 
 // DELETE a single user by id
 router.delete('/:id', function(req, res, next){
     User.remove({_id :req.params.id}).then(function(){
       return res.status(200).json(req.targetUser);
-    }).then(null, next)
+    }).then(null, next);
 });
 
 // PUT to challenge friends
 router.put('/:id/friends/challenge', function (req, res, next) {
 	req.targetUser.challengeFriends(req.body.ghostId)
-	.then(function (friends){
+	.then(function (){
 		return res.status(201).json("Success");
-	}).then(null, next)
+	}).then(null, next);
 });
 
 // PUT to remove newChallenges
@@ -167,4 +166,5 @@ router.put('/:id/emptychallenges', function (req, res, next) {
 	.then(function (user){
 		return res.status(201).json(user);
 	})
+	.then(null, next);
 });
