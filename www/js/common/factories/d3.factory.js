@@ -38,11 +38,11 @@ app.factory('d3Factory', function(TimeFactory){
     				}
                 }
             },
-            transformer: function (someData) {
+            transformer: function (viewData) {
             	var count = 1;
             	return [{
 							key: 'Recent Runs',
-							values: someData.map(data => {
+							values: viewData.map(data => {
 								return {
 									'label': moment.utc(data.timestamp).valueOf(),
 									'value': data.distance
@@ -141,10 +141,10 @@ app.factory('d3Factory', function(TimeFactory){
                 },
                 showLegend: false
             },
-            transformer: function (someData) {
+            transformer: function (viewData) {
                 var count = 1;
                 return [{
-                            values: someData.map(data => {
+                            values: viewData.map(data => {
                                 return {
                                     'label': (data.runner.displayName || data.runner.email) + "-"+(count++),
                                     'value': data.time // in seconds
@@ -160,6 +160,7 @@ app.factory('d3Factory', function(TimeFactory){
 
 	return {
 		getStatsAbout: function (string, newData) {
+            
             var toReturn = d3Stuff[string];
             if (string === "Pace over Time"){
                 var bounds = [1000, 0];
@@ -170,17 +171,9 @@ app.factory('d3Factory', function(TimeFactory){
                 })
                 bounds[0] = Math.max(bounds[0] - .10, 0);
                 bounds[1] = bounds[1] + .10;
+                toReturn.options.chart.yDomain = bounds;
             }
 
-            someData.map(data => {
-                                return {
-                                    'label': count++,
-                                    'value': data.pace
-                                }
-                            }),
-            
-            // can change parameters yDomain of Pace over Time here to get correct Y axis
-            // need to resolve why we are getting the wrong paces.
 			toReturn.data = toReturn.transformer(newData);
 			return toReturn;
 		}
