@@ -38,14 +38,14 @@ app.factory('d3Factory', function(TimeFactory){
     				}
                 }
             },
-            transformer: function (viewData) {
+            transformer: function (viewData, isMetric) {
             	var count = 1;
             	return [{
 							key: 'Recent Runs',
 							values: viewData.map(data => {
 								return {
 									'label': moment.utc(data.timestamp).valueOf(),
-									'value': data.distance
+									'value': isMetric ? data.distance/1000 : data.distance/1609.34
 								}
 							}),
 							color: '#ff7f0e'
@@ -159,22 +159,24 @@ app.factory('d3Factory', function(TimeFactory){
    
 
 	return {
-		getStatsAbout: function (string, newData) {
+		getStatsAbout: function (string, newData, isMetric) {
 
             var toReturn = d3Stuff[string];
             if (string === "Pace over Time"){
                 var bounds = [1000, 0];
                 newData.forEach( data => {
-                    data.pace = (data.time/60)/(data.distance/1000);
+                    if (isMetric) data.pace = (data.time/60)/(data.distance/1000);
+                    else data.pace = (data.time/60)/(data.distance/1609.34);
                     bounds[0] = Math.min(bounds[0], data.pace);
                     bounds[1] = Math.max(bounds[1], data.pace);
                 })
                 bounds[0] = Math.max(bounds[0] - .10, 0);
                 bounds[1] = bounds[1] + .10;
+                if (!isMetric) toReturn.options.chart.yAxis.axisLabel = 'mins/mile';
                 toReturn.options.chart.yDomain = bounds;
             }
 
-			toReturn.data = toReturn.transformer(newData);
+			toReturn.data = toReturn.transformer(newData, isMetric);
 			return toReturn;
 		}
 	}
