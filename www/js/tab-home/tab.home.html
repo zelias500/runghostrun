@@ -61,7 +61,7 @@
       <ion-slide>
         <div class="list card">
          <div class="item item-body">
-          <p ng-show="{{friendRuns.length === 0}}">No recent friend activity. Go make friends!</p>
+          <p ng-show="{{friendRuns.length === 0}}" style="color:lightgray;margin-bottom:16px">No recent friend activity. Go make friends!</p>
           <div ng-repeat="friendRun in friendRuns">
             <div class="item item-avatar">
               <img ng-src="{{friendRun.runner.picture}}">

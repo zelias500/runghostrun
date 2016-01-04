@@ -26,7 +26,7 @@ app.factory('d3Factory', function(TimeFactory){
                         
                     },
                     yAxis: {
-                        axisLabel: 'Distance',
+                        axisLabel: 'Distance in km',
                         axisLabelDistance: 0
                     }
                 },
@@ -38,14 +38,14 @@ app.factory('d3Factory', function(TimeFactory){
     				}
                 }
             },
-            transformer: function (someData) {
+            transformer: function (viewData, isMetric) {
             	var count = 1;
             	return [{
 							key: 'Recent Runs',
-							values: someData.map(data => {
+							values: viewData.map(data => {
 								return {
 									'label': moment.utc(data.timestamp).valueOf(),
-									'value': data.distance
+									'value': isMetric ? data.distance/1000 : data.distance/1609.34
 								}
 							}),
 							color: '#ff7f0e'
@@ -78,7 +78,7 @@ app.factory('d3Factory', function(TimeFactory){
                         }
     				},
     				yAxis: {
-    					axisLabel: 'Pace',
+    					axisLabel: 'mins/km',
     					tickFormat: function(d){
     						return d3.format('.02f')(d);
     					}
@@ -96,11 +96,11 @@ app.factory('d3Factory', function(TimeFactory){
     		transformer: function (someData) {
     			var count = 1;
             	return [{
-							key: 'Avg Pace/Run',
+							key: 'Pace',
 							values: someData.map(data => {
 								return {
 									'label': count++,
-									'value': data.distance/data.time
+									'value': data.pace
 								}
 							}),
 							color: '#ff7f0e'
@@ -141,10 +141,10 @@ app.factory('d3Factory', function(TimeFactory){
                 },
                 showLegend: false
             },
-            transformer: function (someData) {
+            transformer: function (viewData) {
                 var count = 1;
                 return [{
-                            values: someData.map(data => {
+                            values: viewData.map(data => {
                                 return {
                                     'label': (data.runner.displayName || data.runner.email) + "-"+(count++),
                                     'value': data.time // in seconds
@@ -159,9 +159,27 @@ app.factory('d3Factory', function(TimeFactory){
    
 
 	return {
-		getStatsAbout: function (string, newData) {
-			var toReturn = d3Stuff[string];
-			toReturn.data = toReturn.transformer(newData);
+		getStatsAbout: function (string, newData, isMetric) {
+
+            var toReturn = d3Stuff[string];
+            if (string === "Pace over Time"){
+                var bounds = [1000, 0];
+                newData.forEach( data => {
+                    if (isMetric) data.pace = (data.time/60)/(data.distance/1000);
+                    else data.pace = (data.time/60)/(data.distance/1609.34);
+                    bounds[0] = Math.min(bounds[0], data.pace);
+                    bounds[1] = Math.max(bounds[1], data.pace);
+                })
+                bounds[0] = Math.max(bounds[0] - .10, 0);
+                bounds[1] = bounds[1] + .10;
+                if (!isMetric) toReturn.options.chart.yAxis.axisLabel = 'mins/mile';
+                toReturn.options.chart.yDomain = bounds;
+            }
+            else {
+                if (!isMetric) toReturn.options.chart.yAxis.axisLabel = "Distance in miles";
+            }
+
+			toReturn.data = toReturn.transformer(newData, isMetric);
 			return toReturn;
 		}
 	}

@@ -49,7 +49,7 @@ app.controller('StatisticsCtrl', function ($scope, user, averagePace, averageDis
     $scope.statSelector = 'Recent Distance'
 
     $scope.changeStat = function(statSelector) {
-        $scope.d3Selected = d3Factory.getStatsAbout(statSelector, $scope.runs)
+        $scope.d3Selected = d3Factory.getStatsAbout(statSelector, $scope.runs, user.isMetric);
     }
     $scope.changeStat($scope.statSelector);
 
