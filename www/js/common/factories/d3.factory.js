@@ -174,7 +174,7 @@ app.factory('d3Factory', function(TimeFactory){
                 if (!isMetric) toReturn.options.chart.yAxis.axisLabel = 'mins/mile';
                 toReturn.options.chart.yDomain = bounds;
             }
-            else {
+            else if (string === "Recent Distance") {
                 if (!isMetric) toReturn.options.chart.yAxis.axisLabel = "Distance in miles";
             }
 
