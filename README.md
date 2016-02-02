@@ -16,17 +16,17 @@ See our presentation [here](http://www.fullstackacademy.com/final-projects/ghost
 
 ## Summary
 
-Ghost runner is a mobile social fitness application that aims to make running a more enjoyable experience. To do this when you go running we track your location and save your run as 'Ghost'. Once a ghost is created you can either challenge your friends to beat your Ghost time or simply run the same path the next time you go running. When challenging a previous run ('Ghost') you are able to see the previous runner's path and have a voice coach that will tell you whether you are running behind or ahead of the current leader. When a ghost have several runs you can then view a leaderboard with the times and names of each runner. Additionally when you view your profile you can see your recent run statistics.
+Ghost Runner is a mobile social fitness application that aims to make running a more enjoyable experience. To do this when you go running we track your location and save your run as a 'Ghost'. Once a 'Ghost' is created you can either challenge your friends to beat your 'Ghost' time or simply run against your own 'Ghost' along the same path the next time you go running. When challenging a previous run ('Ghost') you are able to see the previous runner's path and have a voice coach that will tell you whether you are running behind or ahead of the current leader. When a ghost have several runs you can then view a leaderboard with the times and names of each runner. Additionally when you view your profile you can see your recent run statistics.
 
 ## Tools
 
-To create this app we used the MEAN(Mongo, Express, Angular, Node) stack, Ionic, D3 and the GoogleMaps API. 
+To create this app we used the MEAN (Mongo, Express, Angular, Node) stack, Ionic, D3 and the Google Maps API. 
 
-We used ionic for easy cross-platform deployment and in order to add mobile swipe and drag features that users have grown accustomed to. 
+We used Ionic for easy cross-platform deployment and in order to easily add mobile features such as swipe and drag.
 
 We used D3 for our data visualization (leaderboard and recent run stats). 
 
-We used the GoogleMaps API to display the live run path of a runner and ,if they are challenging a 'Ghost' (previous run), where the path the previous runner took.
+We used the Google Maps API to display the live run path of a runner and, if they are challenging a 'Ghost' (previous run), the path that the original runner took.
 
 ## Use
 
