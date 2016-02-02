@@ -37,14 +37,14 @@ If you want to give our application a try, pick up your phone and head on over t
 If you want to play around with our code and modify anything, go ahead! 
 Be sure to install dependencies
 
-	```bash
+	```markdown
 	npm install    # installs node packages
 	bower install  # installs bower dependencies
 	```
 
 Then run gulp and npm start in two seperate tabs to run the app on your computer (note since this is a mobile application, limited testing can be done using a localhost. If you are trying to do more substantial changes it can be best to deploy to heroku or another platform)
 
-	```bash
+	```markdown
 	gulp    # installs node packages
 	npm start # starts the app
 	```
