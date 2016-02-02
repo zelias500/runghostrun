@@ -41,6 +41,7 @@ Be sure to install dependencies
 	npm install    # installs node packages
 	bower install  # installs bower dependencies
 	```
+
 Then run gulp and npm start in two seperate tabs to run the app on your computer (note since this is a mobile application, limited testing can be done using a localhost. If you are trying to do more substantial changes it can be best to deploy to heroku or another platform)
 
 	```bash
